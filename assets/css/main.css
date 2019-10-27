@@ -2705,7 +2705,7 @@ input, select, textarea {
 	background-color: #fff;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
   #sketch-holder {
 	display: inline;
     height: 75vh;
