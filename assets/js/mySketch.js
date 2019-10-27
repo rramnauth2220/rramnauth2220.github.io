@@ -14,11 +14,12 @@ function preload() {
 }
 
 function setup() {
-	
-  var canvas = createCanvas(window.innerWidth/2, window.innerHeight);
+  height = document.getElementById('sketch-holder').clientHeight;
+  width = document.getElementById('sketch-holder').clientWidth;
+  var canvas = createCanvas(width, height);
   canvas.parent('sketch-holder');
-  width = window.innerWidth/2;
-  height = window.innerHeight;
+  //width = window.innerWidth/2;
+  //height = window.innerHeight;
   fill(0);
   img = createImage(width, height);
   nextImage();
