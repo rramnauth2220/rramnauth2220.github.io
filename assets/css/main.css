@@ -2705,6 +2705,14 @@ input, select, textarea {
 	background-color: #fff;
 }
 
+@media only screen and (max-width: 600px) {
+  #sketch-holder {
+	display: inline;
+    height: 75vh;
+	width: 100wh;
+  }
+}
+
 /* List */
 
 	ol {
