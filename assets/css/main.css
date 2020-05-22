@@ -7,6 +7,78 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+/* Styling */
+.timeline {
+  margin: 3em auto;
+  position: relative;
+  max-width: 46em;
+}
+
+  .timeline:before {
+    background-color: black;
+    content: '';
+    margin-left: -1px;
+    position: absolute;
+    top: 0;
+    left: 2em;
+    width: 2px;
+    height: 100%;
+  }
+
+.timeline-event {
+  position: relative;
+}
+
+  .timeline-event:hover {
+  
+    .timeline-event-icon {
+      @include rotate (-45deg);
+      background-color: blue;
+    }
+    
+    .timeline-event-thumbnail {
+      @include box-shadow(inset 40em 0 0 0 rgb(168, 50, 121));
+    }
+  }
+
+.timeline-event-copy {
+  position: relative;
+  left: 5em;
+  width: 85%;
+}
+  .timeline-event-copy > h3 {
+    font-size: 1.75em;
+  }
+  
+  .timeline-event-copy > h4 {
+    font-size: 1.2em;
+  }
+  
+  .timeline-event-copy > strong {
+    font-weight: 700;
+  }
+ 
+.timeline-event-icon {
+  background-color: black;
+  display: none;
+  margin: 0.5em 0.5em 0.5em -0.5em;
+  position: absolute;
+  top: 0;
+  left: 4em;
+  width: 1em;
+  height: 1em;
+}
+
+.timeline-event-thumbnail {
+  color: white;
+  font-size: 0.85em;
+  border-radius: 0.25em;
+  padding: 0.25em 0.75em 0.25em 0.75em;
+  background-color: black;
+  display: inline-block;
+  margin-bottom: 1.2em;
+}
+
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
@@ -189,6 +261,17 @@ input, select, textarea {
 
 		p.major {
 			font-size: 1.25rem;
+		}
+		
+		p.minor {
+			font-size: 0.75rem;
+			padding: 0;
+			margin: 0;
+		}
+		
+		p.supplemented {
+			padding-bottom: 0;
+			margin-bottom: 0;
 		}
 
 	.buttonpaired {
@@ -2119,8 +2202,8 @@ input, select, textarea {
 		max-width: 20rem;
 		height: 3.75em;
 		line-height: 3.75em;
-		border-radius: 1em;
-		padding: 0 2.5em;
+		border-radius: 0.5em;
+		padding: 0em 2.5em;
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
@@ -2703,6 +2786,14 @@ input, select, textarea {
 
 #sketch-holder, #sketch-experience {
 	background-color: #fff;
+}
+
+@media only screen and (max-width: 1600px) {
+  #sketch-holder {
+	display: inline;
+    height: 100vh;
+	width: 100wh;
+  }
 }
 
 @media only screen and (max-width: 900px) {

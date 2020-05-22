@@ -8,9 +8,7 @@ var isStop = false;
 var count = 0;
 
 function preload() {
-  imgs[0] = loadImage("assets/js/profile02.png"); // profile02
-  //imgs[1] = loadImage("assets/js/test2.png");
-  //imgs[2] = loadImage("assets/js/test3.png");
+  imgs[0] = loadImage("assets/js/profile02.png");
 }
 
 function setup() {
@@ -18,8 +16,6 @@ function setup() {
   width = document.getElementById('sketch-holder').clientWidth;
   var canvas = createCanvas(width, height);
   canvas.parent('sketch-holder');
-  //width = window.innerWidth/2;
-  //height = window.innerHeight;
   fill(0);
   img = createImage(width, height);
   nextImage();
