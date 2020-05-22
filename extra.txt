@@ -1,0 +1,66 @@
+
+
+				#wrapper > .invert .banner.style4 .image:before {
+					background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='64px' height='32px' viewBox='0 0 64 32' zoomAndPan='disable'%3E%3Cstyle%3Erect %7Bfill: transparent%3B stroke: white%3B stroke-width: 1px%3B %7D%3C/style%3E%3Crect rx='4' ry='4' x='11' y='12' width='42' height='8' vector-effect='non-scaling-stroke' /%3E%3C/svg%3E");
+					border-color: white;
+					width: calc(100% + 2px);
+					margin-left: -1px;
+				}
+
+				#wrapper > .invert .banner.style4 .image:after {
+					background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='64px' height='32px' viewBox='0 0 64 32' zoomAndPan='disable'%3E%3Cstyle%3Ecircle %7Bfill: transparent%3B stroke: white%3B stroke-width: 1px%3B %7D%3C/style%3E%3Ccircle cx='32' cy='16' r='14' vector-effect='non-scaling-stroke' /%3E%3C/svg%3E");
+					border-color: white;
+					width: calc(100% + 2px);
+					margin-left: -1px;
+				}
+
+			#wrapper > .invert .banner.style4.android .image:after {
+				background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='64px' height='32px' viewBox='0 0 64 32' zoomAndPan='disable'%3E%3Cstyle%3Erect %7Bfill: transparent%3B stroke: white%3B stroke-width: 1px%3B %7D%3C/style%3E%3Crect rx='4' ry='4' x='6' y='4' width='52' height='24' vector-effect='non-scaling-stroke' /%3E%3C/svg%3E");
+			}
+
+			
+				#wrapper > .invert .spotlight.style3 .image:before {
+					background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='64px' height='32px' viewBox='0 0 64 32' zoomAndPan='disable'%3E%3Cstyle%3Erect %7Bfill: transparent%3B stroke: white%3B stroke-width: 1px%3B %7D%3C/style%3E%3Crect rx='4' ry='4' x='11' y='12' width='42' height='8' vector-effect='non-scaling-stroke' /%3E%3C/svg%3E");
+					border-color: white;
+					width: calc(100% + 2px);
+					margin-left: -1px;
+				}
+
+				#wrapper > .invert .spotlight.style3 .image:after {
+					background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='64px' height='32px' viewBox='0 0 64 32' zoomAndPan='disable'%3E%3Cstyle%3Ecircle %7Bfill: transparent%3B stroke: white%3B stroke-width: 1px%3B %7D%3C/style%3E%3Ccircle cx='32' cy='16' r='14' vector-effect='non-scaling-stroke' /%3E%3C/svg%3E");
+					border-color: white;
+					width: calc(100% + 2px);
+					margin-left: -1px;
+				}
+
+			#wrapper > .invert .spotlight.style3.android .image:after {
+				background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='64px' height='32px' viewBox='0 0 64 32' zoomAndPan='disable'%3E%3Cstyle%3Erect %7Bfill: transparent%3B stroke: white%3B stroke-width: 1px%3B %7D%3C/style%3E%3Crect rx='4' ry='4' x='6' y='4' width='52' height='24' vector-effect='non-scaling-stroke' /%3E%3C/svg%3E");
+			}
+
+			#wrapper > .invert .gallery article .image {
+				background-color: rgba(255, 255, 255, 0.125);
+			}
+
+			#wrapper > .invert .items.style1 > * {
+				border-color: white;
+			}
+
+			#wrapper > .invert .items.style2 {
+				border-color: white;
+			}
+
+				#wrapper > .invert .items.style2 > * {
+					border-color: white;
+				}
+
+			#wrapper > .invert .index > * {
+				border-top-color: white;
+			}
+
+		#wrapper.divided > .invert {
+			box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.125);
+		}
+
+			#wrapper.divided > .invert:first-child {
+				box-shadow: none !important;
+			}
