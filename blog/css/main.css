@@ -323,26 +323,17 @@ pre {
 }
 
 pre {
-  padding: 2.4rem 3.2rem 3.2rem;
-  background: #efefef;
+  padding: 0 0 0 0.5em;
   overflow-x: auto;
 }
 
 code {
   font-size: 1.4rem;
-  margin: 0 0.2rem;
-  padding: 0.4rem 0.8rem;
-  white-space: nowrap;
-  background: #efefef;
-  border: 1px solid #d3d3d3;
-  color: #000000;
-  border-radius: 3px;
 }
 
 pre > code {
   display: block;
-  white-space: pre;
-  line-height: 2;
+  line-height: 1.25;
   padding: 0;
   margin: 0;
 }
@@ -1560,6 +1551,11 @@ input::-moz-focus-inner {
   letter-spacing: -0.05rem;
   margin-top: 0;
   margin-bottom: 0.8rem;
+}
+
+figure figcaption {
+	font-size: 1.25rem;
+	text-align: center;
 }
 
 /* ------------------------------------------------------------------- 
