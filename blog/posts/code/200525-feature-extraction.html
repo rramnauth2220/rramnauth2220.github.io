@@ -123,7 +123,42 @@
 						</p>
 						
 						<h3>Time domain features</h3>
-						<h4>Windowing in time domain</h4>
+                        <pre><code class="python">%matplotlib inline  
+import librosa                     # librosa music package
+import essentia                    # essentia music package
+import essentia.standard           # essentia for imperative programming
+import essentia.streaming          # essentia for declarative programming
+
+import IPython                     # for playing audio
+import numpy as np                 # for handling large arrays
+import pandas as pd                # for data manipulation and analysis
+import scipy                       # for common math functions
+import sklearn                     # a machine learning library
+import os                          # for accessing local files
+
+import librosa.display             # librosa plot functions
+import matplotlib.pyplot as plt    # plotting with Matlab functionality
+import seaborn as sns              # data visualization based on matplotlib
+</code></pre>
+
+<pre><code class="python"># in libROSA
+audio_librosa = 'audio/human-rights.wav' # audio file path
+y, sr = librosa.core.load(audio_librosa) # load samples and determine sampling rate
+
+# in Essentia
+loader = essentia.standard.MonoLoader(filename='audio/human-rights.wav') # instantiate audio loader
+audio_essentia = loader() # actually load audio file
+
+# to hear how the audio we want to process sounds like
+IPython.display.Audio('audio/human-rights.wav')
+</code></pre>
+
+<pre><code class="python">plt.rcParams['figure.figsize'] = (15, 6) # instantiate plot canvas
+plot(audio[1*44100:2*44100]) # get the 2nd second of the audio clip
+show()
+</code></pre>
+<img src="images/inline/audio-plot-1.png" alt="time series of audio clip"/>
+                        <h4>Windowing in time domain</h4>
 						<p>Before we discuss time domain features, it is necessary to introduce the concept of windowing in time domain. The simplest way to analyze a signal is in its raw form. For <em>time series signals</em> (signals that evolve with time), <strong>windowing</strong> allows us to view a short time segment of a longer signal and analyze its frequency content. Mathematically, windowing can be seen as multiplying a signal with a window function that is zero everywhere on the given signal except on the region of interest. The simplest type of window is a rectangular window such as that defined by 
 						$$W(n) = \left\{ \begin{array}{ll} 1, & -\frac{M-1}{2} \leq n \leq \frac{M-1}{2} \\ 0, & otherwise \end{array} \right.$$
 						</p> 
@@ -133,23 +168,70 @@
 						W(n)=w_{0}\left(\frac{L}{N}(n-N / 2)\right) & =\frac{1}{2}\left[1-\cos \left(\frac{2 \pi n}{N}\right)\right] \\
 						& =\sin ^{2}\left(\frac{\pi n}{N}\right)
 						\end{array}\right\}, \quad 0 \leq n \leq N,$$ where the length of the window is \(N + 1\). In summary, these functions round the corners of rectangular windows to downgrade the edge of the signal, reducing the edge effect and therefore the Gibbs phenomenon.
-						</p>
+                        </p>
+                        <pre><code class="python">w_essentia = Windowing(type = 'hann')    # specify window function in essentia
+w_scipy = signal.get_window('triang', 7) # apply window function in scipy
+w_librosa= signal.get_window('hamm', 7)  # apply window function in librosa 
+</code></pre>
+<p>The windowing method in LibROSA is provided as a wrapper for the scipy function of the same name that also supports callable or pre-computed windows. For a list of window types supported by scipy and LibROSA, see <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.get_window.html#scipy.signal.get_window">scipy.signal.get_window</a>. For a list of types supported by Essentia, see <a href="https://essentia.upf.edu/reference/std_Windowing.html">essentia.standard.Windowing</a>.</p>
 						
 						<h4>Zero-crossing rate (ZCR)</h4>
-						<p>The ZCR of an audio grame is defined as the rate at which the signal changes sign. ZCR is an efficient and simple way to detecting whether a speech frame is voice, unvoiced, or silent. </p>
-						https://pdf.sciencedirectassets.com/271440/1-s2.0-S0003682X19X00110/1-s2.0-S0003682X19308795/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDgaCXVzLWVhc3QtMSJIMEYCIQDe7x2ifg7NhzIQIy7SOpGuGWzmAAbJh%2FcQZlSrU2B%2BqgIhANVII%2FIZnYz0VT1DAfKNVBO0i%2FOmIRzAl5cDoe1syDbzKr0DCJH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQAxoMMDU5MDAzNTQ2ODY1Igy49CzK8LgGeoCvDBMqkQMe7b%2FDuW493PAkPl8y9Fco2dPP2Mt6HaX3PIHWrwKk9SKSjspWW1cFdyT%2B6HActR5SwhodOLtPauWd0I%2BF6nhiiIXtHG4eYwAgMiuCCZcla52P9NO3cqvKK8p7xUNWbfWWv6QYCzGDUivV5Y4gRJaYlOvJuKD%2BUGVQstBuo7q2KyTNYCtxImv6%2F%2BmXWLrQw1U6A%2B6V5qjHMOEJStt%2F4l7XKDHazWi5BWnf9lYP5ouX7LdE16ygRUhncUvbi04JJCRkLp%2Blv9%2BRWqCf8qSq6OwUc2%2BoxTcSee6m%2FTC9zAku5U6RXbf6MsWzGgyb1KbIag8g3cpwIUuC7xxdg%2FMkcTj5el9SIp82rJi2BsmCryzz6bel%2BTM4iLIA7XQ1ktzYc9RDLUrDr7kUlS%2Fp6ZB1vujBfOXhcLGhrjklFasC9HFPTuB%2FhFOH5QOBeVoThbxPx%2Bnoj9oR9YTGh7kMX%2B0gObnY6NsjuOYJWhXJyRC48Tc1gc8CfHyBBXH15Rqxp9roFKv3D4l1v%2FAjBcV29VkXO2Ma2jCj1K%2F2BTrqATJ%2Bi3gjZMGxz%2Faxdp357DuTO9HwrGNzfMoZbVgyqDaEwNZvAsktj4%2FGzmxvqF0WKohW%2BxigcIuUgeGLTdN9R1F8RAV%2BG1kN65%2Bk1qvJBp5QCWwp5502qQxiDC%2BgnOcdSe2tS3svuVqDyZkkDsPk0BsAUgf%2BydvCFupQReHLsLux96n9nBAKIdlKigm90iQJzJ4BHf30U0zQ7n7xfumq7yaMpGC248ER%2BAyKSuYunI2q2AUQLaVsUF0cZ7BjeGzhKovF70dInNkS264xIs%2F6CO6oxBHTLitBl0mbvTlbuSfEKuMjjZmVgFUouA%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200525T171516Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTY4S6SJD72%2F20200525%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=ae7edaab6032a5e961ce60db87a13fbe8eccc920767df9cf627c034091bb9560&hash=d0480e33b012b1c2240132ba2c4eb2767bea316c3afcbdaf5091b39a5edbbbdd&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S0003682X19308795&tid=spdf-6a53923c-da38-48a5-bec4-fb6ce51cd002&sid=8cd4c85a3bd2f24f49-955e-afd6f0b4c9d9gxrqa&type=client
+                        <p>The ZCR of an audio grame is defined as the rate at which the signal changes sign. ZCR is an efficient and simple way to detecting whether a speech frame is voice, unvoiced, or silent. It is expected that unvoiced segments produce higher ZCRs than for voice segments, and ideally ZCRs equal to zero for silence segments [<a href="#bachu-2010">3</a>]. </p>
+
+                        <p>ZCR is also an essential technique for estimating <strong>fundamental frequency</strong>, the lowest frequency of a periodic waveform. The ZCR feature can therefore be used to design discriminator and classifier systems. With this additional information, this feature demonstrates, for example, a higher ZCR for music sources than for speech source. To see the implementation of such a system, check out <a href="https://ieeexplore.ieee.org/document/1386250">"A speech/music discriminator based on RMS and zero-crossings."</a></p>
 						
-						<pre><code class="python">import essentia
-from essentia.standard import *
-import essentia.standard as es
-print("Hullo wurld")
+						<pre><code class="python"># SETUP
+w = Windowing(type = 'hann')    # state windowing function
+spectrum = Spectrum()           # instead of a complex FTT (the output of FFT()), we just want the magnitude spectrum
+zcr = ZeroCrossingRate()        # instantiate the essentia.standard zero-crossing function
+
+zcrs = []
+frameSize = 1024
+hopSize = 512
 </code></pre>
-						
+
+<code><pre># APPLY ZCR FUNCTION to SPEECH signal
+
+# iterating through frames matlab style:
+# for fstart in range(0, len(audio)-frameSize, hopSize):
+#   frame = audio[fstart:fstart+frameSize]
+
+# iterating through frames essentia style:
+for frame in FrameGenerator(audio, frameSize=1024, hopSize=512, startFromZero=True):
+    zcrs.append(zcr(spectrum(w(frame))))
+
+zcrs = essentia.array(zcrs).T # shape output array
+</code></pre>
+
+<code><pre># PLOT OUTPUT
+zcrs_x = range(0, len(zcrs))
+zcrs_y = zcrs
+plt.plot(zcrs_x, zcrs_y, 'o', color='black') # plot ZCR per frame as points
+plt.plot(zcrs) # plot time-series change in ZCRs
+show()
+</code></pre>
+<img src="images/inline/audio-zcrs.png"/>
+
+<pre><code class="python"># APPLY LibROSA ZCR FUNCTION to MUSIC signal
+zcr = librosa.feature.zero_crossing_rate(y) 
+
+# PLOT OUTPUT
+plt.figure(figsize=(15,5))
+plt.semilogy(zcr.T, label='Fraction') # apply log transform on y
+plt.ylabel('Fraction per Frame')
+plt.xticks([])
+plt.xlim([0, rolloff.shape[-1]])
+plt.legend()    
+</code></pre>
+<img src="images/inline/audio-zcrs-librosa.png"/>
+
+
 						<h2>References</h2>
 						<ol>
 							<li id="#barchiesi-2015">Barchiesi, D., Giannoulis, D., Stowell, D., & Plumbley, M. D. (2015). Acoustic scene classification: Classifying environments from the sounds they produce. <em>IEEE Signal Processing Magazine, 32</em>(3), 16-34. [<a href="https://ieeexplore.ieee.org/abstract/document/7760424/?casa_token=feP8fRrzDdwAAAAA:njTGJ3xScXbqpSiW_SO_6ry9_-cmcEsnNgW9fUc3ZAi_Jb-llci5oEKhLeOyNNC2boM-bo2pxCU">PDF</a>]</li>
 							<li id="#rahmani-2018">Rahmani, M. H., Almasganj, F., & Seyyedsalehi, S. A. (2018). Audio-visual feature fusion via deep neural networks for automatic speech recognition. <em>Digital Signal Processing, 82,</em> 54-63. [<a href="https://www.sciencedirect.com/science/article/pii/S1051200418305050?casa_token=NHMQ69s4NYUAAAAA:ioRv7aYl7BiFOT57galxXoyUW1AleAJBkqFADl_1mv7tgUnMcQpzSXElVZ8PHRq_vB7qOLBosP4">PDF</a>]</li>
-						</ol>
+                            <li id="#bachu-2010">Bachu, R. G., Kopparthi, S., Adapa, B., & Barkana, B. D. (2010). Voiced/unvoiced decision for speech signals based on zero-crossing rate and energy. <em>In Advanced Techniques in Computing Sciences and Software Engineering </em>(pp. 279-282). Springer, Dordrecht. [<a href="https://www.researchgate.net/profile/Buket_Barkana/publication/259823741_VoicedUnvoiced_Decision_for_Speech_Signals_Based_on_Zero-Crossing_Rate_and_Energy/links/5654b2bf08ae4988a7b06035.pdf">PDF</a>]</li>
+                        </ol>
     
 
                         <p class="entry__tags">
