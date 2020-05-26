@@ -93,19 +93,40 @@
 
                     <div class="entry__content">
 
+                        <p><strong>High-level summary:</strong> how to get pretty graphs, nice numbers, and Python code to accurately describe sounds. </p>
+                    <p style="color:#00a67a"><code>05/25/2020 5:34 PM update:</code> I have yet to proofread this and organize the Essentia versus LibROSA code examples. It's a lot. I'll get it done. For now, just bear with me. </p>
+
                         <p class="lead drop-cap">
                         In order to make machines intelligent like humans, we often rely on machine learning and artificial intelligence techniques. There are several reasons why we want computers to be able to make human-like decisions. Developing smarter artificial agents and studying our interaction with them serve as an intermediary for better understanding human behavior and cognition. 
                         </p>
 
+                        <h2>Contents</h2>
+                        <ol>
+                            <li><strong><a href="#time-domain">Time domain features</a></strong>: <a href="#windowing">windowing techniques</a>, <a href="#zcr">zero-crossing rate (ZCR)</a>, <a href="#energy">characterizing energy</a> using <a href="#ste">short time energy (STE)</a> and <a href="#rmse">root mean square energy (RMSE)</a>, <a href="#shps">separating harmonic & percussive signals</a>, and <a href="#beat">beat extraction</a>.
+                            </li>
+                            
+                            <li><strong><a href="#frequency-domain">Frequency domain features</a></strong>: <a href="#chroma">chroma-related features</a>, <a href="#tonality">tonality based features</a></li>
+                                    
+                            <li><strong><a href="#spectrum">Spectrum shape based features</a></strong>: <a href="#centroids">spectral centroids</a>, <a href="#contrast">spectral contrast</a>, <a href="#rolloff">spectral rolloff</a>, and <a href="#mfccs">mel-frequency cepstral coefficients (MFCCs)</a>
+                            </li>
+
+                            <li><strong><a href="#analysis">Using features for analysis</a></strong>: <a href="#hum">hum</a>, <a href="#discontinuity">discontinuity</a>, and <a href="#click">click</a> detection algorithms
+                            </li>
+                        </ol>
+
                         <p>
-                        Despite extensive research on vision, emotion, and cognition, the human auditory system remains understudied. If our machines could hear as well as humans do, we would expect them to easily distinguish speech from music or ambient noises, to know what direction sounds are coming from, to accurately enumerate the number of sound-producing objects in the room, to differentiate between sounds that are typical and those that are noteworthy, and to effortlessly characterize important features of any given audio source. Such machines should also be able to organize what they hear, learn names for recognizable objects and styles, and retrieve memory of a sound by reference to a handful of descriptors. These machines should be able to listen and react in real time, to take appropriate action to respond to having heard a noteworthy event. 
+                        Despite extensive research on vision, emotion, and cognition, modeling the human auditory system in machines remains understudied. If our machines could hear as well as humans do, we would expect them to easily distinguish speech from music or ambient noises, to know what direction sounds are coming from, to accurately enumerate the number of sound-producing objects in the room, to differentiate between sounds that are typical and those that are noteworthy, and to effortlessly characterize important features of any given audio source. Such machines should also be able to organize what they hear, learn names for recognizable objects and styles, and retrieve memory of a sound by reference to a handful of descriptors. These machines should be able to listen and react in real time, to take appropriate action to respond to having heard a noteworthy event. 
                         </p>
+
+                        <img src="images/inline/song-bots.svg"/>
 						
 						<p>
 						These abilities present unique challenges to computer scientists (to build better machines) and psychologists (to better understand these human functions), and are collectively motivations for the emerging field of <strong>machine hearing</strong>. Regardless of any one aim, a machine requires a set of robust and discriminatory features to accurately and quickly achieve its goal. For an ML system (and arguably also for a human child), intelligence is defined by the amount and quality of training given to it. It is typical for one to reduce the size representation of the signals used to train the machine as opposed to feeding it a complete dataset. Compact representations of a signal, also called <strong>features</strong>, reduce the size of the orginal signal signficantly while still describing the signal completely and accurately. As a result, the reduced representation improves the computational and time complexities of the ML algorithm, making it more suitable for real-time applications.  
-						</p>
+                        </p>
+                        
+                        
 
-                        <h2>Audio feature extraction</h2>
+                        <h2 id="audio-feature-extraction">Audio feature extraction</h2>
     
                         <p>
                         <strong>Feature extraction</strong> is the process of highlighting the most discriminating and impactful features of a signal. The evolution of features used in audio signal processing algorithms begins with features extracted in the <em>time domain</em> (&lt; 1950s), which continue to play an important role in audio analysis and classification. Analyzing the spectrum for several features such as pitch, formants, etc. originates from the <em>frequency domain</em> (&lt; 1960s). Eventually, <em>joint time-frequency</em> techniques (&gt; 1970s) allowed for analyzing signals in both the time and frequency domains simultaneously. Since the development of <a href="https://en.wikipedia.org/wiki/Deep_learning">deep learning</a> (&gt; 2000s), <em>deep features</em> are extensively used in a diverse array of applications such as acoustic scene classification [<a href="#barchiesi-2015">1</a>] and speaker recognition [<a href="#rahmani-2018">2</a>].
@@ -118,7 +139,7 @@
 						The remainder of this article will a walkthrough on extracting some of these features using the <a href="https://essentia.upf.edu/">Essentia</a> and <a href="https://librosa.github.io/librosa/">LibROSA</a> Python libraries. It will also be an attempt of an applied computer science student to explain what she's learned about signal processing theory in the past 48 hours. Enjoy.
 						</p>
 						
-						<h3>Time domain features</h3>
+						<h3 id="time-domain">Time domain features</h3>
                         <pre><code class="python">%matplotlib inline  
 import librosa                     # librosa music package
 import essentia                    # essentia music package
@@ -154,7 +175,7 @@ plot(audio[1*44100:2*44100]) # get the 2nd second of the audio clip
 show()
 </code></pre>
 <img src="images/inline/audio-plot-1.png" alt="time series of audio clip"/>
-                        <h4>Windowing in time domain</h4>
+                        <h4 id="windowing">Windowing in time domain</h4>
 						<p>Before we discuss time domain features, it is necessary to introduce the concept of windowing in time domain. The simplest way to analyze a signal is in its raw form. For <em>time series signals</em> (signals that evolve with time), <strong>windowing</strong> allows us to view a short time segment of a longer signal and analyze its frequency content. Mathematically, windowing can be seen as multiplying a signal with a window function that is zero everywhere on the given signal except on the region of interest. The simplest type of window is a rectangular window such as that defined by 
 						$$W(n) = \left\{ \begin{array}{ll} 1, & -\frac{M-1}{2} \leq n \leq \frac{M-1}{2} \\ 0, & otherwise \end{array} \right.$$
 						</p> 
@@ -171,7 +192,7 @@ w_librosa= signal.get_window('hamm', 7)  # apply window function in librosa
 </code></pre>
 <p>The windowing method in LibROSA is provided as a wrapper for the scipy function of the same name that also supports callable or pre-computed windows. For a list of window types supported by scipy and LibROSA, see <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.get_window.html#scipy.signal.get_window">scipy.signal.get_window</a>. For a list of types supported by Essentia, see <a href="https://essentia.upf.edu/reference/std_Windowing.html">essentia.standard.Windowing</a>.</p>
 						
-						<h4>Zero-crossing rate (ZCR)</h4>
+						<h4 id="zcr">Zero-crossing rate (ZCR)</h4>
                         <p>The ZCR of an audio grame is defined as the rate at which the signal changes sign. ZCR is an efficient and simple way to detecting whether a speech frame is voice, unvoiced, or silent. It is expected that unvoiced segments produce higher ZCRs than for voice segments, and ideally ZCRs equal to zero for silence segments [<a href="#bachu-2010">3</a>]. </p>
 
                         <p>ZCR is also an essential technique for estimating <strong>fundamental frequency</strong>, the lowest frequency of a periodic waveform. The ZCR feature can therefore be used to design discriminator and classifier systems. With this additional information, this feature demonstrates, for example, a higher ZCR for music sources than for speech source. To see the implementation of such a system, check out <a href="https://ieeexplore.ieee.org/document/1386250">"A speech/music discriminator based on RMS and zero-crossings."</a></p>
@@ -221,12 +242,12 @@ plt.legend()
 </code></pre>
 <img src="images/inline/audio-zcrs-librosa.png"/>
 
-    <h3>Characterizing Energy</h3>
+    <h3 id="energy">Characterizing Energy</h3>
     <p>The sound signals here are <strong>non-stationary</strong> time series which means that its statistical properties (e.g., mean, variance) are changing over time. A <strong>stationary</strong> time series has constant statistical properties. Non-stationary signals must be first converted into stationary data before performing further analysis (to avoid under/over-estimating the mean and variance). This conversion can be achieved, for example, by <a href="https://www.mathworks.com/help/matlab/data_analysis/detrending-data.html">trend removal</a> which involves fitting the series to a regression line and then subtracting it from the original signal, or using framing/windowing methods as previously discussed to transform small chunks of the non-stationary signal into quasi-stationary signals. </p>
 
     <p>The <strong>energy</strong> of a signal corresponds to its total magnitude. For audio signals this roughly characterizes how loud the signal is. Two methods for individually characterizing signal energy are <em>short time energy</em> and <em>root mean square energy</em> measures.</p>
 
-    <h4>Short Time Energy (STE)</h4>
+    <h4 id="ste">Short Time Energy (STE)</h4>
     <p>The energy throughout a raw sound signal is variable and it is difficult, therefore, to accurately characterize the energy of a signal. For this, the <strong>short time energy</strong>, which is the energy from a frame, is calculated. With similar applications to ZCRs, STE is used to detect voiced-unvoiced segments, aid in music onset detection, and discriminate between source types (music, environmental, speech).</p>
 
 <pre><code>def calculateSTE(audio_signal, window_type, frame_length, hop_size):
@@ -242,8 +263,8 @@ plt.legend()
     return np.convolve(signal_new, win)
 </code></pre>
 
-<h4>Root Mean Square Energy (RSME)</h4>
-<p>The RSME of a signal follows a similar calculation as the STE method, where RSME is instead the squart root of the mean square (the average of the squares of magnitude of the audio frames).</p>
+<h4 id="rmse">Root Mean Square Energy (RMSE)</h4>
+<p>The RMSE of a signal follows a similar calculation as the STE method, where RSME is instead the squart root of the mean square (the average of the squares of magnitude of the audio frames).</p>
 <pre><code>hop_length = 256
 frame_length = 512
     
@@ -260,7 +281,7 @@ rmse.shape
 rmse = rmse[0]
 </code></pre>
 <code><pre>
-# plot energy and rsme along the waveform
+# plot energy and rmse along the waveform
 frames = range(len(energy))
 t = librosa.frames_to_time(frames, sr=sr, hop_length=hop_length)
 
@@ -291,7 +312,7 @@ plt.title('log power spectrogram')
 </code></pre>
 <img src="images/inline/audio-signal-rsme-powergram.png"/>
 
-<h3>Separation of Harmonic & Percussive Signals</h3>
+<h3 id="shps">Separation of Harmonic & Percussive Signals</h3>
 <p>On a very coarse level, many sounds can be categorized as either of the harmonic or percussive sound class. <strong>Harmonic</strong> sounds are sounds we perceive to have a specific pitch, whereas <strong>percussive</strong> sounds are often perceived as the result of two colliding objects. Percussive sounds tend to have a clear localization in time moreso than a particular pitch. More granular sound classes can be classified by its harmonic-percussive components ratio. For example, a note played on the piano has a percussive onset (marked by the hammer hitting the strings) preceding a harmonic tone (the result of the vibrating string).</p>
 
 <p>The value of mapping both the time and phase content of a signal in distinguishing between harmonic and percussive components, makes the STFT spectral representation important. The time-frequency bin of the STFT for harmonic component of an input signal is expected to look more horizontal than vertical/time-dependent structure that is a percussive component. Applying this harmonic-percussive source separation algorithm without explicit intermediary analysis of the STFT spectrum looks like this: </p>
@@ -332,7 +353,7 @@ plt.show()
 </code></pre>
 <img src="images/inline/audio-hpss-stft.png"/>
 
-<h3>Beat Extraction</h3>
+<h3 id="beat">Beat Extraction</h3>
 <p>Particularly useful features to extract from musical sources may be an approximation of tempo as well as the <em>beat onset indices</em>, an array of frame numbers corresponding to beat events:</p>
 
 <pre><code>tempo, beat_frames = librosa.beat.beat_track(y=y_harmonic, sr=sr)
@@ -351,10 +372,10 @@ g = g.set(xticklabels=[])
 </code></pre><pre><code class="plaintext">Detected Tempo: 161.4990234375 beats/min</code></pre>
 <img src="images/inline/audio-beat-detection.png"/>
 
-<h2>Frequency domain features</h2>
+<h2 id="frequency-domain">Frequency domain features</h2>
 <p>Time-domain plots show signal variation with respect to time. Therefore, to analyze a signal in terms of frequency, the time-domain signal is converted into frequency-domain signals using transforms such as the Fourier transform or auto-regression analysis. We've already seen this implemented in previous time-domain feature extraction using STFTs. </p>
 
-<h3>Chroma related features</h3>
+<h3 id="chroma">Chroma related features</h3>
 <p>Chroma features are a powerful representation of music audio in which we use a 12-element representation of spectral energy called a <strong>chroma vector</strong> where each of the 12 bins represeent the 12 equal-tempered pitch class of western-type music (semitone spacing). It can be computed from the logarithmic short-time Fourier transform of the input sound signal, also called a <strong>chromagram</strong> or a <strong>pitch class profile</strong>. </p>
 
 <pre><code># using a power spectrum
@@ -406,7 +427,7 @@ librosa.display.specshow(chroma,y_axis='chroma', x_axis='time')
 plt.colorbar()</code></pre>
 <img src="images/inline/audio-chromas-cens.png"/>
 
-<h4>Tonality-based features</h4>
+<h4 id="#tonality">Tonality-based features</h4>
 <p>The <strong>tonal</strong> sounds of a harmonic stationary audio signal is actually the <strong>fundamental frequency</strong> (FF). The more technical definition of the FF is that it is the first peak of the local normalized spectrotemporal auto-correlation function (<em>english translation:</em> the lowest frequency of a periodic waveform). FF is an important feature for music onset detection, audio retrieval, and sound type classification. </p>
 <pre><code class="plaintext"># psuedocode for FF detection
 1. Input: audio signal x and sampling frequency sf
@@ -432,8 +453,8 @@ sns.barplot(x=octave,y=chroma_std)
 <img src="images/inline/tonal-mean.png"/>
 <img src="images/inline/tonal-std.png"/>
 
-<h3>Spectrum shape based features</h3>
-<h4>Spectral centroid</h4>
+<h2 id="spectrum">Spectrum shape based features</h2>
+<h3 id="centroids">Spectral centroid</h3>
 <p>The <strong>spectral centroid</strong> is a measure to characterize the "center of mass" of a given spectrum. Perceptually, it has a robust connection with the impression of sound "brightness". Timbre researchers formalize <em>brightness</em> as an indication of the amount of high-frequency content in a sound. </p>
 
 <p> The spectral centroid is calculated as the weighted means of the frequencies present in a given signal, determined using a Fourier transform, with the frequency magnitudes as the weights: 
@@ -461,7 +482,7 @@ plt.legend()
 </code></pre>
 <img src="images/inline/audio-spectral-centroid.png"/>
 
-<h4>Spectral contrast</h4>
+<h3 id="contrast">Spectral contrast</h3>
 <p><strong>Octave-based Spectral Contrast (OSC)</strong> was developed to represent the spectral characteristics of a musical piece. It considers the spectral peak and valley in each sub-band separately.</p>
 
 <pre><code># pseudocode of OSC extraction
@@ -486,7 +507,7 @@ plt.title('Spectral contrast')
 </code></pre>
 <img src="images/inline/audio-spectral-contrast.png"/>
 
-<h4>Spectral Rolloff</h4>
+<h3 id="rolloff">Spectral Rolloff</h3>
 <p>Spectral rolloff point is defined as the \(N\)th percentile frequency of the power spectral distribution, where \(N\) is usually 85% or 95%. The rolloff point is the frequency below which the \(N\)% of the magnitude distribution is concentrated. In other words, the <strong>spectral rolloff point</strong> is the frequency so the \(N%\) of the signal energy is contained below the this frequency. Mathematically, this is represented as \(rolloff = \sum_{k=b_{1}}^{d} s_{k}=N\left(\sum_{k=b_{1}}^{b_{2}} s_{k}\right)\), where \(s_{k}\) is the spectral value at bin \(k\), \(N\) is the percentile cutoff, and \(b_{1}\) and \(b_{2}\) are the band edges.</p>
  
 <p>This measure is useful in distinguishing voiced speech from unvoiced: unvoiced speech has a high proportion of energy contained in the high-frequency range of the spectrum, where most of the energy for voiced speech and music is contained in lower bands. </p>
@@ -515,8 +536,8 @@ SD: 1723.177533529806
 Skewness: 1.6971059924278158
 </code></pre>
 
-<h4>Mel-frequency cepstral coefficients (MFCCs)</h4>
-<p>A <strong>cepstrum</strong> is derived from taking the inverse Fourier transofrm of the logarithm of the raw signal spectrum. There are complex, power, phase, and real cepstrum representations. Among these, the <em>power cepstrum</em> proves to be the most relevant for speech signal processing. The analysis of the cepstrum is called <strong>quefrency analysis</strong> (the naming is a physicist' inside-joke to drawing a direct parallel to frequency analysis in the spectrum domain) or <strong>liftering</strong> (a parallel to filtering in the spectrum domain). Cepstrum features can be used for pitch detection, and speech recognition and enhancement. </p>
+<h3 id="mfccs">Mel-frequency cepstral coefficients (MFCCs)</h3>
+<p>A <strong>cepstrum</strong> is derived from taking the inverse Fourier transform of the logarithm of the raw signal spectrum. There are complex, power, phase, and real cepstrum representations. Among these, the <em>power cepstrum</em> proves to be the most relevant for speech signal processing. The analysis of the cepstrum is called <strong>quefrency analysis</strong> (the naming is a physicist' inside-joke to drawing a direct parallel to frequency analysis in the spectrum domain) or <strong>liftering</strong> (a parallel to filtering in the spectrum domain). Cepstrum features can be used for pitch detection, and speech recognition and enhancement. </p>
 
 <p><strong>Mel-frequency cepstral coefficients</strong> represent the short-time power  an audio clip based on the discrete cosine transform of the log power spectrum on a non-linear mel scale. The difference between a cepstrum and the mel-frequency cepstrum  (MFC) is that in the MFC, the frequency bands are equally spaced on the <a href="https://en.wikipedia.org/wiki/Mel_scale">mel scale</a> to more closely resemble the human auditory system's response as opposed to the linearly-spaced bands in the normal spectrum. This frequency warping allows for better representation of sound and is especially useful in audio compression. </p>
 
@@ -541,7 +562,7 @@ plt.title('MFCCs')
 
 <img src="images/inline/audio-mfccs.png"/>
 
-<h2>Using features for analysis</h2>
+<h2 id="analysis">Using features for analysis</h2>
 <p>Obviously we haven't covered <em>all</em> relevant audio features and how to extract each. However, this overview of the basic features allows us to perform more complex analyses.</p>
 
 <pre><code class="python"># importing dependencies
@@ -568,7 +589,7 @@ else:
     return pool['spectrogram'].T    
 </code></pre>
 
-<h3>Hum detection</h3>
+<h3 id="hum">Hum detection</h3>
 <p>Audio files are sometimes contaminated with low-frequency humming tones degrading the audio quality. Typical causes for this problem are the electric installation frequency (aka mains hum; typically 50-60Hz) or poor electrical isolation on the recording or copying equipment. For the following example, we simulate this phenomenon by adding a 50Hz sinusoid with some harmonics. </p>
 
 <p> This algorithm detects low frequency tonal noises in the audio signal. First, the steadiness of the power spectral density of the signal is computed by measuring the quantile ratios as described in [<a href="#brandt-2014">4</a>]. Then, the <a href="https://essentia.upf.edu/reference/streaming_PitchContours.html">essentia.streaming.PitchContours</a> algorithm is used to track the humming tones. Check out <a href="https://ieeexplore.ieee.org/document/6412627">"Modeling and analysis of Electric Network Frequency signal for timestamp verification"</a> for a demonstrated implementation of hum detection in validating the authenticity of audio recordings using <a href="https://en.wikipedia.org/wiki/Electrical_network_frequency_analysis">electrical network frequency analysis</a>.
@@ -647,7 +668,7 @@ for i in range(len(freqs)):
 <h4>Relationship to sub-bass over-excitation</h4>
 <p>Hum detection is not beyond human hearing ability whereas sub-bass are more "felt" than "heard". Sub-bass over-excitation is not simply a phenomenon limited to a class of electronic speakers, but rather is a fundamental characteristic of all speakers regardless of quality or electrical interference. Sub-bass over-excitation would therefore give us a better measure of how "organic" an audio clip is [<a href="#blue-2018">5</a>]. </p>
 
-<h3>Discontinuity detection</h3>
+<h3 id="discontinuity">Discontinuity detection</h3>
 <p>Discontinuities occur occasionally by hardware issues in the process of recording or copying. This algorithm described here uses Linear Predictive Coding and some heuristics  as described in [<a href="#muh-2010">6</a>] to detect discontinuities in an audio signal.</p>
 
 <pre><code># a stand-alone detector method
@@ -731,7 +752,7 @@ for idx, point in enumerate(groundTruth):
 <li><code>energyThreshold</code> = threshold in dB to detect silent subframes.</li>
 </ul>
 
-<h3>Click detection</h3>
+<h3 id="click">Click detection</h3>
 <p>An extension of the discontinuties detection algorithm, this algorithm detects the locations of impulsive noises (such as clicks and pops) on the input audio frame. It relies on LPC coefficients to perform an inverse-filter on the audio to attenuate the stationary part and enhance the prediction error (or excitation noise). See [<a href="vaseghi-1990">7</a>] for more information. Then, a matched filter is used to further enhance the impulsive peaks. The detection threshold is obtained from a robust estimate of the excitation noise power [<a href="vaseghi-2008">8</a>] plus a parametric gain value.</p>
 
 <pre><code># a stand-alone click detection method
@@ -809,18 +830,33 @@ for idx, point in enumerate(groundTruth):
 </ul>
 
 <h2>Summary</h2>
-<p>I have yet to proof-read this article and wrap everything up, plus a table of contents. It's a lot. I'll come back to this. </p>
+<p> Developing more intelligent agents and studying our interaction with them help us better understand human behavior and cognition. The task of building more intelligent machines includes challenges in machine hearing in which we optimize, parse, and detect a relevant feature set. This article provides a high-level summary of the following audio features. </p>
+
+<ol>
+    <li><strong><a href="#time-domain">Time domain features</a></strong>: <a href="#windowing">windowing techniques</a>, <a href="#zcr">zero-crossing rate (ZCR)</a>, <a href="#energy">characterizing energy</a> using <a href="#ste">short time energy (STE)</a> and <a href="#rmse">root mean square energy (RMSE)</a>, <a href="#shps">separating harmonic & percussive signals</a>, and <a href="#beat">beat extraction</a>.
+    </li>
+    
+    <li><strong><a href="#frequency-domain">Frequency domain features</a></strong>: <a href="#chroma">chroma-related features</a>, <a href="#tonality">tonality based features</a></li>
+            
+    <li><strong><a href="#spectrum">Spectrum shape based features</a></strong>: <a href="#centroids">spectral centroids</a>, <a href="#contrast">spectral contrast</a>, <a href="#rolloff">spectral rolloff</a>, and <a href="#mfccs">mel-frequency cepstral coefficients (MFCCs)</a>
+    </li>
+
+    <li><strong><a href="#analysis">Using features for analysis</a></strong>: <a href="#hum">hum</a>, <a href="#discontinuity">discontinuity</a>, and <a href="#click">click</a> detection algorithms
+    </li>
+</ol>
+
+<p>All code and audio samples are available on GitHub @<a href="https://github.com/rramnauth2220/essentia-notes">rramnauth2220</a>.</p>
 
 <h2>References</h2>
 						<ol>
-							<li id="#barchiesi-2015">Barchiesi, D., Giannoulis, D., Stowell, D., & Plumbley, M. D. (2015). Acoustic scene classification: Classifying environments from the sounds they produce. <em>IEEE Signal Processing Magazine, 32</em>(3), 16-34. [<a href="https://ieeexplore.ieee.org/abstract/document/7760424/?casa_token=feP8fRrzDdwAAAAA:njTGJ3xScXbqpSiW_SO_6ry9_-cmcEsnNgW9fUc3ZAi_Jb-llci5oEKhLeOyNNC2boM-bo2pxCU">PDF</a>]</li>
-							<li id="#rahmani-2018">Rahmani, M. H., Almasganj, F., & Seyyedsalehi, S. A. (2018). Audio-visual feature fusion via deep neural networks for automatic speech recognition. <em>Digital Signal Processing, 82,</em> 54-63. [<a href="https://www.sciencedirect.com/science/article/pii/S1051200418305050?casa_token=NHMQ69s4NYUAAAAA:ioRv7aYl7BiFOT57galxXoyUW1AleAJBkqFADl_1mv7tgUnMcQpzSXElVZ8PHRq_vB7qOLBosP4">PDF</a>]</li>
-                            <li id="#bachu-2010">Bachu, R. G., Kopparthi, S., Adapa, B., & Barkana, B. D. (2010). Voiced/unvoiced decision for speech signals based on zero-crossing rate and energy. <em>In Advanced Techniques in Computing Sciences and Software Engineering </em>(pp. 279-282). Springer, Dordrecht. [<a href="https://www.researchgate.net/profile/Buket_Barkana/publication/259823741_VoicedUnvoiced_Decision_for_Speech_Signals_Based_on_Zero-Crossing_Rate_and_Energy/links/5654b2bf08ae4988a7b06035.pdf">PDF</a>]</li>
-                            <li id="#brandt-2014">Brandt, M., & Bitzer, J. (2014). Automatic Detection of Hum in Audio Signals. <em>Journal of the Audio Engineering Society, 62</em>(9), 584-595.</li>
-                            <li id="#blue-2018">Blue, L., Vargas, L., & Traynor, P. (2018, June). Hello, Is It Me You're Looking For? Differentiating Between Human and Electronic Speakers for Voice Interface Security. <em>In Proceedings of the 11th ACM Conference on Security & Privacy in Wireless and Mobile Networks</em> (pp. 123-133). [<a href="https://cise.ufl.edu/~lvargas/files/papers/2018/wisec2018.pdf">PDF</a>]</li>
-                            <li id="#muh-2010">Mühlbauer, R. (2010). Automatic audio defect detection. <em>Bachelorarbeit. Bachelor of Science im Bachelorstudium Informatik, Jonhannes Kepler Universität Linz.</em></li>
-                            <li id="#vaseghi-1990">Vaseghi, S. V., & Rayner, P. J. W. (1990). Detection and suppression of impulsive noise in speech communication systems. <em>IEE Proceedings I (Communications, Speech and Vision), 137</em>(1), 38-46.</li>
-                            <li id="#vaseghi-2008">Vaseghi, S. V. (2008). <em>Advanced digital signal processing and noise reduction.</em> John Wiley & Sons. Page 355.</li>
+							<li id="barchiesi-2015">Barchiesi, D., Giannoulis, D., Stowell, D., & Plumbley, M. D. (2015). Acoustic scene classification: Classifying environments from the sounds they produce. <em>IEEE Signal Processing Magazine, 32</em>(3), 16-34. [<a href="https://ieeexplore.ieee.org/abstract/document/7760424/?casa_token=feP8fRrzDdwAAAAA:njTGJ3xScXbqpSiW_SO_6ry9_-cmcEsnNgW9fUc3ZAi_Jb-llci5oEKhLeOyNNC2boM-bo2pxCU">PDF</a>]</li>
+							<li id="rahmani-2018">Rahmani, M. H., Almasganj, F., & Seyyedsalehi, S. A. (2018). Audio-visual feature fusion via deep neural networks for automatic speech recognition. <em>Digital Signal Processing, 82,</em> 54-63. [<a href="https://www.sciencedirect.com/science/article/pii/S1051200418305050?casa_token=NHMQ69s4NYUAAAAA:ioRv7aYl7BiFOT57galxXoyUW1AleAJBkqFADl_1mv7tgUnMcQpzSXElVZ8PHRq_vB7qOLBosP4">PDF</a>]</li>
+                            <li id="bachu-2010">Bachu, R. G., Kopparthi, S., Adapa, B., & Barkana, B. D. (2010). Voiced/unvoiced decision for speech signals based on zero-crossing rate and energy. <em>In Advanced Techniques in Computing Sciences and Software Engineering </em>(pp. 279-282). Springer, Dordrecht. [<a href="https://www.researchgate.net/profile/Buket_Barkana/publication/259823741_VoicedUnvoiced_Decision_for_Speech_Signals_Based_on_Zero-Crossing_Rate_and_Energy/links/5654b2bf08ae4988a7b06035.pdf">PDF</a>]</li>
+                            <li id="brandt-2014">Brandt, M., & Bitzer, J. (2014). Automatic Detection of Hum in Audio Signals. <em>Journal of the Audio Engineering Society, 62</em>(9), 584-595.</li>
+                            <li id="blue-2018">Blue, L., Vargas, L., & Traynor, P. (2018, June). Hello, Is It Me You're Looking For? Differentiating Between Human and Electronic Speakers for Voice Interface Security. <em>In Proceedings of the 11th ACM Conference on Security & Privacy in Wireless and Mobile Networks</em> (pp. 123-133). [<a href="https://cise.ufl.edu/~lvargas/files/papers/2018/wisec2018.pdf">PDF</a>]</li>
+                            <li id="muh-2010">Mühlbauer, R. (2010). Automatic audio defect detection. <em>Bachelorarbeit. Bachelor of Science im Bachelorstudium Informatik, Jonhannes Kepler Universität Linz.</em></li>
+                            <li id="vaseghi-1990">Vaseghi, S. V., & Rayner, P. J. W. (1990). Detection and suppression of impulsive noise in speech communication systems. <em>IEE Proceedings I (Communications, Speech and Vision), 137</em>(1), 38-46.</li>
+                            <li id="vaseghi-2008">Vaseghi, S. V. (2008). <em>Advanced digital signal processing and noise reduction.</em> John Wiley & Sons. Page 355.</li>
                         </ol>
     
 
