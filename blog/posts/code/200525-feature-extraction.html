@@ -105,10 +105,6 @@
 						These abilities present unique challenges to computer scientists (to build better machines) and psychologists (to better understand these human functions), and are collectively motivations for the emerging field of <strong>machine hearing</strong>. Regardless of any one aim, a machine requires a set of robust and discriminatory features to accurately and quickly achieve its goal. For an ML system (and arguably also for a human child), intelligence is defined by the amount and quality of training given to it. It is typical for one to reduce the size representation of the signals used to train the machine as opposed to feeding it a complete dataset. Compact representations of a signal, also called <strong>features</strong>, reduce the size of the orginal signal signficantly while still describing the signal completely and accurately. As a result, the reduced representation improves the computational and time complexities of the ML algorithm, making it more suitable for real-time applications.  
 						</p>
 
-                        <p>
-                        <img src="images/inline/single-gallery-01-1000.jpg" alt="">
-                        </p>
-
                         <h2>Audio feature extraction</h2>
     
                         <p>
@@ -225,12 +221,606 @@ plt.legend()
 </code></pre>
 <img src="images/inline/audio-zcrs-librosa.png"/>
 
+    <h3>Characterizing Energy</h3>
+    <p>The sound signals here are <strong>non-stationary</strong> time series which means that its statistical properties (e.g., mean, variance) are changing over time. A <strong>stationary</strong> time series has constant statistical properties. Non-stationary signals must be first converted into stationary data before performing further analysis (to avoid under/over-estimating the mean and variance). This conversion can be achieved, for example, by <a href="https://www.mathworks.com/help/matlab/data_analysis/detrending-data.html">trend removal</a> which involves fitting the series to a regression line and then subtracting it from the original signal, or using framing/windowing methods as previously discussed to transform small chunks of the non-stationary signal into quasi-stationary signals. </p>
 
-						<h2>References</h2>
+    <p>The <strong>energy</strong> of a signal corresponds to its total magnitude. For audio signals this roughly characterizes how loud the signal is. Two methods for individually characterizing signal energy are <em>short time energy</em> and <em>root mean square energy</em> measures.</p>
+
+    <h4>Short Time Energy (STE)</h4>
+    <p>The energy throughout a raw sound signal is variable and it is difficult, therefore, to accurately characterize the energy of a signal. For this, the <strong>short time energy</strong>, which is the energy from a frame, is calculated. With similar applications to ZCRs, STE is used to detect voiced-unvoiced segments, aid in music onset detection, and discriminate between source types (music, environmental, speech).</p>
+
+<pre><code>def calculateSTE(audio_signal, window_type, frame_length, hop_size):
+    signal_new = []                           # container for signal square
+    win = Windowing(type = window_type)       # instantiate window function
+    
+    # compute signal square by frame
+    for frame in FrameGenerator(audio_signal, frameSize=frame_length, hopSize=hop_size, startFromZero=True):
+        frame_new = frame**2
+        signal_new.append(frame_new)
+    
+    # output the convolution of window and signal square
+    return np.convolve(signal_new, win)
+</code></pre>
+
+<h4>Root Mean Square Energy (RSME)</h4>
+<p>The RSME of a signal follows a similar calculation as the STE method, where RSME is instead the squart root of the mean square (the average of the squares of magnitude of the audio frames).</p>
+<pre><code>hop_length = 256
+frame_length = 512
+    
+# compute sum of signal square by frame
+energy = np.array([
+    sum(abs(y[i:i+frame_length]**2))
+    for i in range(0, len(y), hop_length)
+])
+energy.shape
+
+# compute RMSE over frames
+rmse = librosa.feature.rms(y, frame_length=frame_length, hop_length=hop_length, center=True)
+rmse.shape
+rmse = rmse[0]
+</code></pre>
+<code><pre>
+# plot energy and rsme along the waveform
+frames = range(len(energy))
+t = librosa.frames_to_time(frames, sr=sr, hop_length=hop_length)
+
+plt.figure(figsize=(15, 5))
+librosa.display.waveplot(y, sr=sr, alpha=0.4)
+plt.plot(t, energy/energy.max(), 'r--')                # normalized for visualization
+plt.plot(t[:len(rmse)], rmse/rmse.max(), color='blue') # normalized for visualization
+plt.legend(('Energy', 'RMSE'))
+</code></pre>
+<img src="images/inline/audio-signal-rsme.png"/>
+
+<p>Computing the RMS value from audio samples is faster than alternative energy calculations requiring <strong>short-time Fourier transform</strong> (STFT) calculations. STFTs are used to determine the sinusoidal frequency and phase content of portions of the signal over time. After dividing the raw signal into quasi-stationary segments, to compute STFTs is to perform the <a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier transform</a> (which simply decomposes a signal into its constituent frequencies) on each segment.</p>
+
+<p>However, using a <strong>spectrogram</strong>, a visual representation of the spectrum of frequencies over time, can give us a more accurate representation of energy because its frames can be windowed. Therefore, if a spectrogram is already available, we prefer to run the RMS function over it: </p>
+<pre><code>S, phase = librosa.magphase(librosa.stft(y)) # compute magnitude and phase content
+rms = librosa.feature.rms(S=S) # compute root-mean-square for each frame in magnitude
+
+plt.figure(figsize=(15, 5))
+plt.subplot(2, 1, 1)
+plt.semilogy(rms.T, label='RMS Energy', color="black")
+plt.xticks([])
+plt.xlim([0, rms.shape[-1]])
+plt.legend()
+plt.subplot(2, 1, 2)
+librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max),
+                            y_axis='log', x_axis='time')
+plt.title('log power spectrogram')
+</code></pre>
+<img src="images/inline/audio-signal-rsme-powergram.png"/>
+
+<h3>Separation of Harmonic & Percussive Signals</h3>
+<p>On a very coarse level, many sounds can be categorized as either of the harmonic or percussive sound class. <strong>Harmonic</strong> sounds are sounds we perceive to have a specific pitch, whereas <strong>percussive</strong> sounds are often perceived as the result of two colliding objects. Percussive sounds tend to have a clear localization in time moreso than a particular pitch. More granular sound classes can be classified by its harmonic-percussive components ratio. For example, a note played on the piano has a percussive onset (marked by the hammer hitting the strings) preceding a harmonic tone (the result of the vibrating string).</p>
+
+<p>The value of mapping both the time and phase content of a signal in distinguishing between harmonic and percussive components, makes the STFT spectral representation important. The time-frequency bin of the STFT for harmonic component of an input signal is expected to look more horizontal than vertical/time-dependent structure that is a percussive component. Applying this harmonic-percussive source separation algorithm without explicit intermediary analysis of the STFT spectrum looks like this: </p>
+
+<pre><code>y_harmonic, y_percussive = librosa.effects.hpss(y)
+
+plt.figure(figsize=(15, 5))
+librosa.display.waveplot(y_harmonic, sr=sr, alpha=0.25)
+librosa.display.waveplot(y_percussive, sr=sr, color='red', alpha=0.5)
+plt.title('Harmonic + Percussive')
+plt.show()
+</code></pre>
+<img src="images/inline/audio-hpss.png"/>
+<pre><code># showing differences in STFT representations
+y, sr = librosa.load(librosa.util.example_audio_file(), duration=15)
+D = librosa.stft(y)
+H, P = librosa.decompose.hpss(D)
+    
+plt.figure(figsize=(15, 7))
+plt.subplot(3, 1, 1)
+librosa.display.specshow(librosa.amplitude_to_db(np.abs(D), ref=np.max), y_axis='log')
+plt.colorbar(format='%+2.0f dB')
+plt.title('Full power spectrogram: Harmonic + Percussive')
+
+# harmonic spectrogram will show more horizontal/pitch-dependent changes
+plt.subplot(3, 1, 2)
+librosa.display.specshow(librosa.amplitude_to_db(np.abs(H), ref=np.max), y_axis='log')
+plt.colorbar(format='%+2.0f dB')
+plt.title('Harmonic power spectrogram')
+plt.subplot(3, 1, 3)
+
+# percussive spectrogram will show more vertical/time-dependent changes
+librosa.display.specshow(librosa.amplitude_to_db(np.abs(P), ref=np.max), y_axis='log')
+plt.colorbar(format='%+2.0f dB')
+plt.title('Percussive power spectrogram')
+plt.tight_layout()
+plt.show()
+</code></pre>
+<img src="images/inline/audio-hpss-stft.png"/>
+
+<h3>Beat Extraction</h3>
+<p>Particularly useful features to extract from musical sources may be an approximation of tempo as well as the <em>beat onset indices</em>, an array of frame numbers corresponding to beat events:</p>
+
+<pre><code>tempo, beat_frames = librosa.beat.beat_track(y=y_harmonic, sr=sr)
+
+print('Detected Tempo: '+ str(tempo) + ' beats/min')
+beat_times = librosa.frames_to_time(beat_frames, sr=sr)
+beat_time_diff = np.ediff1d(beat_times)
+beat_nums = np.arange(1, np.size(beat_times))
+
+fig, ax = plt.subplots()
+fig.set_size_inches(15, 5)
+ax.set_ylabel("Time difference (s)")
+ax.set_xlabel("Beats")
+g = sns.barplot(beat_nums, beat_time_diff, palette="rocket",ax=ax)
+g = g.set(xticklabels=[])
+</code></pre><pre><code class="plaintext">Detected Tempo: 161.4990234375 beats/min</code></pre>
+<img src="images/inline/audio-beat-detection.png"/>
+
+<h2>Frequency domain features</h2>
+<p>Time-domain plots show signal variation with respect to time. Therefore, to analyze a signal in terms of frequency, the time-domain signal is converted into frequency-domain signals using transforms such as the Fourier transform or auto-regression analysis. We've already seen this implemented in previous time-domain feature extraction using STFTs. </p>
+
+<h3>Chroma related features</h3>
+<p>Chroma features are a powerful representation of music audio in which we use a 12-element representation of spectral energy called a <strong>chroma vector</strong> where each of the 12 bins represeent the 12 equal-tempered pitch class of western-type music (semitone spacing). It can be computed from the logarithmic short-time Fourier transform of the input sound signal, also called a <strong>chromagram</strong> or a <strong>pitch class profile</strong>. </p>
+
+<pre><code># using a power spectrum
+chroma_d = librosa.feature.chroma_stft(y=y, sr=sr)
+
+plt.figure(figsize=(15, 4))
+librosa.display.specshow(chroma_d, y_axis='chroma', x_axis='time')
+plt.colorbar()
+plt.title('Power spectrum chromagram')
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<img src="images/inline/audio-chromas-power.png"/>
+
+<pre><code># using an energy (magnitude) spectrum
+S = np.abs(librosa.stft(y)) # apply short-time fourier transform
+chroma_e = librosa.feature.chroma_stft(S=S, sr=sr)
+
+plt.figure(figsize=(15, 4))
+librosa.display.specshow(chroma_e, y_axis='chroma', x_axis='time')
+plt.colorbar()
+plt.title('Energy spectrum chromagram')
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<img src="images/inline/audio-chromas-energy.png"/>
+
+<pre><code># using a pre-computed power spectrogram with a larger frame
+S = np.abs(librosa.stft(y, n_fft=4096))**2
+chroma_p = librosa.feature.chroma_stft(S=S, sr=sr)
+
+plt.figure(figsize=(15, 4))
+librosa.display.specshow(chroma_p, y_axis='chroma', x_axis='time')
+plt.colorbar()
+plt.title('Pre-computed power spectrogram with larger frame size')
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<img src="images/inline/audio-chromas-computed.png"/>
+
+<p>Another chroma-based feature is <strong>chroma energy distribution normalized statistics</strong> (CENS) which is typically used to identify similarity between different interpretations of the music given. The main idea of CENS is that taking statistics over large windows of an audio file smooths local deviations in tempo, articulation, and musical ornaments. CENS are typically implemented for audio matching and similarity tasks.</p>
+
+<pre><code>chroma = librosa.feature.chroma_cens(y=y_harmonic, sr=sr)
+plt.figure(figsize=(15, 4))
+librosa.display.specshow(chroma,y_axis='chroma', x_axis='time')
+plt.colorbar()</code></pre>
+<img src="images/inline/audio-chromas-cens.png"/>
+
+<h4>Tonality-based features</h4>
+<p>The <strong>tonal</strong> sounds of a harmonic stationary audio signal is actually the <strong>fundamental frequency</strong> (FF). The more technical definition of the FF is that it is the first peak of the local normalized spectrotemporal auto-correlation function (<em>english translation:</em> the lowest frequency of a periodic waveform). FF is an important feature for music onset detection, audio retrieval, and sound type classification. </p>
+<pre><code class="plaintext"># psuedocode for FF detection
+1. Input: audio signal x and sampling frequency sf
+2. Find the pitch of an audio signal by auto-correlation or cepstral methods
+3. Return pitch, an estimate of the FF of x
+</code></pre>
+<p>Other tonality-based features include <em>pitch histograms</em> which explain the pitch of a signal in a more compact form, <em>pitch profiles</em>, <em>harmonicity</em> which distinguishes between tonal- and noise-like sounds by finding periodicity in sound in either the time or frequency domain, and <em>harmonic-to-noise ratios</em>.</p>
+
+<pre><code># a pitch histogram using CENS
+chroma_mean = np.mean(chroma,axis=1)
+chroma_std = np.std(chroma,axis=1)
+
+# plot the summary
+octave = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
+plt.figure(figsize = (15,5))
+plt.title('Mean CENS')
+sns.barplot(x=octave,y=chroma_mean)
+
+plt.figure(figsize = (15,5))
+plt.title('Standard Deviation CENS')
+sns.barplot(x=octave,y=chroma_std)
+</code></pre>
+<img src="images/inline/tonal-mean.png"/>
+<img src="images/inline/tonal-std.png"/>
+
+<h3>Spectrum shape based features</h3>
+<h4>Spectral centroid</h4>
+<p>The <strong>spectral centroid</strong> is a measure to characterize the "center of mass" of a given spectrum. Perceptually, it has a robust connection with the impression of sound "brightness". Timbre researchers formalize <em>brightness</em> as an indication of the amount of high-frequency content in a sound. </p>
+
+<p> The spectral centroid is calculated as the weighted means of the frequencies present in a given signal, determined using a Fourier transform, with the frequency magnitudes as the weights: 
+\(centroid =\left(\sum_{k=b_{1}}^{b_{2}} f_{k} s_{k}\right) /\left(\sum_{k=b_{1}}^{b_{2}} s_{k}\right)\), where \(f_{k}\) is the frequency corresponding to bin \(k\) and \(s_{k}\) is the spectral value at bin \(k\), \(b_{1}\) and \(b_{2}\) are the band edges.</p>
+
+<pre><code># compute the spectral centroid for each frame in a signal
+spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
+spectral_centroids.shape
+
+# compute the time variable for visualization
+frames = range(len(spectral_centroids))
+f_times = librosa.frames_to_time(frames)
+
+# an auxiliar function to normalize the spectral centroid for visualization
+def normalize(x, axis=0):
+    return sklearn.preprocessing.minmax_scale(x, axis=axis)
+
+plt.figure(figsize=(15,5))
+plt.subplot(1, 1, 1)
+librosa.display.waveplot(y, sr=sr, alpha=0.4)
+plt.plot(f_times, normalize(spectral_centroids), color='black', label='spectral centroids')
+plt.ylabel('Hz')
+plt.xticks([])
+plt.legend()    
+</code></pre>
+<img src="images/inline/audio-spectral-centroid.png"/>
+
+<h4>Spectral contrast</h4>
+<p><strong>Octave-based Spectral Contrast (OSC)</strong> was developed to represent the spectral characteristics of a musical piece. It considers the spectral peak and valley in each sub-band separately.</p>
+
+<pre><code># pseudocode of OSC extraction
+1. Input: audio signal x
+2. Perform windowing over the signal
+3. Take FFT of each signal frame
+4. Divide the transformed signal into 6 octave scaled sub-bands
+5. For each band, calculate peak and valley values
+6. Calculate the contrast of the peaks and valleys
+7. Output contrast and valleys as the OSC feature set
+</code></pre>
+
+<p>In general, spectral peaks correspond to harmonic components and spectral valleys correspond to non-harmonic components or noise in a music piece. Therefore, the difference between spectral peaks and spectral valleys will reflect the spectral contrast distribution.</p>
+
+<pre><code>contrast = librosa.feature.spectral_contrast(y=y_harmonic,sr=sr)
+
+plt.figure(figsize=(15,5))
+librosa.display.specshow(contrast, x_axis='time')
+plt.colorbar()
+plt.ylabel('Frequency bands')
+plt.title('Spectral contrast')
+</code></pre>
+<img src="images/inline/audio-spectral-contrast.png"/>
+
+<h4>Spectral Rolloff</h4>
+<p>Spectral rolloff point is defined as the \(N\)th percentile frequency of the power spectral distribution, where \(N\) is usually 85% or 95%. The rolloff point is the frequency below which the \(N\)% of the magnitude distribution is concentrated. In other words, the <strong>spectral rolloff point</strong> is the frequency so the \(N%\) of the signal energy is contained below the this frequency. Mathematically, this is represented as \(rolloff = \sum_{k=b_{1}}^{d} s_{k}=N\left(\sum_{k=b_{1}}^{b_{2}} s_{k}\right)\), where \(s_{k}\) is the spectral value at bin \(k\), \(N\) is the percentile cutoff, and \(b_{1}\) and \(b_{2}\) are the band edges.</p>
+ 
+<p>This measure is useful in distinguishing voiced speech from unvoiced: unvoiced speech has a high proportion of energy contained in the high-frequency range of the spectrum, where most of the energy for voiced speech and music is contained in lower bands. </p>
+
+<pre><code>rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
+
+plt.figure(figsize=(15,5))
+plt.semilogy(rolloff.T, label='Roll-off frequency')
+plt.ylabel('Hz')
+plt.xticks([])
+plt.xlim([0, rolloff.shape[-1]])
+plt.legend()    
+</code></pre>
+<img src="images/inline/audio-rolloff.png"/>
+
+<pre><code>rolloff_mean = np.mean(rolloff)
+rolloff_std = np.std(rolloff)
+rolloff_skew = scipy.stats.skew(rolloff,axis = 1)[0]
+print('Mean: ' + str(rolloff_mean))
+print('STD: ' + str(rolloff_std))
+print('Skewness: ' + str(rolloff_skew))    
+</code></pre>
+
+<pre><code class="plaintext">Mean: 1548.2560100760093
+SD: 1723.177533529806
+Skewness: 1.6971059924278158
+</code></pre>
+
+<h4>Mel-frequency cepstral coefficients (MFCCs)</h4>
+<p>A <strong>cepstrum</strong> is derived from taking the inverse Fourier transofrm of the logarithm of the raw signal spectrum. There are complex, power, phase, and real cepstrum representations. Among these, the <em>power cepstrum</em> proves to be the most relevant for speech signal processing. The analysis of the cepstrum is called <strong>quefrency analysis</strong> (the naming is a physicist' inside-joke to drawing a direct parallel to frequency analysis in the spectrum domain) or <strong>liftering</strong> (a parallel to filtering in the spectrum domain). Cepstrum features can be used for pitch detection, and speech recognition and enhancement. </p>
+
+<p><strong>Mel-frequency cepstral coefficients</strong> represent the short-time power  an audio clip based on the discrete cosine transform of the log power spectrum on a non-linear mel scale. The difference between a cepstrum and the mel-frequency cepstrum  (MFC) is that in the MFC, the frequency bands are equally spaced on the <a href="https://en.wikipedia.org/wiki/Mel_scale">mel scale</a> to more closely resemble the human auditory system's response as opposed to the linearly-spaced bands in the normal spectrum. This frequency warping allows for better representation of sound and is especially useful in audio compression. </p>
+
+<pre><code class="plaintext"># pseudocode for MFCC extraction
+1. Input: audio signal x
+2. Apply windowing function over the signal
+3. For each frame, calculate the spectral density (periodogram) estimate of the power spectrum
+4. Apply the mel-filter bank to the power spectrum 
+5. Sum the energy in each filter 
+6. Take the log of filter-bank energies
+7. Take the discrete cosine transform (DCT) of the log filter-bank energies
+8. Return the first 2-13 DCT coefficients, discarding the rest
+</code></pre>
+
+<pre><code>mfccs = librosa.feature.mfcc(y=y_harmonic, sr=sr, n_mfcc=13)
+
+plt.figure(figsize=(15, 5))
+librosa.display.specshow(mfccs, x_axis='time')
+plt.colorbar()
+plt.title('MFCCs')    
+</code></pre>
+
+<img src="images/inline/audio-mfccs.png"/>
+
+<h2>Using features for analysis</h2>
+<p>Obviously we haven't covered <em>all</em> relevant audio features and how to extract each. However, this overview of the basic features allows us to perform more complex analyses.</p>
+
+<pre><code class="python"># importing dependencies
+import essentia.standard as es
+import numpy as np
+import matplotlib.pyplot as plt
+from essentia import Pool
+from essentia import db2amp
+from IPython.display import Audio    
+</code></pre>
+
+<pre><code># an auxiliar function for plotting spectrograms
+def spectrogram(audio, frameSize=1024, hopSize=512, db=True):
+eps = np.finfo(np.float32).eps
+window = es.Windowing(size=frameSize)
+spectrum = es.PowerSpectrum(size=frameSize)
+pool = Pool()
+for frame in es.FrameGenerator(audio, frameSize=frameSize, hopSize=hopSize, startFromZero=True):
+    pool.add('spectrogram', spectrum(window(frame)))
+    
+if db:
+    return 10 * np.log10(pool['spectrogram'].T + eps)
+else:
+    return pool['spectrogram'].T    
+</code></pre>
+
+<h3>Hum detection</h3>
+<p>Audio files are sometimes contaminated with low-frequency humming tones degrading the audio quality. Typical causes for this problem are the electric installation frequency (aka mains hum; typically 50-60Hz) or poor electrical isolation on the recording or copying equipment. For the following example, we simulate this phenomenon by adding a 50Hz sinusoid with some harmonics. </p>
+
+<p> This algorithm detects low frequency tonal noises in the audio signal. First, the steadiness of the power spectral density of the signal is computed by measuring the quantile ratios as described in [<a href="#brandt-2014">4</a>]. Then, the <a href="https://essentia.upf.edu/reference/streaming_PitchContours.html">essentia.streaming.PitchContours</a> algorithm is used to track the humming tones. Check out <a href="https://ieeexplore.ieee.org/document/6412627">"Modeling and analysis of Electric Network Frequency signal for timestamp verification"</a> for a demonstrated implementation of hum detection in validating the authenticity of audio recordings using <a href="https://en.wikipedia.org/wiki/Electrical_network_frequency_analysis">electrical network frequency analysis</a>.
+</p>
+
+<h4>Generating an example signal</h4>
+<p>Let's downsample our audio gile to 2kHz as we are only interested in the lowest part of the spectrum. </p>
+<pre><code>file_name = '../../../test/audio/recorded/musicbox.wav'
+audio = es.MonoLoader(filename=file_name)()
+    
+# downsampling
+fs = 44100.
+out_fs = 2000
+audio_decimated = es.Resample(inputSampleRate=fs, outputSampleRate=out_fs)(audio)    
+
+# generating the humming tone
+nSamples = len(audio)
+time = np.linspace(0, nSamples / 44100., nSamples)
+freq = 50. # Hz
+hum = 1.5 * np.sin(2 * np.pi * freq * time)
+
+# adding some harmonics via clipping
+hum = es.Clipper(min=-1., max=1.)(hum.astype(np.float32))
+
+# adding some attenuation
+hum *= db2amp(-36.)
+audio_with_hum = np.array(audio + hum, dtype=np.float32)
+audio_with_hum_decimated = es.Resample(inputSampleRate=fs, outputSampleRate=out_fs)(audio_with_hum)
+
+# generate plots
+fn = out_fs / 2.
+f0 = 0.
+f, ax = plt.subplots(2)
+
+ax[0].matshow(spectrogram(audio_decimated), aspect='auto', origin='lower', extent=[0 , len(audio_decimated) / out_fs, f0, fn])
+ax[0].set_title('Clean audio')
+
+ax[1].matshow(spectrogram(audio_with_hum_decimated), aspect='auto', origin='lower', extent=[0 , len(audio_decimated) / out_fs, f0, fn])
+ax[1].set_title('Contaminated audio')
+</code></pre>
+<img src="images/inline/hum-contamination.png"/>
+<h4>Detection algorithm</h4>
+<p>The detection algorithm relies on the fact that the humming tones are mostly constant on time. It measures the ratio between two quartiles of the power spectral density of the signal and expressess the results in a time versus frequency matrix where the peaks can be tracked. The following example illustrates the effect on choosing different quaratile parameters.</p>
+
+<pre><code>r0, _, _, _, _ = es.HumDetector(Q0=.1, Q1=.55)(audio_with_hum)
+r1, _, _, _, _ = es.HumDetector(Q0=.1, Q1=.9)(audio_with_hum)
+r2, _, _, _, _ = es.HumDetector(Q0=.1, Q1=.3)(audio_with_hum)
+
+_, ax = plt.subplots(3)
+f0 = 0
+fn = 1000
+ax[0].matshow(r0, aspect='auto', origin='lower', extent=[0 , r0.shape[1] * .2, f0, fn])
+ax[0].set_title('Q0=.1, Q1=.55')
+
+ax[1].matshow(r1, aspect='auto', origin='lower', extent=[0 , r1.shape[1] * .2, f0, fn])
+ax[1].set_title('Q0=.1, Q1=.9')
+
+ax[2].matshow(r2, aspect='auto', origin='lower', extent=[0 , r2.shape[1] * .2, f0, fn])
+ax[2].set_title('Q0=.1, Q1=.3')
+</code></pre>
+<img src="images/inline/hum-detection-quartiles.png"/>
+
+<pre><code>r0, freqs, saliences, starts, ends = es.HumDetector(Q0=.1, Q1=.55, detectionThreshold=5)(audio_with_hum)
+
+plt.matshow(r0, aspect='auto', origin='lower', extent=[0 , r0.shape[1] * .2, f0, fn])
+aLen = r0.shape[1] * .2
+for i in range(len(freqs)):
+    plt.axhline(y=freqs[i], xmin=starts[i] / aLen, xmax=ends[i] / aLen, alpha = saliences[i], color='r')
+    
+    print ('detected a {:.2f}Hz tone with salience {:.2f} starting at {:.2f}s and ending at {:.2f}s'\
+            .format(freqs[i], saliences[i], starts[i], ends[i]))
+</code></pre>
+<pre><code class="plaintext">detected a 275.60Hz tone with salience 0.27 starting at 10.00s and ending at 44.80s</code></pre>
+<img src="images/inline/hum-detection.png"/>
+
+<h4>Relationship to sub-bass over-excitation</h4>
+<p>Hum detection is not beyond human hearing ability whereas sub-bass are more "felt" than "heard". Sub-bass over-excitation is not simply a phenomenon limited to a class of electronic speakers, but rather is a fundamental characteristic of all speakers regardless of quality or electrical interference. Sub-bass over-excitation would therefore give us a better measure of how "organic" an audio clip is [<a href="#blue-2018">5</a>]. </p>
+
+<h3>Discontinuity detection</h3>
+<p>Discontinuities occur occasionally by hardware issues in the process of recording or copying. This algorithm described here uses Linear Predictive Coding and some heuristics  as described in [<a href="#muh-2010">6</a>] to detect discontinuities in an audio signal.</p>
+
+<pre><code># a stand-alone detector method
+def compute(x, frame_size=1024, hop_size=512, **kwargs):
+discontinuityDetector = es.DiscontinuityDetector(frameSize=frame_size, hopSize=hop_size, **kwargs)
+locs = []
+amps = []
+for idx, frame in enumerate(es.FrameGenerator(x, frameSize=frame_size, hopSize=hop_size, startFromZero=True)):
+    frame_locs, frame_ampls = discontinuityDetector(frame)
+
+    for l in frame_locs:
+        locs.append((l + hop_size * idx) / 44100.)
+    for a in frame_ampls:
+        amps.append(a)
+
+return locs, amps
+</code></pre>
+
+<h4>Generating an example signal</h4>
+<p>Let's start by degrading an audio file with some discontinuities by removing a random number of samples from the input audio file.</p>
+<pre><code>fs = 44100.
+audio = es.MonoLoader(filename='../../../test/audio/recorded/musicbox.wav', sampleRate=fs)()
+
+originalLen = len(audio)
+startJumps = np.array([int(i) for i in [originalLen / 4, originalLen / 2]])
+groundTruth = startJumps / float(fs)
+
+for startJump in startJumps:
+    # make sure that the artificial jump produces a prominent discontinuity
+    if audio[startJump] > 0:
+        end = next(idx for idx, i in enumerate(audio[startJump:]) if i < -.3)
+    else:
+        end = next(idx for idx, i in enumerate(audio[startJump:]) if i > .3)
+
+    endJump = startJump + end
+    audio = esarr(np.hstack([audio[:startJump], audio[endJump:]]))
+
+times = np.linspace(0, len(audio) / fs, len(audio))
+plt.plot(times, audio)
+for point in groundTruth:
+    l1 = plt.axvline(point, color='blue')
+plt.title('Signal with artificial clicks of different amplitudes')
+l1.set_label('Click locations')
+plt.legend()    
+</code></pre>
+<img src="images/inline/audio-discontinuity-example.png"/>
+
+<h4>Detection algorithm</h4>
+<p>The algorithm should accurately determine the start and end timestamp of each click/discontinuity. The following plots show how the algorithm performs on the previously generated example audio.</p>
+
+<pre><code>locs, amps = compute(audio)
+
+fig, ax = plt.subplots(len(groundTruth))
+plt.subplots_adjust(hspace=.4)
+for idx, point in enumerate(groundTruth):
+    l1 = ax[idx].axvline(locs[idx], color='blue', alpha=.5)
+    l2 = ax[idx].axvline(point, color='red', alpha=.5)
+    ax[idx].plot(times, audio)
+    ax[idx].set_xlim([point-.001, point+.001])
+    ax[idx].set_title('Click located at {:.2f}s'.format(point))
+    
+    
+    fig.legend((l1, l2), ('Detected discontinuity', 'Ground truth'), 'upper right')    
+</code></pre>
+<img src="images/inline/discontinuity-detection.png"/>
+
+<h4>Algorithm parameters</h4>
+<p>This is an explanation of the most relevant parameters of the algorithm</p>
+
+<ul>
+<li><code>detectionThreshold</code> = controls the detection sensibility of the algorithm </li>
+</br>
+<li><code>kernelSize</code> = a scalar giving the size of the median filter window. The window has to be as small as possible to improve the whitening of the signal but big enough to skip peaky outlayers from the prediction error signal. </li> 
+</br>
+<li><code>order</code> = the order for the LPC. As a rule of thumb, use 2 coefficients for each format on the input signal. However, it was empirically found that modelling more than 5 formats did not improve the clip detection on music.</li>
+</br>
+<li><code>silenceThresholder</code> = it makes no sense to process silent frames as even if there are events looking like discontinuities that can't be heard</li>
+</br>
+<li><code>subFrameSize</code> = important if it was found that frames that are partially silent are suitable for fake detections. This is because the audio is modelled as an autoregressive process in which discontinuities are easily detected as peaks on the prediction error. However, if the autoregressive assumption is no longer true, unexpected events can produce error peaks. Thus, a subframe window is used to mask out the silent part of the frame so they don't interfere in the autoregressive parameter estimation. </li>
+</br>
+<li><code>energyThreshold</code> = threshold in dB to detect silent subframes.</li>
+</ul>
+
+<h3>Click detection</h3>
+<p>An extension of the discontinuties detection algorithm, this algorithm detects the locations of impulsive noises (such as clicks and pops) on the input audio frame. It relies on LPC coefficients to perform an inverse-filter on the audio to attenuate the stationary part and enhance the prediction error (or excitation noise). See [<a href="vaseghi-1990">7</a>] for more information. Then, a matched filter is used to further enhance the impulsive peaks. The detection threshold is obtained from a robust estimate of the excitation noise power [<a href="vaseghi-2008">8</a>] plus a parametric gain value.</p>
+
+<pre><code># a stand-alone click detection method
+def compute(x, frame_size=1024, hop_size=512, **kwargs):
+clickDetector = es.ClickDetector(frameSize=frame_size, hopSize=hop_size, **kwargs)
+ends = []
+starts = []
+for frame in es.FrameGenerator(x, frameSize=frame_size,
+                                hopSize=hop_size, startFromZero=True):
+    frame_starts, frame_ends = clickDetector(frame)
+
+    for s in frame_starts:
+        starts.append(s)
+    for e in frame_ends:
+        ends.append(e)
+
+return starts, ends
+</code></pre>
+<h4>Generating an example signal</h4>
+<p>Let's degrade some audio files with clicks of different amplitudes.</p>
+<pre><code>fs = 44100.
+audio = es.MonoLoader(filename='../../../test/audio/recorded/vignesh.wav', sampleRate=fs)()
+
+originalLen = len(audio)
+jumpLocation1 = int(originalLen / 4.)
+jumpLocation2 = int(originalLen / 2.)
+jumpLocation3 = int(originalLen * 3 / 4.)
+
+audio[jumpLocation1] += .5
+audio[jumpLocation2] += .15
+audio[jumpLocation3] += .05
+
+groundTruth = esarr([jumpLocation1, jumpLocation2, jumpLocation3]) / fs
+
+times = np.linspace(0, len(audio) / fs, len(audio))
+plt.plot(times, audio)
+for point in groundTruth:
+    l1 = plt.axvline(point, color='blue', alpha=.5)
+
+l1.set_label('Click locations')
+plt.legend()
+plt.title('Signal with artificial clicks of different amplitudes')</code></pre>
+<img src="images/inline/click-detection-example.png"/>
+
+<h4>Detection algorithm</h4>
+<p>The algorithm will output the start and end timestampes of the clicks.</p>
+<pre><code>starts, ends = compute(audio)
+
+fig, ax = plt.subplots(len(groundTruth))
+plt.subplots_adjust(hspace=.4)
+for idx, point in enumerate(groundTruth):
+    l1 = ax[idx].axvline(starts[idx], color='red', alpha=.5)
+    ax[idx].axvline(ends[idx], color='red', alpha=.5)
+    l2 = ax[idx].axvline(point, color='blue', alpha=.5)
+    ax[idx].plot(times, audio)
+    ax[idx].set_xlim([point-.001, point+.001])
+    ax[idx].set_title('Click located at {:.2f}s'.format(point))
+    
+    
+    fig.legend((l1, l2), ('Detected click', 'Ground truth'), 'upper right')
+</code></pre>
+
+<img src="images/inline/click-detection-results.png"/>
+
+<h4>Algorithm parameters</h4>
+<p>A description of the most relevant parameters of the algorithm</p>
+<ul>
+<li><code>detectionThreshold</code> = this algorithm features an adaptative threshold obtained from the instant power of each frame. This parameter is a gain factor to adjust the algorithm to different kinds of signals. Typically it should be increased for very "noisy" music as hard rock or electric music. The default value was empirically found to perform well in most of the cases. </li>
+</br>
+<li><code>powerEstimationThreshold</code> = after removing the auto-regressive part of the input frames through the LPC filter, the residual is used to compute the detection threshold. This signal is clipped to 'powerEstimationThreshold' times its median as a way to prevent the clicks to have a huge impact in the estimated threshold. This parameter controls how much the residual is clipped. </li>
+</br>
+<li><code>order</code> = the order for the LPC. As a rule of thumb, use 2 coefficients for each format on the input signal. However, it was empirically found that modeling more than 5 formats did not improve the clip detection on music.</li>
+</br>
+<li><code>silenceThreshold</code> = very low energy frames can have an unexpected shape. This frame can contain very small clicks that are detected by the algorithm but are impossible to hear. Thus, it is better to skip them with a silence threshold. </li>
+</ul>
+
+<h2>Summary</h2>
+<p>I have yet to proof-read this article and wrap everything up, plus a table of contents. It's a lot. I'll come back to this. </p>
+
+<h2>References</h2>
 						<ol>
 							<li id="#barchiesi-2015">Barchiesi, D., Giannoulis, D., Stowell, D., & Plumbley, M. D. (2015). Acoustic scene classification: Classifying environments from the sounds they produce. <em>IEEE Signal Processing Magazine, 32</em>(3), 16-34. [<a href="https://ieeexplore.ieee.org/abstract/document/7760424/?casa_token=feP8fRrzDdwAAAAA:njTGJ3xScXbqpSiW_SO_6ry9_-cmcEsnNgW9fUc3ZAi_Jb-llci5oEKhLeOyNNC2boM-bo2pxCU">PDF</a>]</li>
 							<li id="#rahmani-2018">Rahmani, M. H., Almasganj, F., & Seyyedsalehi, S. A. (2018). Audio-visual feature fusion via deep neural networks for automatic speech recognition. <em>Digital Signal Processing, 82,</em> 54-63. [<a href="https://www.sciencedirect.com/science/article/pii/S1051200418305050?casa_token=NHMQ69s4NYUAAAAA:ioRv7aYl7BiFOT57galxXoyUW1AleAJBkqFADl_1mv7tgUnMcQpzSXElVZ8PHRq_vB7qOLBosP4">PDF</a>]</li>
                             <li id="#bachu-2010">Bachu, R. G., Kopparthi, S., Adapa, B., & Barkana, B. D. (2010). Voiced/unvoiced decision for speech signals based on zero-crossing rate and energy. <em>In Advanced Techniques in Computing Sciences and Software Engineering </em>(pp. 279-282). Springer, Dordrecht. [<a href="https://www.researchgate.net/profile/Buket_Barkana/publication/259823741_VoicedUnvoiced_Decision_for_Speech_Signals_Based_on_Zero-Crossing_Rate_and_Energy/links/5654b2bf08ae4988a7b06035.pdf">PDF</a>]</li>
+                            <li id="#brandt-2014">Brandt, M., & Bitzer, J. (2014). Automatic Detection of Hum in Audio Signals. <em>Journal of the Audio Engineering Society, 62</em>(9), 584-595.</li>
+                            <li id="#blue-2018">Blue, L., Vargas, L., & Traynor, P. (2018, June). Hello, Is It Me You're Looking For? Differentiating Between Human and Electronic Speakers for Voice Interface Security. <em>In Proceedings of the 11th ACM Conference on Security & Privacy in Wireless and Mobile Networks</em> (pp. 123-133). [<a href="https://cise.ufl.edu/~lvargas/files/papers/2018/wisec2018.pdf">PDF</a>]</li>
+                            <li id="#muh-2010">Mühlbauer, R. (2010). Automatic audio defect detection. <em>Bachelorarbeit. Bachelor of Science im Bachelorstudium Informatik, Jonhannes Kepler Universität Linz.</em></li>
+                            <li id="#vaseghi-1990">Vaseghi, S. V., & Rayner, P. J. W. (1990). Detection and suppression of impulsive noise in speech communication systems. <em>IEE Proceedings I (Communications, Speech and Vision), 137</em>(1), 38-46.</li>
+                            <li id="#vaseghi-2008">Vaseghi, S. V. (2008). <em>Advanced digital signal processing and noise reduction.</em> John Wiley & Sons. Page 355.</li>
                         </ol>
     
 
