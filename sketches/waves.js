@@ -17,11 +17,12 @@ function preload() {
 }
 
 function setup(){
-	var canvas = createCanvas(window.innerWidth/2, window.innerHeight);
+	height = document.getElementById('sketch-holder').clientHeight;
+    width = document.getElementById('sketch-holder').clientWidth;
+    var canvas = createCanvas(width, height);
     canvas.parent('sketch-holder');
-    //button = createButton('toggle');
-    //button.parent('descript');
-    //button.mousePressed(toggleSong);
+    button = createButton('toggle');
+    button.parent('descript');
     analyzer = new p5.Amplitude();
     analyzer.setInput(song);
     fft = new p5.FFT();
@@ -33,7 +34,6 @@ function setup(){
 		particles_b[i] = new Particle(random(0, width),random(0,height));
 		particles_c[i] = new Particle(random(0, width),random(0,height));
 	}
-    song.play();
 }
 
 function draw(){
@@ -70,14 +70,14 @@ function Particle(x, y){
     // update speed based on current tempo
 	this.move = function(){
         rms = analyzer.getLevel(0);
-        fft.analyze();
-        peakDetect.update(fft);
+        //fft.analyze();
+        //peakDetect.update(fft);
         var angle = noise(this.pos.x/noiseScale, this.pos.y/noiseScale)*TWO_PI*noiseScale;
 		this.dir.x = cos(angle);
 		this.dir.y = sin(angle);
 		this.vel = this.dir.copy();
-		this.vel.mult(this.speed * map(peakDetect.currentValue, 0, 1, 0, 5));
-        //this.vel.mult(this.speed * map(rms, 0, 1, 0, 5));
+		//this.vel.mult(this.speed * map(peakDetect.currentValue, 0, 1, 0, 3));
+        this.vel.mult(this.speed * map(rms, 0, 1, 0, 5));
 		//this.vel.mult(this.speed);
         this.pos.add(this.vel);
 	}
