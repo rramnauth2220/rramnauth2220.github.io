@@ -1,11 +1,6 @@
 @import url(fontawesome-all.min.css);
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i");
-
-/*
-	Story by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
 
 /* Styling */
 .timeline {
@@ -292,15 +287,19 @@ input, select, textarea {
 		}
 
 	h1 {
+		font-family: "PT Serif";
 		font-size: 3.5rem;
+		font-weight: 300;
 		line-height: 1.2;
 	}
 
 	h2 {
+		font-family: "PT Serif";
 		font-size: 2.25rem;
 	}
 
 	h3 {
+		font-family: "PT Serif";
 		font-size: 1.5rem;
 	}
 
@@ -378,7 +377,7 @@ input, select, textarea {
 	.align-right {
 		text-align: right;
 	}
-
+	
 	@media screen and (max-width: 736px) {
 
 		p.major {
@@ -2200,10 +2199,10 @@ input, select, textarea {
 		white-space: nowrap;
 		font-size: 0.75rem;
 		max-width: 20rem;
-		height: 3.75em;
-		line-height: 3.75em;
+		height: 2.75em;
+		line-height: 2.75em;
 		border-radius: 0.5em;
-		padding: 0em 2.5em;
+		padding: 0em 1.75em;
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
@@ -2727,7 +2726,6 @@ input, select, textarea {
 	}
 
 /* Image */
-
 	.image {
 		border: 0;
 		border-radius: 4px;
@@ -2887,6 +2885,30 @@ input, select, textarea {
 		border-top-color: rgba(0, 0, 0, 0.2);
 	}
 
+	ul.press {
+		font-size: 0.85rem;
+	}
+
+	.sponsor-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+		gap: 1.5rem;
+		margin: 0 auto;
+		list-style-type: none;
+		padding: 0;
+		max-height:1000px;
+	  }
+	  
+	  li p {
+		font-family: system-ui;
+		text-align: left;
+	  }
+	  
+	  .sponsor img {
+		aspect-ratio: 1 / 1;
+		width: 100%;
+		object-fit: contain;
+	  }
 
 /* Actions */
 
