@@ -8,7 +8,7 @@ var isStop = false;
 var count = 0;
 
 function preload() {
-  imgs[0] = loadImage("assets/js/maki.png");
+  imgs[0] = loadImage("assets/js/hand.jpg");
 }
 
 function setup() {
