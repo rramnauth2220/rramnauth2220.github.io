@@ -8,7 +8,7 @@ var isStop = false;
 var count = 0;
 
 function preload() {
-  imgs[0] = loadImage("assets/js/profile02.jpg");
+  imgs[0] = loadImage("assets/js/profile02.png");
 }
 
 function setup() {

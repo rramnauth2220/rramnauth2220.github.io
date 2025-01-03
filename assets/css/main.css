@@ -2780,6 +2780,23 @@ input, select, textarea {
 				width: 100%;
 			}
 
+		.image.preview {
+			background: #fff;
+			display: block;
+			margin: 3rem auto 3rem auto;
+			/* Center horizontally */
+			width: 50%;
+			text-align: center;
+			/* Ensures the image inside is centered */
+		}
+
+			.image.preview img {
+				width: 100%;
+				/* Let the image take full width of the container */
+				max-width: 100%;
+				/* Ensure it doesn't exceed container's width */
+			}
+
 /* Sketch */
 
 #sketch-holder, #sketch-experience {
