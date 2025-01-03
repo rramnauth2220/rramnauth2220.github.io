@@ -5,7 +5,7 @@
     <!--- basic page needs
     ================================================== -->
     <meta charset="utf-8">
-    <title>Audio Feature Extraction - Hullo.</title>
+    <title>Garage: Audio Feature Extraction</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -77,25 +77,18 @@
 
                     <div class="content__page-header entry__header">
                         <h1 class="display-1 entry__title">
-                        Algorithmic Audio Feature Extraction <em>in English</em>
+                        Audio Feature Extraction & Interpretation
                         </h1>
                         <ul class="entry__header-meta">
                             <li class="author">By <a href="https://ramnauth2220.github.io">Rebecca Ramnauth</a></li>
                             <li class="date">May 25, 2020</li>
-                            <li class="cat-links">
-                                <a href="category.html">Code</a><a href="../../404.html">Research</a>
-                            </li>
+                            <li class="author"> Python 3.6^</li>
                         </ul>
                     </div> <!-- end entry__header -->
 
                     <div class="entry__content">
 
-                        <p><strong>High-level summary:</strong> how to get pretty graphs, nice numbers, and Python code to accurately describe sounds. </p>
-                    <p style="color:#00a67a"><code>05/25/2020 5:34 PM update:</code> I have yet to proofread this and organize the Essentia versus LibROSA code examples. It's a lot. I'll get it done. For now, just bear with me. </p>
-
-                        <p class="lead drop-cap">
-                        In order to make machines intelligent like humans, we often rely on machine learning and artificial intelligence techniques. There are several reasons why we want computers to be able to make human-like decisions. Developing smarter artificial agents and studying our interaction with them serve as an intermediary for better understanding human behavior and cognition. 
-                        </p>
+                        <blockquote><em>Corresponding Paper:</em> Georgiou, N. C., <strong>Ramnauth, R.</strong>, Adeniran, E., Lee, M., Selin, L., & Scassellati, B. (2023). Is Someone There Or Is That The TV? Detecting Social Presence Using Sound. ACM Transactions on Human-Robot Interaction, 12(4), 1-33. <a href="https://dl.acm.org/doi/pdf/10.1145/3611658">[PDF].</a></blockquote>
 
                         <h2>Contents</h2>
                         <ol>
@@ -115,13 +108,9 @@
                         Despite extensive research on vision, emotion, and cognition, modeling the human auditory system in machines remains understudied. If our machines could hear as well as humans do, we would expect them to easily distinguish speech from music or ambient noises, to know what direction sounds are coming from, to accurately enumerate the number of sound-producing objects in the room, to differentiate between sounds that are typical and those that are noteworthy, and to effortlessly characterize important features of any given audio source. Such machines should also be able to organize what they hear, learn names for recognizable objects and styles, and retrieve memory of a sound by reference to a handful of descriptors. These machines should be able to listen and react in real time, to take appropriate action to respond to having heard a noteworthy event. 
                         </p>
 
-                        <img src="images/inline/song-bots.svg"/>
-						
 						<p>
 						These abilities present unique challenges to computer scientists (to build better machines) and psychologists (to better understand these human functions), and are collectively motivations for the emerging field of <strong>machine hearing</strong>. Regardless of any one aim, a machine requires a set of robust and discriminatory features to accurately and quickly achieve its goal. For an ML system (and arguably also for a human child), intelligence is defined by the amount and quality of training given to it. It is typical for one to reduce the size representation of the signals used to train the machine as opposed to feeding it a complete dataset. Compact representations of a signal, also called <strong>features</strong>, reduce the size of the orginal signal signficantly while still describing the signal completely and accurately. As a result, the reduced representation improves the computational and time complexities of the ML algorithm, making it more suitable for real-time applications.  
                         </p>
-                        
-                        
 
                         <h2 id="audio-feature-extraction">Audio feature extraction</h2>
     

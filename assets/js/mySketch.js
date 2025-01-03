@@ -57,24 +57,6 @@ function fset(i, j, c) {
   img.pixels[index+3] = alpha(c);
 }
 
-/*
-function keyPressed() {
-  console.log(key);
-  if (key === 's' || key === 'S') {
-    isStop = !isStop;
-  } 
-}
-function mouseClicked() {
-  nextImage();
-	isStop = false;
-	count = 0;
-}
-function touchStarted() {
-  nextImage();
-	isStop = false;
-	count = 0;
-}*/
-
 function nextImage() {
 	if (!img) return;
   imgIndex = (++imgIndex) % imgs.length;
