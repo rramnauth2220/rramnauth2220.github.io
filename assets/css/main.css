@@ -7555,12 +7555,12 @@ input, select, textarea {
 
 	.wrapper.style2 {
 		padding: 7rem;
-		background-color: #eeeeee;
+		background-color: #ffffff;
 	}
 
 		.wrapper.style2 > .inner {
 			padding: 5.25rem 3.5rem 3.25rem 3.5rem ;
-			background-color: #ffffff;
+			background-color: #fafafa;
 			border-radius: 0.5rem;
 			margin: 0 auto;
 			max-width: 100%;
