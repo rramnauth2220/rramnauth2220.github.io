@@ -375,6 +375,12 @@ input, select, textarea {
 		color: #000;
 	}
 
+	.card-link {
+		text-decoration: none;
+		color: inherit;
+		display: block;
+	}
+
 	/* Responsive */
 	@media (max-width: 900px) {
 		.card-grid {
