@@ -375,6 +375,18 @@ input, select, textarea {
 		color: #000;
 	}
 
+	.splash {
+		display: flex;
+		justify-content: center; /* horizontal */
+		align-items: center;     /* vertical */
+		width: 100%;
+	}
+
+	.splash img {
+		max-width: 65%;
+		height: auto;
+	}
+
 	.card-link {
 		text-decoration: none;
 		color: inherit;
