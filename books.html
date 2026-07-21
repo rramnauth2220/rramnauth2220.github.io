@@ -1,0 +1,2492 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Library · Rebecca Ramnauth</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	<link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon" />
+	<style>
+		.books-intro { max-width: 62rem; margin-left: auto; margin-right: auto; }
+		.books-controls { display: grid; grid-template-columns: minmax(14rem, 2fr) minmax(12rem, 1fr) auto; gap: 1rem; margin: 2rem 0 1rem; text-align: left; align-items: end; }
+		.books-controls label { font-size: .8rem; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; }
+		.books-controls input, .books-controls select { margin-top: .45rem; }
+		.books-expand { margin: 0 0 .05rem 0; white-space: nowrap; }
+		.books-section > .inner { transition: max-width .25s ease, width .25s ease; }
+		.books-section.is-expanded > .inner { max-width: none; width: calc(100% - 4rem); }
+		.books-status { color: #666; font-size: .9rem; margin: 0 0 1rem; text-align: left; }
+		.books-table { font-size: 1rem; line-height: 1.45; }
+		.books-table th { white-space: nowrap; }
+		.books-table td { min-width: 9rem; vertical-align: top; }
+		.books-table td:first-child { min-width: 8rem; font-weight: 500; }
+		.books-table td:nth-child(2) { min-width: 8.5rem; }
+		.books-table td:nth-child(3), .books-table td:nth-child(10) { min-width: 13rem; }
+		.books-table td:nth-child(5), .books-table td:nth-child(7) { min-width: 8rem; }
+		.books-table-wrapper { scrollbar-gutter: stable; }
+		.books-note { max-width: 54rem; margin: 2rem auto 0; color: #000000; font-size: 1rem; }
+		[hidden] { display: none !important; }
+		@media screen and (max-width: 736px) {
+			.books-controls { grid-template-columns: 1fr; }
+			.books-expand { width: 100%; }
+			.books-section.is-expanded > .inner { width: calc(100% - 2rem); }
+			.books-table thead { display: none; }
+			.books-table, .books-table tbody, .books-table tr, .books-table td { display: block; width: 100%; }
+			.books-table tr { border-top: solid 1px rgba(0,0,0,.18); padding: 1.25rem 0 .85rem; }
+			.books-table td { border: 0; display: grid; grid-template-columns: minmax(7.5rem, 34%) 1fr; gap: .75rem; min-width: 0 !important; padding: .35rem 0; }
+			.books-table td::before { color: #c5c5c5; content: attr(data-label); font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+		}
+	</style>
+</head>
+<body class="is-preload">
+	<div id="wrapper" class="divided">
+		<section class="banner style6 orient-left content-align-left onload-content-fade-right">
+			<div class="content">
+				<h1><strong>Library </strong></h1>
+				<p class="major">Curated collections of books that have shaped how I understand myself, other people, and the world around me. Yes, I have read every one of them&mdash;some more than once. I have lived long enough to have no excuse not to. Ask me about any of them.</p>
+				<ul class="actions"><li><a href="index.html" class="button">Home</a></li><li><a href="#world-list" class="button smooth-scroll">Around the World</a></li></ul>
+				
+			</div>
+		</section>
+
+		<section class="wrapper style2 align-center books-section" id="world-list">
+			<div class="inner">
+				<header class="books-intro"><h2>Around the World</h2>
+				</header>
+				<p>
+					This collection began as a personal literary passport shaped by my travels (and desire to travel more), not as a definitive canon. 
+				</br>Selections are replaced as I discover works that better capture a country's literary voice or resonate more deeply with my own understanding.
+				</p>
+				<button class="button small books-expand" id="books-expand" type="button" aria-expanded="false">Expand table</button>
+				<div class="image preview">
+					<img src="images/404.jpg" alt="" />
+				</div>
+				<div class="books-controls" aria-label="Book list filters">
+					<label for="book-search">Search<input id="book-search" type="search" placeholder="Title, author, country, theme…" autocomplete="off" /></label>
+					<label for="region-filter">Region<select id="region-filter"><option value="">All regions</option><option value="Africa">Africa</option>
+							<option value="Asia">Asia</option>
+							<option value="Europe">Europe</option>
+							<option value="North America &amp; Caribbean">North America &amp; Caribbean</option>
+							<option value="South America">South America</option>
+							<option value="Oceania">Oceania</option></select></label>
+				</div>
+				<p class="books-status" id="books-status" aria-live="polite">196 books · 8-row view</p>
+				<div class="table-wrapper align-left books-table-wrapper" id="books-table-wrapper">
+					<table class="books-table">
+						<thead><tr><th scope="col">Country</th><th scope="col">Region</th><th scope="col">Primary Book</th><th scope="col">Author</th><th scope="col">Genre</th><th scope="col">Themes</th><th scope="col">Original Language</th><th scope="col">Historical + Cultural Context</th><th scope="col">Next Read</th></tr></thead>
+						<tbody>
+						<tr data-region="Africa">
+							<td data-label="Country">Algeria</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Meursault Investigation</td>
+							<td data-label="Author">Kamel Daoud</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Colonial legacy; identity; grief; narrative power</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Postcolonial Algeria; a response to Camus</td>
+
+							<td data-label="Next Read">The Last Summer of Reason — Tahar Djaout</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Angola</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Book of Chameleons</td>
+							<td data-label="Author">José Eduardo Agualusa</td>
+							<td data-label="Genre">Literary fiction / magical realism</td>
+							<td data-label="Themes">Memory; identity; reinvention; civil war</td>
+							<td data-label="Original Language">Portuguese</td>
+							<td data-label="Historical / Cultural Context">Postwar Angola</td>
+
+							<td data-label="Next Read">Mayombe — Pepetela</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Benin</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Snares Without End</td>
+							<td data-label="Author">Olympe Bhêly-Quenum</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Fate; violence; tradition; justice</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Dahomey/Benin social life</td>
+
+							<td data-label="Next Read">As She Was Discovering Tigony — Ken Bugul</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Botswana</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Maru</td>
+							<td data-label="Author">Bessie Head</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Prejudice; belonging; dignity; love</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Botswana and the marginalization of the San</td>
+
+							<td data-label="Next Read">The Collector of Treasures — Bessie Head</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Burkina Faso</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Parachute Drop</td>
+							<td data-label="Author">Norbert Zongo</td>
+							<td data-label="Genre">Political novel</td>
+							<td data-label="Themes">Power; corruption; dictatorship; resistance</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">West African authoritarian politics</td>
+
+							<td data-label="Next Read">Of Water and the Spirit — Malidoma Patrice Somé</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Burundi</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Baho!</td>
+							<td data-label="Author">Roland Rugero</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Rumor; violence; fear; communal judgment</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Rural Burundi after mass violence</td>
+
+							<td data-label="Next Read">Small Country — Gaël Faye</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Cabo Verde</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Last Will and Testament of Senhor da Silva Araújo</td>
+							<td data-label="Author">Germano Almeida</td>
+							<td data-label="Genre">Satirical novel</td>
+							<td data-label="Themes">Reputation; memory; hypocrisy; colonial society</td>
+							<td data-label="Original Language">Portuguese</td>
+							<td data-label="Historical / Cultural Context">Mindelo, Cabo Verde</td>
+
+							<td data-label="Next Read">Chiquinho — Baltasar Lopes</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Cameroon</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Houseboy</td>
+							<td data-label="Author">Ferdinand Oyono</td>
+							<td data-label="Genre">Satirical novel</td>
+							<td data-label="Themes">Colonialism; hypocrisy; humiliation; power</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">French colonial Cameroon</td>
+
+							<td data-label="Next Read">The Poor Christ of Bomba — Mongo Beti</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Central African Republic</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Silence of the Forest</td>
+							<td data-label="Author">Étienne Goyémidé</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Cultural encounter; prejudice; ecology; dignity</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Forest communities and the Aka people</td>
+
+							<td data-label="Next Read">Batouala — René Maran</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Chad</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Told by Starlight in Chad</td>
+							<td data-label="Author">Joseph Brahim Seid</td>
+							<td data-label="Genre">Folktales / short fiction</td>
+							<td data-label="Themes">Oral tradition; ancestry; community; moral lessons</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Chadian oral and cultural traditions</td>
+
+							<td data-label="Next Read">In the Shadow of the Sahel — Mahamat-Saleh Haroun</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Comoros</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">A Girl Called Eel</td>
+							<td data-label="Author">Ali Zamir</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Survival; gender; social exclusion; voice</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Contemporary Comorian island life</td>
+
+							<td data-label="Next Read">The Kafir of Karthala — Mohamed Toihiri</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Republic of the Congo</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Broken Glass</td>
+							<td data-label="Author">Alain Mabanckou</td>
+							<td data-label="Genre">Satirical literary fiction</td>
+							<td data-label="Themes">Storytelling; failure; colonial language; community</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Brazzaville bar culture</td>
+
+							<td data-label="Next Read">African Psycho — Alain Mabanckou</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Democratic Republic of the Congo</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Tram 83</td>
+							<td data-label="Author">Fiston Mwanza Mujila</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Exploitation; chaos; art; survival</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">A mining city shaped by global extraction</td>
+
+							<td data-label="Next Read">The Seven Solitudes of Lorsa Lopez — Sony Labou Tansi</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Côte d'Ivoire</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Suns of Independence</td>
+							<td data-label="Author">Ahmadou Kourouma</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Decolonization; tradition; disillusionment; power</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Post-independence Côte d'Ivoire</td>
+
+							<td data-label="Next Read">Waiting for the Wild Beasts to Vote — Ahmadou Kourouma</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Djibouti</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Transit</td>
+							<td data-label="Author">Abdourahman A. Waberi</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Exile; dictatorship; migration; memory</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Djibouti and diaspora</td>
+
+							<td data-label="Next Read">In the United States of Africa — Abdourahman A. Waberi</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Egypt</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Palace Walk</td>
+							<td data-label="Author">Naguib Mahfouz</td>
+							<td data-label="Genre">Historical family novel</td>
+							<td data-label="Themes">Patriarchy; family; nationalism; modernity</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Cairo during the 1919 revolution</td>
+
+							<td data-label="Next Read">Midaq Alley — Naguib Mahfouz</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Equatorial Guinea</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Shadows of Your Black Memory</td>
+							<td data-label="Author">Donato Ndongo</td>
+							<td data-label="Genre">Coming-of-age novel</td>
+							<td data-label="Themes">Colonial education; religion; identity; race</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Spanish colonial Equatorial Guinea</td>
+
+							<td data-label="Next Read">By Night the Mountain Burns — Juan Tomás Ávila Laurel</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Eritrea</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Conscript</td>
+							<td data-label="Author">Gebreyesus Hailu</td>
+							<td data-label="Genre">Historical novel</td>
+							<td data-label="Themes">Colonialism; war; coercion; awakening</td>
+							<td data-label="Original Language">Tigrinya</td>
+							<td data-label="Historical / Cultural Context">Eritrean conscripts in colonial Libya</td>
+
+							<td data-label="Next Read">The Consequences of Love — Sulaiman Addonia</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Eswatini</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Weeding the Flowerbeds</td>
+							<td data-label="Author">Sarah Mkhonza</td>
+							<td data-label="Genre">Memoir</td>
+							<td data-label="Themes">Gender; education; apartheid; resistance</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Eswatini and southern Africa</td>
+
+							<td data-label="Next Read">What the Future Holds — Sarah Mkhonza</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Ethiopia</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Shadow King</td>
+							<td data-label="Author">Maaza Mengiste</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">War; memory; women; resistance</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Ethiopia during the Italian invasion</td>
+
+							<td data-label="Next Read">The Beautiful Things That Heaven Bears — Dinaw Mengestu</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Gabon</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Mema</td>
+							<td data-label="Author">Daniel Mengara</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Motherhood; tradition; accusation; memory</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Gabonese village life</td>
+
+							<td data-label="Next Read">The Fury and Cries of Women — Angèle Rawiri</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Gambia</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Reading the Ceiling</td>
+							<td data-label="Author">Dayo Forster</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Choice; womanhood; fate; social expectation</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Urban Gambian life</td>
+
+							<td data-label="Next Read">The Sun Will Soon Shine — Sally Sadie Singhateh</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Ghana</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Beautyful Ones Are Not Yet Born</td>
+							<td data-label="Author">Ayi Kwei Armah</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Corruption; integrity; disgust; postcolonial disillusionment</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Post-independence Ghana</td>
+
+							<td data-label="Next Read">Changes — Ama Ata Aidoo</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Guinea</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Dark Child</td>
+							<td data-label="Author">Camara Laye</td>
+							<td data-label="Genre">Memoir / coming of age</td>
+							<td data-label="Themes">Childhood; tradition; education; departure</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Colonial Guinea</td>
+
+							<td data-label="Next Read">The Radiance of the King — Camara Laye</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Guinea-Bissau</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Ultimate Tragedy</td>
+							<td data-label="Author">Abdulai Silá</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Colonialism; gender; education; liberation</td>
+							<td data-label="Original Language">Portuguese</td>
+							<td data-label="Historical / Cultural Context">Colonial Guinea-Bissau</td>
+
+							<td data-label="Next Read">The True Story of the Slave Child — Abdulai Silá</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Kenya</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">A Grain of Wheat</td>
+							<td data-label="Author">Ngũgĩ wa Thiong'o</td>
+							<td data-label="Genre">Historical literary fiction</td>
+							<td data-label="Themes">Betrayal; freedom; guilt; community</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Kenya at independence and the Mau Mau uprising</td>
+
+							<td data-label="Next Read">The River Between — Ngũgĩ wa Thiong'o</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Lesotho</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Chaka</td>
+							<td data-label="Author">Thomas Mofolo</td>
+							<td data-label="Genre">Historical / mythic novel</td>
+							<td data-label="Themes">Ambition; power; destiny; moral corruption</td>
+							<td data-label="Original Language">Sesotho</td>
+							<td data-label="Historical / Cultural Context">Southern African history and legend</td>
+
+							<td data-label="Next Read">Singing Away the Hunger — Mpho 'M'atsepo Nthunya</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Liberia</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">She Would Be King</td>
+							<td data-label="Author">Wayétu Moore</td>
+							<td data-label="Genre">Historical magical realism</td>
+							<td data-label="Themes">Nationhood; slavery; power; belonging</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">The founding era of Liberia</td>
+
+							<td data-label="Next Read">Murder in the Cassava Patch — Bai T. Moore</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Libya</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Bleeding of the Stone</td>
+							<td data-label="Author">Ibrahim al-Koni</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Nature; solitude; violence; sacred ecology</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">The Libyan desert and Tuareg cosmology</td>
+
+							<td data-label="Next Read">In the Country of Men — Hisham Matar</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Madagascar</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Beyond the Rice Fields</td>
+							<td data-label="Author">Naivo</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Slavery; love; hierarchy; cultural upheaval</td>
+							<td data-label="Original Language">Malagasy</td>
+							<td data-label="Historical / Cultural Context">19th-century Madagascar</td>
+
+							<td data-label="Next Read">Return to the Enchanted Island — Johary Ravaloson</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Malawi</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Jive Talker</td>
+							<td data-label="Author">Samson Kambalu</td>
+							<td data-label="Genre">Memoir</td>
+							<td data-label="Themes">Art; poverty; education; self-invention</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Postcolonial Malawi</td>
+
+							<td data-label="Next Read">The Boy Who Harnessed the Wind — William Kamkwamba</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Mali</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Fortunes of Wangrin</td>
+							<td data-label="Author">Amadou Hampâté Bâ</td>
+							<td data-label="Genre">Historical fiction / oral biography</td>
+							<td data-label="Themes">Cunning; colonial bureaucracy; fate; power</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">French colonial West Africa</td>
+
+							<td data-label="Next Read">The Epic of Sundiata — traditional</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Mauritania</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Desert and the Drum</td>
+							<td data-label="Author">Mbarek Ould Beyrouk</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Tradition; freedom; exile; social class</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Mauritanian desert society</td>
+
+							<td data-label="Next Read">The Wounded Soul — Mbarek Ould Beyrouk</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Mauritius</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Eve Out of Her Ruins</td>
+							<td data-label="Author">Ananda Devi</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Poverty; gender; violence; desire</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Troumaron, Mauritius</td>
+
+							<td data-label="Next Read">The Last Brother — Nathacha Appanah</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Morocco</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Sand Child</td>
+							<td data-label="Author">Tahar Ben Jelloun</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Gender; identity; storytelling; patriarchy</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Moroccan family and social life</td>
+
+							<td data-label="Next Read">This Blinding Absence of Light — Tahar Ben Jelloun</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Mozambique</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Sleepwalking Land</td>
+							<td data-label="Author">Mia Couto</td>
+							<td data-label="Genre">Magical realist novel</td>
+							<td data-label="Themes">War; memory; storytelling; survival</td>
+							<td data-label="Original Language">Portuguese</td>
+							<td data-label="Historical / Cultural Context">Mozambique during civil war</td>
+
+							<td data-label="Next Read">Under the Frangipani — Mia Couto</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Namibia</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Purple Violet of Oshaantu</td>
+							<td data-label="Author">Neshani Andreas</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Marriage; friendship; patriarchy; resilience</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Northern Namibian community life</td>
+
+							<td data-label="Next Read">The Other Presence — Francis Sifiso Nyathi</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Niger</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Epic of Askia Mohammed</td>
+							<td data-label="Author">Traditional / Nouhou Malio</td>
+							<td data-label="Genre">Oral epic</td>
+							<td data-label="Themes">Leadership; history; Islam; memory</td>
+							<td data-label="Original Language">Songhay</td>
+							<td data-label="Historical / Cultural Context">Songhay imperial memory in Niger</td>
+
+							<td data-label="Next Read">The New Wives — Abdoulaye Mamani</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Nigeria</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Things Fall Apart</td>
+							<td data-label="Author">Chinua Achebe</td>
+							<td data-label="Genre">Historical literary fiction</td>
+							<td data-label="Themes">Colonialism; masculinity; tradition; change</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Igbo society at the onset of colonial rule</td>
+
+							<td data-label="Next Read">The Death of Vivek Oji — Akwaeke Emezi</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Rwanda</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Our Lady of the Nile</td>
+							<td data-label="Author">Scholastique Mukasonga</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Ethnicity; prejudice; girlhood; impending violence</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">A Rwandan girls' school before the genocide</td>
+
+							<td data-label="Next Read">The Barefoot Woman — Scholastique Mukasonga</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">São Tomé and Príncipe</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Pain of the Marginal World</td>
+							<td data-label="Author">Olinda Beja</td>
+							<td data-label="Genre">Poetry / short prose</td>
+							<td data-label="Themes">Island identity; colonial memory; exile; belonging</td>
+							<td data-label="Original Language">Portuguese</td>
+							<td data-label="Historical / Cultural Context">São Toméan island and diaspora experience</td>
+
+							<td data-label="Next Read">The Equator — Miguel Sousa Tavares</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Senegal</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">So Long a Letter</td>
+							<td data-label="Author">Mariama Bâ</td>
+							<td data-label="Genre">Epistolary novel</td>
+							<td data-label="Themes">Marriage; friendship; faith; women's autonomy</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Post-independence Senegal</td>
+
+							<td data-label="Next Read">God's Bits of Wood — Ousmane Sembène</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Seychelles</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Voice of Change</td>
+							<td data-label="Author">Antoine Abel</td>
+							<td data-label="Genre">Poetry / stories</td>
+							<td data-label="Themes">Island life; Creole identity; memory; change</td>
+							<td data-label="Original Language">Seychellois Creole / French</td>
+							<td data-label="Historical / Cultural Context">Seychellois cultural and oral traditions</td>
+
+							<td data-label="Next Read">Coco Sec — Antoine Abel</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Sierra Leone</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">A Long Way Gone</td>
+							<td data-label="Author">Ishmael Beah</td>
+							<td data-label="Genre">Memoir</td>
+							<td data-label="Themes">Childhood; war; trauma; rehabilitation</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">The Sierra Leone Civil War</td>
+
+							<td data-label="Next Read">The Memory of Love — Aminatta Forna</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Somalia</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Maps</td>
+							<td data-label="Author">Nuruddin Farah</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Identity; nation; motherhood; borders</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Somalia and the Ogaden conflict</td>
+
+							<td data-label="Next Read">From a Crooked Rib — Nuruddin Farah</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">South Africa</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Disgrace</td>
+							<td data-label="Author">J. M. Coetzee</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Shame; power; violence; social change</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Post-apartheid South Africa</td>
+
+							<td data-label="Next Read">Cry, the Beloved Country — Alan Paton</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">South Sudan</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">They Poured Fire on Us from the Sky</td>
+							<td data-label="Author">Benson Deng, Alephonsion Deng &amp; Benjamin Ajak</td>
+							<td data-label="Genre">Memoir</td>
+							<td data-label="Themes">War; displacement; childhood; survival</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">The Second Sudanese Civil War</td>
+
+							<td data-label="Next Read">What Is the What — Dave Eggers</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Sudan</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Season of Migration to the North</td>
+							<td data-label="Author">Tayeb Salih</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Colonialism; desire; identity; violence</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Sudan and Britain after colonial rule</td>
+
+							<td data-label="Next Read">The Wedding of Zein — Tayeb Salih</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Tanzania</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Paradise</td>
+							<td data-label="Author">Abdulrazak Gurnah</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Bondage; trade; colonialism; coming of age</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">East Africa before World War I</td>
+
+							<td data-label="Next Read">By the Sea — Abdulrazak Gurnah</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Togo</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">An African in Greenland</td>
+							<td data-label="Author">Tété-Michel Kpomassie</td>
+							<td data-label="Genre">Travel memoir</td>
+							<td data-label="Themes">Curiosity; cultural encounter; belonging; isolation</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Togo and Greenland</td>
+
+							<td data-label="Next Read">The Place of the Dead — Kangni Alem</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Tunisia</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Italian</td>
+							<td data-label="Author">Shukri Mabkhout</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Ideology; desire; repression; disillusionment</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Tunisia under Bourguiba and Ben Ali</td>
+
+							<td data-label="Next Read">The Scents of Marie-Claire — Habib Selmi</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Uganda</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Kintu</td>
+							<td data-label="Author">Jennifer Nansubuga Makumbi</td>
+							<td data-label="Genre">Historical family saga</td>
+							<td data-label="Themes">Ancestry; curse; family; nation</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Buganda across several centuries</td>
+
+							<td data-label="Next Read">Abyssinian Chronicles — Moses Isegawa</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Zambia</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">The Old Drift</td>
+							<td data-label="Author">Namwali Serpell</td>
+							<td data-label="Genre">Literary saga / speculative fiction</td>
+							<td data-label="Themes">History; technology; family; colonialism</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Zambia from colonial times into the future</td>
+
+							<td data-label="Next Read">Patchwork — Ellen Banda-Aaku</td>
+						</tr>
+						<tr data-region="Africa">
+							<td data-label="Country">Zimbabwe</td>
+							<td data-label="Region">Africa</td>
+							<td data-label="Primary Book">Nervous Conditions</td>
+							<td data-label="Author">Tsitsi Dangarembga</td>
+							<td data-label="Genre">Coming-of-age novel</td>
+							<td data-label="Themes">Education; colonialism; gender; family</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Rhodesia/Zimbabwe</td>
+
+							<td data-label="Next Read">We Need New Names — NoViolet Bulawayo</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Afghanistan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Patience Stone</td>
+							<td data-label="Author">Atiq Rahimi</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">War; marriage; confession; female voice</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">War-torn Afghanistan</td>
+
+							<td data-label="Next Read">A Thousand Splendid Suns — Khaled Hosseini</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Armenia</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Gray House</td>
+							<td data-label="Author">Mariam Petrosyan</td>
+							<td data-label="Genre">Literary / fantastical fiction</td>
+							<td data-label="Themes">Belonging; disability; myth; institutional life</td>
+							<td data-label="Original Language">Russian</td>
+							<td data-label="Historical / Cultural Context">An Armenian-authored cult novel about an isolated community</td>
+
+							<td data-label="Next Read">The Fool — Raffi</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Azerbaijan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Ali and Nino</td>
+							<td data-label="Author">Kurban Said</td>
+							<td data-label="Genre">Historical romance</td>
+							<td data-label="Themes">Identity; East and West; love; nation</td>
+							<td data-label="Original Language">German</td>
+							<td data-label="Historical / Cultural Context">Baku during World War I and revolution</td>
+
+							<td data-label="Next Read">Stone Dreams — Akram Aylisli</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Bahrain</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Madman of Freedom Square</td>
+							<td data-label="Author">Hassan Blasim</td>
+							<td data-label="Genre">Short stories</td>
+							<td data-label="Themes">War; migration; absurdity; violence</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Iraqi-Bahraini diasporic context</td>
+
+							<td data-label="Next Read">QuixotiQ — Ali Al Saeed</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Bangladesh</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">A Golden Age</td>
+							<td data-label="Author">Tahmima Anam</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">War; motherhood; nationalism; sacrifice</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">The 1971 Bangladesh Liberation War</td>
+
+							<td data-label="Next Read">The Good Muslim — Tahmima Anam</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Bhutan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Circle of Karma</td>
+							<td data-label="Author">Kunzang Choden</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Pilgrimage; gender; faith; endurance</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Bhutan and the Himalayas</td>
+
+							<td data-label="Next Read">Kyichu Lhakhang — Kunzang Choden</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Brunei</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Fisherman King</td>
+							<td data-label="Author">Kathrina Mohd Daud</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Family; folklore; grief; modernity</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Contemporary Brunei</td>
+
+							<td data-label="Next Read">Written in Black — K. H. Lim</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Cambodia</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">In the Shadow of the Banyan</td>
+							<td data-label="Author">Vaddey Ratner</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Genocide; childhood; memory; survival</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Cambodia under the Khmer Rouge</td>
+
+							<td data-label="Next Read">First They Killed My Father — Loung Ung</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">China</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Dream of the Red Chamber</td>
+							<td data-label="Author">Cao Xueqin</td>
+							<td data-label="Genre">Classic family saga</td>
+							<td data-label="Themes">Family; impermanence; desire; social decline</td>
+							<td data-label="Original Language">Chinese</td>
+							<td data-label="Historical / Cultural Context">Qing-dynasty elite society</td>
+
+							<td data-label="Next Read">The True Story of Ah Q — Lu Xun</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Cyprus</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Island of Missing Trees</td>
+							<td data-label="Author">Elif Shafak</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Division; memory; migration; intergenerational trauma</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Cyprus and its divided communities</td>
+
+							<td data-label="Next Read">The Last Woman Home — Theodora Tsalichou</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Georgia</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Knight in the Panther's Skin</td>
+							<td data-label="Author">Shota Rustaveli</td>
+							<td data-label="Genre">Epic poem</td>
+							<td data-label="Themes">Friendship; love; honor; courage</td>
+							<td data-label="Original Language">Georgian</td>
+							<td data-label="Historical / Cultural Context">Medieval Georgian court culture</td>
+
+							<td data-label="Next Read">The Eighth Life — Nino Haratischvili</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">India</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The God of Small Things</td>
+							<td data-label="Author">Arundhati Roy</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Caste; family; forbidden love; memory</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Kerala in the 20th century</td>
+
+							<td data-label="Next Read">Midnight's Children — Salman Rushdie</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Indonesia</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">This Earth of Mankind</td>
+							<td data-label="Author">Pramoedya Ananta Toer</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Colonialism; education; race; awakening</td>
+							<td data-label="Original Language">Indonesian</td>
+							<td data-label="Historical / Cultural Context">Dutch colonial Java</td>
+
+							<td data-label="Next Read">Beauty Is a Wound — Eka Kurniawan</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Iran</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Blind Owl</td>
+							<td data-label="Author">Sadegh Hedayat</td>
+							<td data-label="Genre">Modernist novella</td>
+							<td data-label="Themes">Alienation; obsession; death; unreality</td>
+							<td data-label="Original Language">Persian</td>
+							<td data-label="Historical / Cultural Context">20th-century Iranian modernism</td>
+
+							<td data-label="Next Read">Persepolis — Marjane Satrapi</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Iraq</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Frankenstein in Baghdad</td>
+							<td data-label="Author">Ahmed Saadawi</td>
+							<td data-label="Genre">Literary horror / satire</td>
+							<td data-label="Themes">War; revenge; identity; moral responsibility</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Baghdad after the 2003 invasion</td>
+
+							<td data-label="Next Read">The Madman of Freedom Square — Hassan Blasim</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Israel</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">To the End of the Land</td>
+							<td data-label="Author">David Grossman</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">War; motherhood; fear; memory</td>
+							<td data-label="Original Language">Hebrew</td>
+							<td data-label="Historical / Cultural Context">Israeli family life amid continuing conflict</td>
+
+							<td data-label="Next Read">A Tale of Love and Darkness — Amos Oz</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Japan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Woman in the Dunes</td>
+							<td data-label="Author">Kōbō Abe</td>
+							<td data-label="Genre">Existential literary fiction</td>
+							<td data-label="Themes">Freedom; labor; identity; adaptation</td>
+							<td data-label="Original Language">Japanese</td>
+							<td data-label="Historical / Cultural Context">Postwar Japanese existentialism</td>
+
+							<td data-label="Next Read">Snow Country — Yasunari Kawabata</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Jordan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Lanterns of the King of Galilee</td>
+							<td data-label="Author">Ibrahim Nasrallah</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Rule; rebellion; justice; national memory</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">18th-century Palestine/Jordanian literary context</td>
+
+							<td data-label="Next Read">Pillars of Salt — Fadia Faqir</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Kazakhstan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Dead Wander in the Desert</td>
+							<td data-label="Author">Rollan Seisenbayev</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Ecological disaster; community; Soviet legacy; loss</td>
+							<td data-label="Original Language">Russian</td>
+							<td data-label="Historical / Cultural Context">The Aral Sea catastrophe</td>
+
+							<td data-label="Next Read">The Nomads — Ilyas Esenberlin</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Kuwait</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Bamboo Stalk</td>
+							<td data-label="Author">Saud Alsanousi</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Identity; migration; race; belonging</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Kuwait and the Philippines</td>
+
+							<td data-label="Next Read">The Book of Mirrors — Saud Alsanousi</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Kyrgyzstan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Jamilia</td>
+							<td data-label="Author">Chinghiz Aitmatov</td>
+							<td data-label="Genre">Novella</td>
+							<td data-label="Themes">Love; freedom; tradition; artistic awakening</td>
+							<td data-label="Original Language">Russian</td>
+							<td data-label="Historical / Cultural Context">Rural Kyrgyzstan during World War II</td>
+
+							<td data-label="Next Read">The Day Lasts More Than a Hundred Years — Chinghiz Aitmatov</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Laos</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Mother's Beloved</td>
+							<td data-label="Author">Outhine Bounyavong</td>
+							<td data-label="Genre">Short stories</td>
+							<td data-label="Themes">Village life; family; tradition; social change</td>
+							<td data-label="Original Language">Lao</td>
+							<td data-label="Historical / Cultural Context">20th-century Laos</td>
+
+							<td data-label="Next Read">The Coroner's Lunch — Colin Cotterill</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Lebanon</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Stone of Laughter</td>
+							<td data-label="Author">Hoda Barakat</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Civil war; fear; sexuality; passivity</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Beirut during the Lebanese Civil War</td>
+
+							<td data-label="Next Read">The Prophet — Kahlil Gibran</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Malaysia</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Garden of Evening Mists</td>
+							<td data-label="Author">Tan Twan Eng</td>
+							<td data-label="Genre">Historical literary fiction</td>
+							<td data-label="Themes">Memory; art; war; forgiveness</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Malaya after Japanese occupation</td>
+
+							<td data-label="Next Read">The Ghost Bride — Yangsze Choo</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Maldives</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Dhivehi Folk Tales</td>
+							<td data-label="Author">Xavier Romero-Frias</td>
+							<td data-label="Genre">Folklore collection</td>
+							<td data-label="Themes">Island life; spirits; morality; oral tradition</td>
+							<td data-label="Original Language">Dhivehi</td>
+							<td data-label="Historical / Cultural Context">Maldivian oral heritage</td>
+
+							<td data-label="Next Read">The Maldives: An Introductory Economic Report — selected cultural nonfiction</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Mongolia</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Blue Sky</td>
+							<td data-label="Author">Galsan Tschinag</td>
+							<td data-label="Genre">Autobiographical novel</td>
+							<td data-label="Themes">Nomadic life; childhood; modernization; loss</td>
+							<td data-label="Original Language">German</td>
+							<td data-label="Historical / Cultural Context">Tuva/Mongolian steppe life</td>
+
+							<td data-label="Next Read">The Green-Eyed Lama — Oyungerel Tsedevdamba</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Myanmar</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Smile as They Bow</td>
+							<td data-label="Author">Nu Nu Yi</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Religion; performance; gender; desire</td>
+							<td data-label="Original Language">Burmese</td>
+							<td data-label="Historical / Cultural Context">A spirit festival in Myanmar</td>
+
+							<td data-label="Next Read">Not Out of Hate — Ma Ma Lay</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Nepal</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Palpasa Café</td>
+							<td data-label="Author">Narayan Wagle</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Civil war; art; love; disillusionment</td>
+							<td data-label="Original Language">Nepali</td>
+							<td data-label="Historical / Cultural Context">Nepal's Maoist conflict</td>
+
+							<td data-label="Next Read">The Tutor of History — Manjushree Thapa</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">North Korea</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Accusation</td>
+							<td data-label="Author">Bandi</td>
+							<td data-label="Genre">Short stories</td>
+							<td data-label="Themes">Totalitarianism; fear; family; resistance</td>
+							<td data-label="Original Language">Korean</td>
+							<td data-label="Historical / Cultural Context">Life under North Korean rule</td>
+
+							<td data-label="Next Read">Friend — Paek Nam-nyong</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Oman</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Celestial Bodies</td>
+							<td data-label="Author">Jokha Alharthi</td>
+							<td data-label="Genre">Literary family saga</td>
+							<td data-label="Themes">Slavery; marriage; modernization; memory</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Oman across social transformation</td>
+
+							<td data-label="Next Read">Bitter Orange Tree — Jokha Alharthi</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Pakistan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Moth Smoke</td>
+							<td data-label="Author">Mohsin Hamid</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Class; desire; corruption; decline</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Lahore in the late 1990s</td>
+
+							<td data-label="Next Read">The Reluctant Fundamentalist — Mohsin Hamid</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Palestine</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Men in the Sun</td>
+							<td data-label="Author">Ghassan Kanafani</td>
+							<td data-label="Genre">Novella</td>
+							<td data-label="Themes">Displacement; silence; exploitation; exile</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Palestinian refugees in the Arab world</td>
+
+							<td data-label="Next Read">Minor Detail — Adania Shibli</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Philippines</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Noli Me Tangere</td>
+							<td data-label="Author">José Rizal</td>
+							<td data-label="Genre">Political / social novel</td>
+							<td data-label="Themes">Colonialism; religion; reform; injustice</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">The Philippines under Spanish colonial rule</td>
+
+							<td data-label="Next Read">America Is in the Heart — Carlos Bulosan</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Qatar</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Corsair</td>
+							<td data-label="Author">Abdulaziz Al-Mahmoud</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Empire; trade; piracy; regional power</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">The Persian Gulf in the early 19th century</td>
+
+							<td data-label="Next Read">The Black Monastery — Abdulaziz Al-Mahmoud</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Saudi Arabia</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Cities of Salt</td>
+							<td data-label="Author">Abdelrahman Munif</td>
+							<td data-label="Genre">Historical literary fiction</td>
+							<td data-label="Themes">Oil; modernization; displacement; power</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Arabian communities transformed by oil</td>
+
+							<td data-label="Next Read">Girls of Riyadh — Rajaa Alsanea</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Singapore</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Art of Charlie Chan Hock Chye</td>
+							<td data-label="Author">Sonny Liew</td>
+							<td data-label="Genre">Graphic novel</td>
+							<td data-label="Themes">History; censorship; nation-building; art</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Singapore's political and cultural history</td>
+
+							<td data-label="Next Read">Ponti — Sharlene Teo</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">South Korea</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Human Acts</td>
+							<td data-label="Author">Han Kang</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">State violence; memory; bodies; mourning</td>
+							<td data-label="Original Language">Korean</td>
+							<td data-label="Historical / Cultural Context">The Gwangju Uprising</td>
+
+							<td data-label="Next Read">The Vegetarian — Han Kang</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Sri Lanka</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Anil's Ghost</td>
+							<td data-label="Author">Michael Ondaatje</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Civil war; truth; identity; forensic memory</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Sri Lanka during political violence</td>
+
+							<td data-label="Next Read">The Seven Moons of Maali Almeida — Shehan Karunatilaka</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Syria</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Shell</td>
+							<td data-label="Author">Mustafa Khalifa</td>
+							<td data-label="Genre">Prison novel</td>
+							<td data-label="Themes">Torture; identity; survival; authoritarianism</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">A Syrian political prison</td>
+
+							<td data-label="Next Read">No Knives in the Kitchens of This City — Khaled Khalifa</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Tajikistan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Sands of Oxus</td>
+							<td data-label="Author">Sadriddin Ayni</td>
+							<td data-label="Genre">Memoir / historical prose</td>
+							<td data-label="Themes">Poverty; education; oppression; reform</td>
+							<td data-label="Original Language">Tajik</td>
+							<td data-label="Historical / Cultural Context">Central Asia under the Emirate of Bukhara</td>
+
+							<td data-label="Next Read">Hurramabad — Andrei Volos</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Thailand</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">Four Reigns</td>
+							<td data-label="Author">Kukrit Pramoj</td>
+							<td data-label="Genre">Historical family novel</td>
+							<td data-label="Themes">Monarchy; modernization; loyalty; social change</td>
+							<td data-label="Original Language">Thai</td>
+							<td data-label="Historical / Cultural Context">Thailand across four reigns</td>
+
+							<td data-label="Next Read">The Blind Earthworm in the Labyrinth — Veeraporn Nitiprapha</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Timor-Leste</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Crossing</td>
+							<td data-label="Author">Luís Cardoso</td>
+							<td data-label="Genre">Autobiographical novel</td>
+							<td data-label="Themes">Colonialism; exile; identity; independence</td>
+							<td data-label="Original Language">Portuguese</td>
+							<td data-label="Historical / Cultural Context">East Timor under Portuguese and Indonesian rule</td>
+
+							<td data-label="Next Read">Requiem for the Timorese — Fernando Sylvan</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Türkiye</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">My Name Is Red</td>
+							<td data-label="Author">Orhan Pamuk</td>
+							<td data-label="Genre">Historical mystery</td>
+							<td data-label="Themes">Art; faith; identity; East and West</td>
+							<td data-label="Original Language">Turkish</td>
+							<td data-label="Historical / Cultural Context">Ottoman Istanbul</td>
+
+							<td data-label="Next Read">The Time Regulation Institute — Ahmet Hamdi Tanpınar</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Turkmenistan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Tale of Aypi</td>
+							<td data-label="Author">Ak Welsapar</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Displacement; Soviet power; community; memory</td>
+							<td data-label="Original Language">Russian</td>
+							<td data-label="Historical / Cultural Context">A Caspian village under Soviet modernization</td>
+
+							<td data-label="Next Read">Cobra — Ak Welsapar</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">United Arab Emirates</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Diesel</td>
+							<td data-label="Author">Thani Al-Suwaidi</td>
+							<td data-label="Genre">Experimental novella</td>
+							<td data-label="Themes">Gender; identity; folklore; transformation</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Gulf society in rapid transition</td>
+
+							<td data-label="Next Read">The Sand Fish — Maha Gargash</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Uzbekistan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Railway</td>
+							<td data-label="Author">Hamid Ismailov</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Empire; migration; absurdity; community</td>
+							<td data-label="Original Language">Russian</td>
+							<td data-label="Historical / Cultural Context">A fictional Uzbek railway town</td>
+
+							<td data-label="Next Read">The Devil's Dance — Hamid Ismailov</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Vietnam</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Sorrow of War</td>
+							<td data-label="Author">Bảo Ninh</td>
+							<td data-label="Genre">War novel</td>
+							<td data-label="Themes">Memory; trauma; love; disillusionment</td>
+							<td data-label="Original Language">Vietnamese</td>
+							<td data-label="Historical / Cultural Context">The Vietnam War from a North Vietnamese perspective</td>
+
+							<td data-label="Next Read">The Mountains Sing — Nguyễn Phan Quế Mai</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Yemen</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Hostage</td>
+							<td data-label="Author">Zayd Mutee' Dammaj</td>
+							<td data-label="Genre">Novella</td>
+							<td data-label="Themes">Power; sexuality; hierarchy; captivity</td>
+							<td data-label="Original Language">Arabic</td>
+							<td data-label="Historical / Cultural Context">Yemen's imamate era</td>
+
+							<td data-label="Next Read">They Die Strangers — Mohammad Abdul-Wali</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Albania</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Broken April</td>
+							<td data-label="Author">Ismail Kadare</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Honor; fate; violence; tradition</td>
+							<td data-label="Original Language">Albanian</td>
+							<td data-label="Historical / Cultural Context">Northern Albania and the blood-feud code</td>
+
+							<td data-label="Next Read">The Palace of Dreams — Ismail Kadare</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Andorra</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Teacher of Cheops</td>
+							<td data-label="Author">Albert Salvadó</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Knowledge; ambition; power; antiquity</td>
+							<td data-label="Original Language">Catalan</td>
+							<td data-label="Historical / Cultural Context">Andorran-authored historical fiction</td>
+
+							<td data-label="Next Read">Andorra — Max Frisch</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Austria</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Radetzky March</td>
+							<td data-label="Author">Joseph Roth</td>
+							<td data-label="Genre">Historical family saga</td>
+							<td data-label="Themes">Empire; decline; duty; identity</td>
+							<td data-label="Original Language">German</td>
+							<td data-label="Historical / Cultural Context">The final decades of Austria-Hungary</td>
+
+							<td data-label="Next Read">The Piano Teacher — Elfriede Jelinek</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Belarus</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Voices from Chernobyl</td>
+							<td data-label="Author">Svetlana Alexievich</td>
+							<td data-label="Genre">Oral-history nonfiction</td>
+							<td data-label="Themes">Disaster; testimony; state secrecy; grief</td>
+							<td data-label="Original Language">Russian</td>
+							<td data-label="Historical / Cultural Context">Belarus after the Chernobyl disaster</td>
+
+							<td data-label="Next Read">Secondhand Time — Svetlana Alexievich</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Belgium</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Sorrow of Belgium</td>
+							<td data-label="Author">Hugo Claus</td>
+							<td data-label="Genre">Literary / historical fiction</td>
+							<td data-label="Themes">Collaboration; family; nationalism; coming of age</td>
+							<td data-label="Original Language">Dutch</td>
+							<td data-label="Historical / Cultural Context">Flanders during World War II</td>
+
+							<td data-label="Next Read">War and Turpentine — Stefan Hertmans</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Bosnia and Herzegovina</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Bridge on the Drina</td>
+							<td data-label="Author">Ivo Andrić</td>
+							<td data-label="Genre">Historical novel</td>
+							<td data-label="Themes">Empire; coexistence; violence; time</td>
+							<td data-label="Original Language">Serbo-Croatian</td>
+							<td data-label="Historical / Cultural Context">Višegrad across centuries</td>
+
+							<td data-label="Next Read">The Book of My Lives — Aleksandar Hemon</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Bulgaria</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Time Shelter</td>
+							<td data-label="Author">Georgi Gospodinov</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Nostalgia; memory; nationalism; time</td>
+							<td data-label="Original Language">Bulgarian</td>
+							<td data-label="Historical / Cultural Context">Contemporary Europe through a Bulgarian lens</td>
+
+							<td data-label="Next Read">Under the Yoke — Ivan Vazov</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Croatia</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Ministry of Pain</td>
+							<td data-label="Author">Dubravka Ugrešić</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Exile; language; memory; Yugoslavia</td>
+							<td data-label="Original Language">Croatian</td>
+							<td data-label="Historical / Cultural Context">Post-Yugoslav diaspora</td>
+
+							<td data-label="Next Read">The Return of Philip Latinowicz — Miroslav Krleža</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Czechia</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Unbearable Lightness of Being</td>
+							<td data-label="Author">Milan Kundera</td>
+							<td data-label="Genre">Philosophical novel</td>
+							<td data-label="Themes">Freedom; love; history; embodiment</td>
+							<td data-label="Original Language">Czech</td>
+							<td data-label="Historical / Cultural Context">Czechoslovakia around the Prague Spring</td>
+
+							<td data-label="Next Read">The Good Soldier Švejk — Jaroslav Hašek</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Denmark</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Smilla's Sense of Snow</td>
+							<td data-label="Author">Peter Høeg</td>
+							<td data-label="Genre">Literary mystery</td>
+							<td data-label="Themes">Identity; colonialism; science; isolation</td>
+							<td data-label="Original Language">Danish</td>
+							<td data-label="Historical / Cultural Context">Denmark and Greenland</td>
+
+							<td data-label="Next Read">We, the Drowned — Carsten Jensen</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Estonia</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Man Who Spoke Snakish</td>
+							<td data-label="Author">Andrus Kivirähk</td>
+							<td data-label="Genre">Mythic literary fiction</td>
+							<td data-label="Themes">Modernization; language; cultural loss; belief</td>
+							<td data-label="Original Language">Estonian</td>
+							<td data-label="Historical / Cultural Context">A fantastical premodern Estonia</td>
+
+							<td data-label="Next Read">Truth and Justice — A. H. Tammsaare</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Finland</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Year of the Hare</td>
+							<td data-label="Author">Arto Paasilinna</td>
+							<td data-label="Genre">Comic literary fiction</td>
+							<td data-label="Themes">Escape; nature; freedom; absurdity</td>
+							<td data-label="Original Language">Finnish</td>
+							<td data-label="Historical / Cultural Context">Rural Finland</td>
+
+							<td data-label="Next Read">Unknown Soldiers — Väinö Linna</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">France</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Hunchback of Notre-Dame</td>
+							<td data-label="Author">Victor Hugo</td>
+							<td data-label="Genre">Historical / Gothic novel</td>
+							<td data-label="Themes">Justice; beauty; exclusion; obsession</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Medieval Paris</td>
+
+							<td data-label="Next Read">The Count of Monte Cristo — Alexandre Dumas</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Germany</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Faust, Part One</td>
+							<td data-label="Author">Johann Wolfgang von Goethe</td>
+							<td data-label="Genre">Verse drama</td>
+							<td data-label="Themes">Knowledge; temptation; striving; salvation</td>
+							<td data-label="Original Language">German</td>
+							<td data-label="Historical / Cultural Context">German Romantic and Enlightenment thought</td>
+
+							<td data-label="Next Read">The Magic Mountain — Thomas Mann</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Greece</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Zorba the Greek</td>
+							<td data-label="Author">Nikos Kazantzakis</td>
+							<td data-label="Genre">Philosophical novel</td>
+							<td data-label="Themes">Freedom; vitality; intellect; mortality</td>
+							<td data-label="Original Language">Greek</td>
+							<td data-label="Historical / Cultural Context">Crete</td>
+
+							<td data-label="Next Read">The Murderess — Alexandros Papadiamantis</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Holy See / Vatican City</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Confessions</td>
+							<td data-label="Author">Augustine of Hippo</td>
+							<td data-label="Genre">Spiritual autobiography / philosophy</td>
+							<td data-label="Themes">Memory; sin; conversion; time</td>
+							<td data-label="Original Language">Latin</td>
+							<td data-label="Historical / Cultural Context">Foundational Latin Christian intellectual tradition</td>
+
+							<td data-label="Next Read">The Divine Comedy — Dante Alighieri</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Hungary</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Satantango</td>
+							<td data-label="Author">László Krasznahorkai</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Decay; hope; manipulation; entrapment</td>
+							<td data-label="Original Language">Hungarian</td>
+							<td data-label="Historical / Cultural Context">A collapsing Hungarian settlement</td>
+
+							<td data-label="Next Read">Embers — Sándor Márai</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Iceland</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Independent People</td>
+							<td data-label="Author">Halldór Laxness</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Independence; poverty; pride; family</td>
+							<td data-label="Original Language">Icelandic</td>
+							<td data-label="Historical / Cultural Context">Rural Iceland</td>
+
+							<td data-label="Next Read">The Blue Fox — Sjón</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Ireland</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Picture of Dorian Gray</td>
+							<td data-label="Author">Oscar Wilde</td>
+							<td data-label="Genre">Gothic philosophical novel</td>
+							<td data-label="Themes">Beauty; corruption; conscience; duplicity</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Victorian London through an Irish author</td>
+
+							<td data-label="Next Read">Ulysses — James Joyce</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Italy</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Name of the Rose</td>
+							<td data-label="Author">Umberto Eco</td>
+							<td data-label="Genre">Historical mystery</td>
+							<td data-label="Themes">Knowledge; faith; interpretation; power</td>
+							<td data-label="Original Language">Italian</td>
+							<td data-label="Historical / Cultural Context">A medieval monastery</td>
+
+							<td data-label="Next Read">The Leopard — Giuseppe Tomasi di Lampedusa</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Latvia</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Soviet Milk</td>
+							<td data-label="Author">Nora Ikstena</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Motherhood; occupation; repression; inheritance</td>
+							<td data-label="Original Language">Latvian</td>
+							<td data-label="Historical / Cultural Context">Soviet Latvia</td>
+
+							<td data-label="Next Read">In the Shadow of Rooster Hill — Osvalds Zebris</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Liechtenstein</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Dark Muse</td>
+							<td data-label="Author">Armin Öhri</td>
+							<td data-label="Genre">Historical crime fiction</td>
+							<td data-label="Themes">Justice; secrecy; medicine; social order</td>
+							<td data-label="Original Language">German</td>
+							<td data-label="Historical / Cultural Context">19th-century Liechtenstein</td>
+
+							<td data-label="Next Read">The Green Madonna — Stefan Sprenger</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Lithuania</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Forest of the Gods</td>
+							<td data-label="Author">Balys Sruoga</td>
+							<td data-label="Genre">Memoir / satire</td>
+							<td data-label="Themes">Concentration camps; survival; absurdity; dehumanization</td>
+							<td data-label="Original Language">Lithuanian</td>
+							<td data-label="Historical / Cultural Context">Stutthof concentration camp</td>
+
+							<td data-label="Next Read">The White Shroud — Antanas Škėma</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Luxembourg</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Book of Secrets</td>
+							<td data-label="Author">Jean-Michel Guenassia</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Memory; identity; Europe; hidden lives</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Luxembourg-connected European context</td>
+
+							<td data-label="Next Read">The Last Summer — Roger Manderscheid</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Malta</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Jukebox Queen of Malta</td>
+							<td data-label="Author">Nicholas Rinaldi</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">War; love; island life; survival</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Malta during World War II</td>
+
+							<td data-label="Next Read">In the Name of the Father (and of the Son) — Immanuel Mifsud</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Moldova</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Good Life Elsewhere</td>
+							<td data-label="Author">Vladimir Lorchenkov</td>
+							<td data-label="Genre">Satirical novel</td>
+							<td data-label="Themes">Migration; poverty; bureaucracy; absurdity</td>
+							<td data-label="Original Language">Russian</td>
+							<td data-label="Historical / Cultural Context">A Moldovan village dreaming of Italy</td>
+
+							<td data-label="Next Read">Bessarabian Nights — Stela Brinzeanu</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Monaco</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">A Book of Mediterranean Food</td>
+							<td data-label="Author">Elizabeth David</td>
+							<td data-label="Genre">Food writing / cultural nonfiction</td>
+							<td data-label="Themes">Place; appetite; travel; Mediterranean culture</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Mediterranean life, including the Riviera</td>
+
+							<td data-label="Next Read">The Principality of Monaco — H. Pemberton</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Montenegro</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Mountain Wreath</td>
+							<td data-label="Author">Petar II Petrović-Njegoš</td>
+							<td data-label="Genre">Epic verse drama</td>
+							<td data-label="Themes">Nation; faith; violence; honor</td>
+							<td data-label="Original Language">Serbian</td>
+							<td data-label="Historical / Cultural Context">Historical Montenegro</td>
+
+							<td data-label="Next Read">The Coming — Andrej Nikolaidis</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Netherlands</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Evenings</td>
+							<td data-label="Author">Gerard Reve</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Alienation; family; boredom; postwar life</td>
+							<td data-label="Original Language">Dutch</td>
+							<td data-label="Historical / Cultural Context">Amsterdam after World War II</td>
+
+							<td data-label="Next Read">The Discovery of Heaven — Harry Mulisch</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">North Macedonia</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">A Spare Life</td>
+							<td data-label="Author">Lidija Dimkovska</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Identity; bodily autonomy; nation; separation</td>
+							<td data-label="Original Language">Macedonian</td>
+							<td data-label="Historical / Cultural Context">Macedonia and the former Yugoslavia</td>
+
+							<td data-label="Next Read">The Time of the Goats — Luan Starova</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Norway</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Hunger</td>
+							<td data-label="Author">Knut Hamsun</td>
+							<td data-label="Genre">Modernist novel</td>
+							<td data-label="Themes">Poverty; pride; madness; artistic identity</td>
+							<td data-label="Original Language">Norwegian</td>
+							<td data-label="Historical / Cultural Context">Kristiania/Oslo</td>
+
+							<td data-label="Next Read">The Ice Palace — Tarjei Vesaas</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Poland</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Solaris</td>
+							<td data-label="Author">Stanisław Lem</td>
+							<td data-label="Genre">Philosophical science fiction</td>
+							<td data-label="Themes">Consciousness; otherness; grief; knowledge</td>
+							<td data-label="Original Language">Polish</td>
+							<td data-label="Historical / Cultural Context">A research station orbiting Solaris</td>
+
+							<td data-label="Next Read">Drive Your Plow Over the Bones of the Dead — Olga Tokarczuk</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Portugal</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Blindness</td>
+							<td data-label="Author">José Saramago</td>
+							<td data-label="Genre">Allegorical literary fiction</td>
+							<td data-label="Themes">Morality; society; dignity; power</td>
+							<td data-label="Original Language">Portuguese</td>
+							<td data-label="Historical / Cultural Context">An unnamed city during an epidemic</td>
+
+							<td data-label="Next Read">The Book of Disquiet — Fernando Pessoa</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Romania</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Solenoid</td>
+							<td data-label="Author">Mircea Cărtărescu</td>
+							<td data-label="Genre">Literary / surreal fiction</td>
+							<td data-label="Themes">Reality; failure; body; transcendence</td>
+							<td data-label="Original Language">Romanian</td>
+							<td data-label="Historical / Cultural Context">Bucharest</td>
+
+							<td data-label="Next Read">The Land of Green Plums — Herta Müller</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Russia</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Brothers Karamazov</td>
+							<td data-label="Author">Fyodor Dostoevsky</td>
+							<td data-label="Genre">Philosophical novel</td>
+							<td data-label="Themes">Faith; freedom; guilt; family</td>
+							<td data-label="Original Language">Russian</td>
+							<td data-label="Historical / Cultural Context">Imperial Russia</td>
+
+							<td data-label="Next Read">Notes from Underground — Fyodor Dostoevsky</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">San Marino</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Republic of San Marino</td>
+							<td data-label="Author">Giuseppe Rossi</td>
+							<td data-label="Genre">Cultural / historical nonfiction</td>
+							<td data-label="Themes">Republicanism; independence; civic identity; endurance</td>
+							<td data-label="Original Language">Italian</td>
+							<td data-label="Historical / Cultural Context">San Marino's political and cultural history</td>
+
+							<td data-label="Next Read">San Marino: A History — various</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Serbia</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Dictionary of the Khazars</td>
+							<td data-label="Author">Milorad Pavić</td>
+							<td data-label="Genre">Postmodern novel</td>
+							<td data-label="Themes">History; interpretation; identity; belief</td>
+							<td data-label="Original Language">Serbian</td>
+							<td data-label="Historical / Cultural Context">A fictionalized Khazar past</td>
+
+							<td data-label="Next Read">The Encyclopedia of the Dead — Danilo Kiš</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Slovakia</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Shop on Main Street</td>
+							<td data-label="Author">Ladislav Grosman</td>
+							<td data-label="Genre">Historical novella</td>
+							<td data-label="Themes">Complicity; antisemitism; cowardice; conscience</td>
+							<td data-label="Original Language">Slovak</td>
+							<td data-label="Historical / Cultural Context">The Slovak State during the Holocaust</td>
+
+							<td data-label="Next Read">Rivers of Babylon — Peter Pišťanek</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Slovenia</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Alamut</td>
+							<td data-label="Author">Vladimir Bartol</td>
+							<td data-label="Genre">Historical / philosophical novel</td>
+							<td data-label="Themes">Power; belief; manipulation; fanaticism</td>
+							<td data-label="Original Language">Slovene</td>
+							<td data-label="Historical / Cultural Context">11th-century Persia</td>
+
+							<td data-label="Next Read">I Saw Her That Night — Drago Jančar</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Spain</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Don Quixote</td>
+							<td data-label="Author">Miguel de Cervantes</td>
+							<td data-label="Genre">Classic comic novel</td>
+							<td data-label="Themes">Reality; idealism; storytelling; identity</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Early modern Spain</td>
+
+							<td data-label="Next Read">The Shadow of the Wind — Carlos Ruiz Zafón</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Sweden</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Saga of Gösta Berling</td>
+							<td data-label="Author">Selma Lagerlöf</td>
+							<td data-label="Genre">Romantic saga</td>
+							<td data-label="Themes">Redemption; community; passion; legend</td>
+							<td data-label="Original Language">Swedish</td>
+							<td data-label="Historical / Cultural Context">19th-century Värmland</td>
+
+							<td data-label="Next Read">Doctor Glas — Hjalmar Söderberg</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Switzerland</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">The Visit</td>
+							<td data-label="Author">Friedrich Dürrenmatt</td>
+							<td data-label="Genre">Drama</td>
+							<td data-label="Themes">Justice; revenge; corruption; collective guilt</td>
+							<td data-label="Original Language">German</td>
+							<td data-label="Historical / Cultural Context">A decaying Swiss town</td>
+
+							<td data-label="Next Read">The Pledge — Friedrich Dürrenmatt</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">Ukraine</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Death and the Penguin</td>
+							<td data-label="Author">Andrey Kurkov</td>
+							<td data-label="Genre">Satirical literary fiction</td>
+							<td data-label="Themes">Absurdity; loneliness; corruption; survival</td>
+							<td data-label="Original Language">Russian</td>
+							<td data-label="Historical / Cultural Context">Post-Soviet Kyiv</td>
+
+							<td data-label="Next Read">The Museum of Abandoned Secrets — Oksana Zabuzhko</td>
+						</tr>
+						<tr data-region="Europe">
+							<td data-label="Country">United Kingdom</td>
+							<td data-label="Region">Europe</td>
+							<td data-label="Primary Book">Frankenstein</td>
+							<td data-label="Author">Mary Shelley</td>
+							<td data-label="Genre">Gothic philosophical novel</td>
+							<td data-label="Themes">Creation; responsibility; isolation; prejudice</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Europe and the Arctic</td>
+
+							<td data-label="Next Read">Never Let Me Go — Kazuo Ishiguro</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Antigua and Barbuda</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Annie John</td>
+							<td data-label="Author">Jamaica Kincaid</td>
+							<td data-label="Genre">Coming-of-age novel</td>
+							<td data-label="Themes">Motherhood; colonial education; identity; departure</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Antigua</td>
+
+							<td data-label="Next Read">A Small Place — Jamaica Kincaid</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Argentina</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">Ficciones</td>
+							<td data-label="Author">Jorge Luis Borges</td>
+							<td data-label="Genre">Short stories</td>
+							<td data-label="Themes">Infinity; identity; knowledge; reality</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Argentina and imagined worlds</td>
+
+							<td data-label="Next Read">The Invention of Morel — Adolfo Bioy Casares</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Bahamas</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">God's Angry Babies</td>
+							<td data-label="Author">Ian Strachan</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Religion; family; sexuality; island society</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">The Bahamas</td>
+
+							<td data-label="Next Read">A Small Man — Patricia Glinton-Meicholas</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Barbados</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">The Polished Hoe</td>
+							<td data-label="Author">Austin Clarke</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Colonialism; violence; memory; class</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">20th-century Barbados</td>
+
+							<td data-label="Next Read">In the Castle of My Skin — George Lamming</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Belize</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Beka Lamb</td>
+							<td data-label="Author">Zee Edgell</td>
+							<td data-label="Genre">Coming-of-age novel</td>
+							<td data-label="Themes">Girlhood; colonialism; politics; family</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Belize City</td>
+
+							<td data-label="Next Read">Time and the River — Zee Edgell</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Bolivia</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">Juan de la Rosa</td>
+							<td data-label="Author">Nataniel Aguirre</td>
+							<td data-label="Genre">Historical novel</td>
+							<td data-label="Themes">Independence; childhood; nation; memory</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Bolivia's independence struggle</td>
+
+							<td data-label="Next Read">The President — Edmundo Paz Soldán</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Brazil</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">Dom Casmurro</td>
+							<td data-label="Author">Machado de Assis</td>
+							<td data-label="Genre">Psychological novel</td>
+							<td data-label="Themes">Jealousy; memory; unreliable narration; class</td>
+							<td data-label="Original Language">Portuguese</td>
+							<td data-label="Historical / Cultural Context">19th-century Rio de Janeiro</td>
+
+							<td data-label="Next Read">The Posthumous Memoirs of Brás Cubas — Machado de Assis</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Canada</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Alias Grace</td>
+							<td data-label="Author">Margaret Atwood</td>
+							<td data-label="Genre">Historical literary fiction</td>
+							<td data-label="Themes">Guilt; gender; class; storytelling</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">19th-century Canada</td>
+
+							<td data-label="Next Read">Fifth Business — Robertson Davies</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Chile</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">The House of the Spirits</td>
+							<td data-label="Author">Isabel Allende</td>
+							<td data-label="Genre">Family saga / magical realism</td>
+							<td data-label="Themes">Memory; politics; family; violence</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">20th-century Chile</td>
+
+							<td data-label="Next Read">By Night in Chile — Roberto Bolaño</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Colombia</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">One Hundred Years of Solitude</td>
+							<td data-label="Author">Gabriel García Márquez</td>
+							<td data-label="Genre">Magical realist family saga</td>
+							<td data-label="Themes">History; solitude; family; repetition</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Macondo and Colombian history</td>
+
+							<td data-label="Next Read">The Sound of Things Falling — Juan Gabriel Vásquez</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Costa Rica</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Mamita Yunai</td>
+							<td data-label="Author">Carlos Luis Fallas</td>
+							<td data-label="Genre">Social realist novel</td>
+							<td data-label="Themes">Labor; imperialism; exploitation; solidarity</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Banana plantations in Costa Rica</td>
+
+							<td data-label="Next Read">The Madwoman of Gandoca — Anacristina Rossi</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Cuba</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">The Kingdom of This World</td>
+							<td data-label="Author">Alejo Carpentier</td>
+							<td data-label="Genre">Historical magical realism</td>
+							<td data-label="Themes">Revolution; slavery; power; myth</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Haiti and the Caribbean through a Cuban writer</td>
+
+							<td data-label="Next Read">The Lost Steps — Alejo Carpentier</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Dominica</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Wide Sargasso Sea</td>
+							<td data-label="Author">Jean Rhys</td>
+							<td data-label="Genre">Postcolonial novel</td>
+							<td data-label="Themes">Identity; colonialism; madness; marriage</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Dominica/Jamaica and the Caribbean</td>
+
+							<td data-label="Next Read">The Orchid House — Phyllis Shand Allfrey</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Dominican Republic</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">In the Time of the Butterflies</td>
+							<td data-label="Author">Julia Alvarez</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Dictatorship; resistance; sisterhood; sacrifice</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">The Trujillo dictatorship</td>
+
+							<td data-label="Next Read">The Brief Wondrous Life of Oscar Wao — Junot Díaz</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Ecuador</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">Huasipungo</td>
+							<td data-label="Author">Jorge Icaza</td>
+							<td data-label="Genre">Social realist novel</td>
+							<td data-label="Themes">Indigenous exploitation; land; racism; capitalism</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">The Ecuadorian Andes</td>
+
+							<td data-label="Next Read">The Old Man Who Read Love Stories — Luis Sepúlveda</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">El Salvador</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">One Day of Life</td>
+							<td data-label="Author">Manlio Argueta</td>
+							<td data-label="Genre">Political literary fiction</td>
+							<td data-label="Themes">Repression; family; faith; resistance</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Rural El Salvador before civil war</td>
+
+							<td data-label="Next Read">The Dream of My Return — Horacio Castellanos Moya</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Grenada</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Angel</td>
+							<td data-label="Author">Merle Collins</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Revolution; family; colonialism; political awakening</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Grenada around the 1979 revolution</td>
+
+							<td data-label="Next Read">The Colour of Forgetting — Merle Collins</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Guatemala</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Men of Maize</td>
+							<td data-label="Author">Miguel Ángel Asturias</td>
+							<td data-label="Genre">Mythic / modernist novel</td>
+							<td data-label="Themes">Indigenous cosmology; land; capitalism; myth</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Guatemala and Maya cultural worlds</td>
+
+							<td data-label="Next Read">The President — Miguel Ángel Asturias</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Guyana</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">Palace of the Peacock</td>
+							<td data-label="Author">Wilson Harris</td>
+							<td data-label="Genre">Modernist novel</td>
+							<td data-label="Themes">Journey; colonialism; consciousness; landscape</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">The Guyanese interior</td>
+
+							<td data-label="Next Read">The Ventriloquist's Tale — Pauline Melville</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Haiti</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Masters of the Dew</td>
+							<td data-label="Author">Jacques Roumain</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Community; drought; solidarity; sacrifice</td>
+							<td data-label="Original Language">French</td>
+							<td data-label="Historical / Cultural Context">Rural Haiti</td>
+
+							<td data-label="Next Read">The Farming of Bones — Edwidge Danticat</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Honduras</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Prisión Verde</td>
+							<td data-label="Author">Ramón Amaya Amador</td>
+							<td data-label="Genre">Social realist novel</td>
+							<td data-label="Themes">Labor; imperialism; exploitation; resistance</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Honduran banana plantations</td>
+
+							<td data-label="Next Read">Big Banana — Roberto Quesada</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Jamaica</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">A Brief History of Seven Killings</td>
+							<td data-label="Author">Marlon James</td>
+							<td data-label="Genre">Historical literary fiction</td>
+							<td data-label="Themes">Violence; politics; music; power</td>
+							<td data-label="Original Language">English / Jamaican Creole</td>
+							<td data-label="Historical / Cultural Context">Jamaica from the 1970s onward</td>
+
+							<td data-label="Next Read">The Book of Night Women — Marlon James</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Mexico</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Pedro Páramo</td>
+							<td data-label="Author">Juan Rulfo</td>
+							<td data-label="Genre">Modernist / magical realist novella</td>
+							<td data-label="Themes">Death; memory; power; haunting</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Comala, Mexico</td>
+
+							<td data-label="Next Read">The Death of Artemio Cruz — Carlos Fuentes</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Nicaragua</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">The Country Under My Skin</td>
+							<td data-label="Author">Gioconda Belli</td>
+							<td data-label="Genre">Memoir</td>
+							<td data-label="Themes">Revolution; feminism; love; political commitment</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Nicaragua and exile</td>
+
+							<td data-label="Next Read">The Infinite Plan — Gioconda Belli</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Panama</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">The Golden Horse</td>
+							<td data-label="Author">Juan David Morgan</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Canal; sovereignty; ambition; national identity</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Panama around canal politics</td>
+
+							<td data-label="Next Read">The Book of Panama — various</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Paraguay</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">I, the Supreme</td>
+							<td data-label="Author">Augusto Roa Bastos</td>
+							<td data-label="Genre">Historical / postmodern novel</td>
+							<td data-label="Themes">Dictatorship; language; power; authorship</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">19th-century Paraguay</td>
+
+							<td data-label="Next Read">Son of Man — Augusto Roa Bastos</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Peru</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">The War of the End of the World</td>
+							<td data-label="Author">Mario Vargas Llosa</td>
+							<td data-label="Genre">Historical epic</td>
+							<td data-label="Themes">Fanaticism; state power; belief; violence</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Brazil, by a Peruvian author</td>
+
+							<td data-label="Next Read">Deep Rivers — José María Arguedas</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Saint Kitts and Nevis</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Only God Can Make a Tree</td>
+							<td data-label="Author">Bertram Roach</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Migration; family; island identity; change</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Saint Kitts and Nevis</td>
+
+							<td data-label="Next Read">A State of Independence — Caryl Phillips</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Saint Lucia</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Omeros</td>
+							<td data-label="Author">Derek Walcott</td>
+							<td data-label="Genre">Epic poem</td>
+							<td data-label="Themes">History; colonialism; sea; identity</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Saint Lucia and the Caribbean</td>
+
+							<td data-label="Next Read">Another Life — Derek Walcott</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Saint Vincent and the Grenadines</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Unburnable</td>
+							<td data-label="Author">Marie-Elena John</td>
+							<td data-label="Genre">Historical literary fiction</td>
+							<td data-label="Themes">Ancestry; colonialism; women; buried history</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Dominica and the Caribbean; author of Vincentian heritage</td>
+
+							<td data-label="Next Read">The Moon Is Following Me — Cecil Browne</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Suriname</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">The Cost of Sugar</td>
+							<td data-label="Author">Cynthia McLeod</td>
+							<td data-label="Genre">Historical fiction</td>
+							<td data-label="Themes">Slavery; plantation society; race; power</td>
+							<td data-label="Original Language">Dutch</td>
+							<td data-label="Historical / Cultural Context">18th-century Suriname</td>
+
+							<td data-label="Next Read">The Free Negress Elisabeth — Cynthia McLeod</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">Trinidad and Tobago</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">A House for Mr Biswas</td>
+							<td data-label="Author">V. S. Naipaul</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Dignity; family; colonial society; belonging</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Trinidad</td>
+
+							<td data-label="Next Read">The Dragon Can't Dance — Earl Lovelace</td>
+						</tr>
+						<tr data-region="North America &amp; Caribbean">
+							<td data-label="Country">United States</td>
+							<td data-label="Region">North America &amp; Caribbean</td>
+							<td data-label="Primary Book">Moby-Dick</td>
+							<td data-label="Author">Herman Melville</td>
+							<td data-label="Genre">Epic / philosophical novel</td>
+							<td data-label="Themes">Obsession; nature; fate; knowledge</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">19th-century whaling world</td>
+
+							<td data-label="Next Read">Beloved — Toni Morrison</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Uruguay</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">The Truce</td>
+							<td data-label="Author">Mario Benedetti</td>
+							<td data-label="Genre">Diary novel</td>
+							<td data-label="Themes">Loneliness; love; routine; mortality</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">Montevideo</td>
+
+							<td data-label="Next Read">The Shipyard — Juan Carlos Onetti</td>
+						</tr>
+						<tr data-region="South America">
+							<td data-label="Country">Venezuela</td>
+							<td data-label="Region">South America</td>
+							<td data-label="Primary Book">Doña Bárbara</td>
+							<td data-label="Author">Rómulo Gallegos</td>
+							<td data-label="Genre">Regional novel</td>
+							<td data-label="Themes">Civilization; power; land; desire</td>
+							<td data-label="Original Language">Spanish</td>
+							<td data-label="Historical / Cultural Context">The Venezuelan plains</td>
+
+							<td data-label="Next Read">The Sickness — Alberto Barrera Tyszka</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Australia</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">Picnic at Hanging Rock</td>
+							<td data-label="Author">Joan Lindsay</td>
+							<td data-label="Genre">Gothic mystery</td>
+							<td data-label="Themes">Mystery; repression; landscape; disappearance</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Colonial Australia</td>
+
+							<td data-label="Next Read">Cloudstreet — Tim Winton</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Fiji</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">The Disturbing Case of the Dead Man</td>
+							<td data-label="Author">Subramani</td>
+							<td data-label="Genre">Short stories</td>
+							<td data-label="Themes">Indo-Fijian identity; migration; family; social change</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Fiji's Indo-Fijian communities</td>
+
+							<td data-label="Next Read">Kisses in the Nederends — Epeli Hau‘ofa</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Kiribati</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">Teresia's Manuscript</td>
+							<td data-label="Author">Teresia Teaiwa</td>
+							<td data-label="Genre">Poetry / essays</td>
+							<td data-label="Themes">Pacific identity; militarism; gender; decolonization</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Kiribati and the wider Pacific</td>
+
+							<td data-label="Next Read">Kiribati: Aspects of History — various</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Marshall Islands</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">Iep Jāltok: Poems from a Marshallese Daughter</td>
+							<td data-label="Author">Kathy Jetñil-Kijiner</td>
+							<td data-label="Genre">Poetry</td>
+							<td data-label="Themes">Climate change; nuclear legacy; motherhood; homeland</td>
+							<td data-label="Original Language">English / Marshallese</td>
+							<td data-label="Historical / Cultural Context">The Marshall Islands and diaspora</td>
+
+							<td data-label="Next Read">For the Good of Mankind — Jack Niedenthal</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Micronesia (Federated States of)</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">My Urohs</td>
+							<td data-label="Author">Emelihter Kihleng</td>
+							<td data-label="Genre">Poetry</td>
+							<td data-label="Themes">Womanhood; island identity; colonialism; memory</td>
+							<td data-label="Original Language">English / Pohnpeian</td>
+							<td data-label="Historical / Cultural Context">Pohnpei and Micronesian life</td>
+
+							<td data-label="Next Read">Island of Shattered Dreams — Chantal Spitz</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Nauru</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">Stories from Nauru</td>
+							<td data-label="Author">Various Nauruan storytellers</td>
+							<td data-label="Genre">Oral history / folklore</td>
+							<td data-label="Themes">Island memory; ancestry; land; community</td>
+							<td data-label="Original Language">Nauruan / English</td>
+							<td data-label="Historical / Cultural Context">Nauruan oral traditions</td>
+
+							<td data-label="Next Read">The People of Nauru — Paul Hambruch</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">New Zealand</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">The Bone People</td>
+							<td data-label="Author">Keri Hulme</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Isolation; violence; Māori identity; healing</td>
+							<td data-label="Original Language">English / Māori</td>
+							<td data-label="Historical / Cultural Context">New Zealand's bicultural society</td>
+
+							<td data-label="Next Read">Potiki — Patricia Grace</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Palau</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">Palauan Legends</td>
+							<td data-label="Author">Various</td>
+							<td data-label="Genre">Folklore / oral tradition</td>
+							<td data-label="Themes">Origins; land; kinship; moral order</td>
+							<td data-label="Original Language">Palauan / English</td>
+							<td data-label="Historical / Cultural Context">Palauan oral heritage</td>
+
+							<td data-label="Next Read">Etpison Museum Palau history collections — various</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Papua New Guinea</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">The Crocodile</td>
+							<td data-label="Author">Vincent Eri</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Colonialism; war; tradition; cultural change</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Papua New Guinea around World War II</td>
+
+							<td data-label="Next Read">Ten Thousand Years in a Lifetime — Albert Maori Kiki</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Samoa</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">Sons for the Return Home</td>
+							<td data-label="Author">Albert Wendt</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Migration; race; love; belonging</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">Samoa and New Zealand</td>
+
+							<td data-label="Next Read">Leaves of the Banyan Tree — Albert Wendt</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Solomon Islands</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">The Pacific and Other Stories</td>
+							<td data-label="Author">John Saunana</td>
+							<td data-label="Genre">Short stories</td>
+							<td data-label="Themes">Island life; colonial legacy; community; change</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">The Solomon Islands</td>
+
+							<td data-label="Next Read">Devil-Devil — Graeme Kent</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Tonga</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">Tales of the Tikongs</td>
+							<td data-label="Author">Epeli Hau‘ofa</td>
+							<td data-label="Genre">Satirical stories</td>
+							<td data-label="Themes">Development; colonialism; bureaucracy; island life</td>
+							<td data-label="Original Language">English</td>
+							<td data-label="Historical / Cultural Context">A fictional Pacific island world shaped by Tonga and Fiji</td>
+
+							<td data-label="Next Read">Kisses in the Nederends — Epeli Hau‘ofa</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Tuvalu</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">Tuvalu: A History</td>
+							<td data-label="Author">Various Tuvaluan contributors</td>
+							<td data-label="Genre">Cultural history / oral testimony</td>
+							<td data-label="Themes">Island history; colonialism; community; environment</td>
+							<td data-label="Original Language">English / Tuvaluan</td>
+							<td data-label="Historical / Cultural Context">Tuvalu's historical and oral record</td>
+
+							<td data-label="Next Read">The Material Culture of Tuvalu — Gerd Koch</td>
+						</tr>
+						<tr data-region="Oceania">
+							<td data-label="Country">Vanuatu</td>
+							<td data-label="Region">Oceania</td>
+							<td data-label="Primary Book">The Other Side of the Island</td>
+							<td data-label="Author">Ralph Regenvanu and contributors</td>
+							<td data-label="Genre">Essays / cultural writing</td>
+							<td data-label="Themes">Custom; colonialism; independence; identity</td>
+							<td data-label="Original Language">English / Bislama</td>
+							<td data-label="Historical / Cultural Context">Vanuatu's cultural and political life</td>
+
+							<td data-label="Next Read">Black Stone — Grace Mera Molisa</td>
+						</tr>
+						<tr data-region="Asia">
+							<td data-label="Country">Taiwan</td>
+							<td data-label="Region">Asia</td>
+							<td data-label="Primary Book">The Butcher's Wife</td>
+							<td data-label="Author">Li Ang</td>
+							<td data-label="Genre">Literary fiction</td>
+							<td data-label="Themes">Patriarchy; violence; gender; social judgment</td>
+							<td data-label="Original Language">Chinese</td>
+							<td data-label="Historical / Cultural Context">Rural Taiwan</td>
+
+							<td data-label="Next Read">Notes of a Desolate Man — Chu T'ien-wen</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<p class="books-note">No single book can represent an entire nation. For a handful of microstates and Pacific island nations with very limited English translation, the list uses documented folklore, oral history, cultural nonfiction, or a provisional related work. Taiwan is included as an optional addition.</p>
+			</div>
+		</section>
+	</div>
+
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script>
+		(function () {
+			var search = document.getElementById('book-search');
+			var region = document.getElementById('region-filter');
+			var status = document.getElementById('books-status');
+			var expand = document.getElementById('books-expand');
+			var section = document.getElementById('world-list');
+			var tableWrapper = document.getElementById('books-table-wrapper');
+			var rows = Array.prototype.slice.call(document.querySelectorAll('.books-table tbody tr'));
+			function filterBooks() {
+				var query = search.value.trim().toLocaleLowerCase();
+				var selectedRegion = region.value;
+				var expanded = expand.getAttribute('aria-expanded') === 'true';
+				var matches = 0;
+				rows.forEach(function (row) {
+					var matchesFilter = (!query || row.textContent.toLocaleLowerCase().indexOf(query) !== -1) && (!selectedRegion || row.dataset.region === selectedRegion);
+					row.hidden = !matchesFilter;
+					if (matchesFilter) matches += 1;
+				});
+				var visibleRows = rows.filter(function (row) { return !row.hidden; });
+				if (expanded || visibleRows.length <= 8) {
+					tableWrapper.style.maxHeight = 'none';
+					tableWrapper.style.overflowY = 'visible';
+					status.textContent = 'Showing ' + matches + (matches === 1 ? ' book' : ' books');
+				} else {
+					var header = document.querySelector('.books-table thead');
+					var height = header.getBoundingClientRect().height;
+					visibleRows.slice(0, 8).forEach(function (row) { height += row.getBoundingClientRect().height; });
+					tableWrapper.style.maxHeight = Math.ceil(height) + 'px';
+					tableWrapper.style.overflowY = 'auto';
+					tableWrapper.scrollTop = 0;
+					status.textContent = matches + ' books · 8-row scrollable view';
+				}
+			}
+			search.addEventListener('input', filterBooks);
+			region.addEventListener('change', filterBooks);
+			expand.addEventListener('click', function () {
+				var expanded = section.classList.toggle('is-expanded');
+				expand.setAttribute('aria-expanded', String(expanded));
+				expand.textContent = expanded ? 'Collapse table' : 'Expand table';
+				filterBooks();
+			});
+			filterBooks();
+		}());
+	</script>
+</body>
+</html>
