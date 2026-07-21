@@ -14,6 +14,7 @@
 		.books-controls label { font-size: .8rem; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; }
 		.books-controls input, .books-controls select { margin-top: .45rem; }
 		.books-expand { margin: 0 0 .05rem 0; white-space: nowrap; }
+		.grade-controls { display: flex; justify-content: flex-end; margin: 2rem 0 1rem; }
 		.books-section > .inner { transition: max-width .25s ease, width .25s ease; }
 		.books-section.is-expanded > .inner { max-width: none; width: calc(100% - 4rem); }
 		.books-status { color: #666; font-size: .9rem; margin: 0 0 1rem; text-align: left; }
@@ -25,6 +26,7 @@
 		.books-table td:nth-child(3), .books-table td:nth-child(10) { min-width: 13rem; }
 		.books-table td:nth-child(5), .books-table td:nth-child(7) { min-width: 8rem; }
 		.books-table-wrapper { scrollbar-gutter: stable; }
+		.books-table-wrapper.is-expanded { max-height: none !important; overflow-y: visible !important; }
 		.books-note { max-width: 54rem; margin: 2rem auto 0; color: #000000; font-size: 1rem; }
 		[hidden] { display: none !important; }
 		@media screen and (max-width: 736px) {
@@ -45,7 +47,11 @@
 			<div class="content">
 				<h1><strong>Library </strong></h1>
 				<p class="major">Curated collections of books that have shaped how I understand myself, other people, and the world around me. Yes, I have read every one of them&mdash;some more than once. I have lived long enough to have no excuse not to. Ask me about any of them.</p>
-				<ul class="actions"><li><a href="index.html" class="button">Home</a></li><li><a href="#world-list" class="button smooth-scroll">Around the World</a></li></ul>
+				<ul class="actions">
+					<li><a href="index.html" class="button">Home</a></li>
+					<li><a href="#world-list" class="button smooth-scroll">Around the World</a></li>
+					<li><a href="#growing-up" class="button smooth-scroll">Growing Up</a></li>
+				</ul>
 				
 			</div>
 		</section>
@@ -71,7 +77,7 @@
 							<option value="South America">South America</option>
 							<option value="Oceania">Oceania</option></select></label>
 				</div>
-				<p class="books-status" id="books-status" aria-live="polite">196 books · 8-row view</p>
+				<p class="books-status" id="books-status" aria-live="polite">196 books · 5-row scrollable view</p>
 				<div class="table-wrapper align-left books-table-wrapper" id="books-table-wrapper">
 					<table class="books-table">
 						<thead><tr><th scope="col">Country</th><th scope="col">Region</th><th scope="col">Primary Book</th><th scope="col">Author</th><th scope="col">Genre</th><th scope="col">Themes</th><th scope="col">Original Language</th><th scope="col">Historical + Cultural Context</th><th scope="col">Next Read</th></tr></thead>
@@ -2431,7 +2437,41 @@
 						</tbody>
 					</table>
 				</div>
-				<p class="books-note">No single book can represent an entire nation. For a handful of microstates and Pacific island nations with very limited English translation, the list uses documented folklore, oral history, cultural nonfiction, or a provisional related work. Taiwan is included as an optional addition.</p>
+				<p class="books-note"><strong>Note:</strong> No single book can represent an entire nation. For a handful of microstates and Pacific island nations with very limited English translation, the list uses documented folklore, oral history, cultural nonfiction, or a provisional related work. Taiwan is included as an optional addition.</p>
+			</div>
+		</section>
+
+		<section class="wrapper style1 align-center books-section" id="growing-up">
+			<div class="inner">
+				<header class="books-intro">
+					<h2>Growing Up</h2>
+				</header>
+				<p>Books I loved growing up (or wish I had discovered sooner).</p>
+				<button class="button small books-expand" id="grade-expand" type="button" aria-expanded="false">Expand table</button>
+				<div class="image preview">
+					<img src="images/growing.png" alt="" />
+				</div>
+				<p class="books-status" id="grade-status" aria-live="polite">13 books · 5-row scrollable view</p>
+				<div class="table-wrapper align-left books-table-wrapper" id="grade-table-wrapper">
+					<table class="books-table grade-table">
+						<thead><tr><th scope="col">Grade</th><th scope="col">Typical Age</th><th scope="col">Book</th><th scope="col">Author</th><th scope="col">Genre</th><th scope="col">Themes</th><th scope="col">Disclaimer</th></tr></thead>
+						<tbody>
+							<tr><td data-label="Grade">K</td><td data-label="Typical Age">5–6</td><td data-label="Book">Where the Wild Things Are</td><td data-label="Author">Maurice Sendak</td><td data-label="Genre">Picture book; fantasy</td><td data-label="Themes">Strong emotions; imagination; anger; home</td><td data-label="Content Notes">Mildly frightening fantasy imagery ;)</td></tr>
+							<tr><td data-label="Grade">1</td><td data-label="Typical Age">6–7</td><td data-label="Book">Frog and Toad Are Friends</td><td data-label="Author">Arnold Lobel</td><td data-label="Genre">Early reader; short stories</td><td data-label="Themes">Friendship; patience; loyalty; difference</td><td data-label="Content Notes">No major concerns.</td></tr>
+							<tr><td data-label="Grade">2</td><td data-label="Typical Age">7–8</td><td data-label="Book">Charlotte's Web</td><td data-label="Author">E. B. White</td><td data-label="Genre">Children's novel; animal fantasy</td><td data-label="Themes">Friendship; sacrifice; mortality; change</td><td data-label="Content Notes">Animal death and grief.</td></tr>
+							<tr><td data-label="Grade">3</td><td data-label="Typical Age">8–9</td><td data-label="Book">The Lion, the Witch and the Wardrobe</td><td data-label="Author">C. S. Lewis</td><td data-label="Genre">Children's fantasy</td><td data-label="Themes">Courage; betrayal; sacrifice; redemption</td><td data-label="Content Notes">Fantasy violence, death, and resurrection imagery.</td></tr>
+							<tr><td data-label="Grade">4</td><td data-label="Typical Age">9–10</td><td data-label="Book">The Hobbit</td><td data-label="Author">J. R. R. Tolkien</td><td data-label="Genre">Fantasy; adventure</td><td data-label="Themes">Courage; greed; judgment; growth</td><td data-label="Content Notes">Battle scenes, peril, and character deaths.</td></tr>
+							<tr><td data-label="Grade">5</td><td data-label="Typical Age">10–11</td><td data-label="Book">The Last Cuentista</td><td data-label="Author">Donna Barba Higuera</td><td data-label="Genre">Middle-grade science fiction</td><td data-label="Themes">Memory; storytelling; cultural erasure; identity</td><td data-label="Content Notes">Mass death, forced assimilation, authoritarian control.</td></tr>
+							<tr><td data-label="Grade">6</td><td data-label="Typical Age">11–12</td><td data-label="Book">A Monster Calls</td><td data-label="Author">Patrick Ness</td><td data-label="Genre">Contemporary fantasy; grief novel</td><td data-label="Themes">Grief; anger; guilt; truth; anticipatory loss</td><td data-label="Content Notes">Terminal illness, bullying, grief, and intense emotional distress.</td></tr>
+							<tr><td data-label="Grade">7</td><td data-label="Typical Age">12–13</td><td data-label="Book">Born a Crime (Young Readers Edition)</td><td data-label="Author">Trevor Noah</td><td data-label="Genre">Memoir</td><td data-label="Themes">Apartheid; race; language; poverty; family; resilience</td><td data-label="Content Notes">Racism, domestic violence, poverty, crime, and political oppression.</td></tr>
+							<tr><td data-label="Grade">8</td><td data-label="Typical Age">13–14</td><td data-label="Book">Persepolis</td><td data-label="Author">Marjane Satrapi</td><td data-label="Genre">Graphic memoir</td><td data-label="Themes">Revolution; religion; gender; war; identity; exile</td><td data-label="Content Notes">War, executions, political repression, sexual references, substance use, and strong language.</td></tr>
+							<tr><td data-label="Grade">9</td><td data-label="Typical Age">14–15</td><td data-label="Book">The Marrow Thieves</td><td data-label="Author">Cherie Dimaline</td><td data-label="Genre">Dystopian fiction; Indigenous speculative fiction</td><td data-label="Themes">Colonialism; Indigenous survival; ecological collapse; memory</td><td data-label="Content Notes">Violence, death, forced confinement, colonial trauma, and references to sexual violence.</td></tr>
+							<tr><td data-label="Grade">10</td><td data-label="Typical Age">15–16</td><td data-label="Book">A Long Way Gone: Memoirs of a Boy Soldier</td><td data-label="Author">Ishmael Beah</td><td data-label="Genre">Memoir; war literature</td><td data-label="Themes">Child soldiers; war; trauma; moral injury; rehabilitation</td><td data-label="Content Notes">Graphic wartime violence, death, drug use, child soldiers, and trauma.</td></tr>
+							<tr><td data-label="Grade">11</td><td data-label="Typical Age">16–17</td><td data-label="Book">Never Let Me Go</td><td data-label="Author">Kazuo Ishiguro</td><td data-label="Genre">Literary dystopia; speculative fiction</td><td data-label="Themes">Personhood; biotechnology; exploitation; mortality; conformity</td><td data-label="Content Notes">Organ harvesting, death, sexuality, institutional exploitation, and existential distress.</td></tr>
+							<tr><td data-label="Grade">12</td><td data-label="Typical Age">17–18</td><td data-label="Book">The Dispossessed</td><td data-label="Author">Ursula K. Le Guin</td><td data-label="Genre">Philosophical science fiction</td><td data-label="Themes">Freedom; property; work; power; utopia; institutional failure</td><td data-label="Content Notes">Sexual content, political repression, attempted sexual assault, violence, and complex political themes.</td></tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</section>
 	</div>
@@ -2449,9 +2489,9 @@
 			var region = document.getElementById('region-filter');
 			var status = document.getElementById('books-status');
 			var expand = document.getElementById('books-expand');
-			var section = document.getElementById('world-list');
+			var section = expand.closest('.books-section');
 			var tableWrapper = document.getElementById('books-table-wrapper');
-			var rows = Array.prototype.slice.call(document.querySelectorAll('.books-table tbody tr'));
+			var rows = Array.prototype.slice.call(section.querySelectorAll('.books-table tbody tr'));
 			function filterBooks() {
 				var query = search.value.trim().toLocaleLowerCase();
 				var selectedRegion = region.value;
@@ -2463,18 +2503,20 @@
 					if (matchesFilter) matches += 1;
 				});
 				var visibleRows = rows.filter(function (row) { return !row.hidden; });
-				if (expanded || visibleRows.length <= 8) {
+				if (expanded || visibleRows.length <= 5) {
+					tableWrapper.classList.add('is-expanded');
 					tableWrapper.style.maxHeight = 'none';
 					tableWrapper.style.overflowY = 'visible';
 					status.textContent = 'Showing ' + matches + (matches === 1 ? ' book' : ' books');
 				} else {
-					var header = document.querySelector('.books-table thead');
+					tableWrapper.classList.remove('is-expanded');
+					var header = section.querySelector('.books-table thead');
 					var height = header.getBoundingClientRect().height;
-					visibleRows.slice(0, 8).forEach(function (row) { height += row.getBoundingClientRect().height; });
+					visibleRows.slice(0, 5).forEach(function (row) { height += row.getBoundingClientRect().height; });
 					tableWrapper.style.maxHeight = Math.ceil(height) + 'px';
 					tableWrapper.style.overflowY = 'auto';
 					tableWrapper.scrollTop = 0;
-					status.textContent = matches + ' books · 8-row scrollable view';
+					status.textContent = matches + ' books · 5-row scrollable view';
 				}
 			}
 			search.addEventListener('input', filterBooks);
@@ -2486,6 +2528,40 @@
 				filterBooks();
 			});
 			filterBooks();
+
+			var gradeExpand = document.getElementById('grade-expand');
+			var gradeSection = gradeExpand.closest('.books-section');
+			var gradeWrapper = document.getElementById('grade-table-wrapper');
+			var gradeStatus = document.getElementById('grade-status');
+			var gradeRows = Array.prototype.slice.call(gradeSection.querySelectorAll('.books-table tbody tr'));
+			function sizeGradeTable() {
+				var expanded = gradeExpand.getAttribute('aria-expanded') === 'true';
+				if (expanded || gradeRows.length <= 5) {
+					gradeWrapper.classList.add('is-expanded');
+					gradeWrapper.style.maxHeight = 'none';
+					gradeWrapper.style.overflowY = 'visible';
+					gradeStatus.textContent = gradeRows.length + ' books';
+				} else {
+					gradeWrapper.classList.remove('is-expanded');
+					var gradeHeader = gradeSection.querySelector('.books-table thead');
+					var gradeHeight = gradeHeader.getBoundingClientRect().height;
+					gradeRows.slice(0, 5).forEach(function (row) { gradeHeight += row.getBoundingClientRect().height; });
+					gradeWrapper.style.maxHeight = Math.ceil(gradeHeight) + 'px';
+					gradeWrapper.style.overflowY = 'auto';
+					gradeStatus.textContent = gradeRows.length + ' books · 5-row scrollable view';
+				}
+			}
+			gradeExpand.addEventListener('click', function () {
+				var gradeExpanded = gradeSection.classList.toggle('is-expanded');
+				gradeExpand.setAttribute('aria-expanded', String(gradeExpanded));
+				gradeExpand.textContent = gradeExpanded ? 'Collapse table' : 'Expand table';
+				sizeGradeTable();
+			});
+			sizeGradeTable();
+			window.addEventListener('load', function () {
+				filterBooks();
+				sizeGradeTable();
+			});
 		}());
 	</script>
 </body>
