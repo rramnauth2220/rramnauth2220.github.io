@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>Selected Research | Rebecca Ramnauth</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Research in language-model representations and adaptation, AI safety and interactive autonomy, and real-world autonomous robotics by Rebecca Ramnauth." />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/industry-refresh.css" />
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon" />
+</head>
+<body class="is-preload">
+  <div id="wrapper" class="divided">
+    <section class="banner style6 orient-left content-align-left onload-content-fade-right">
+      <div class="content">
+        <p class="industry-eyebrow">Selected research · Rebecca Ramnauth, Ph.D.</p>
+        <h1>Research Portfolio</h1>
+        <p class="major">How intelligent systems represent, adapt, decide, and act.</p>
+        <p>My research bridges experimental studies of language-model behavior, methods for adaptive and safe autonomy, and autonomous systems deployed in complex human environments. Each case below connects a research question to its method and evidence.</p>
+        <ul class="actions industry-quicknav">
+          <li><a href="index.html" class="button">Home</a></li>
+          <li><a href="#model-adaptation" class="button smooth-scroll">Model Adaptation</a></li>
+          <li><a href="#interactive-autonomy" class="button smooth-scroll">Safe Autonomy</a></li>
+          <li><a href="#embodied-ai" class="button smooth-scroll">Embodied AI</a></li>
+          <li><a href="cv.html" class="button">Résumé / CV</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="wrapper style1 industry-overview" id="model-adaptation">
+      <div class="inner">
+        <div class="industry-section-heading">
+          <p class="industry-eyebrow">01 / Models</p>
+          <h2>Model Representations &amp; Adaptation</h2>
+          <p>I investigate what language models represent even when their visible outputs appear compliant, and how to make model adaptation more predictable and targeted. My methods span representation analysis, controlled behavioral experiments, and adaptation-policy selection.</p>
+        </div>
+        <article class="industry-case industry-case--text" id="white-bear">
+          <div class="industry-case-copy">
+            <span class="industry-category">Mechanistic interpretability · EMNLP 2026</span>
+            <h3>The Attentional White Bear</h3>
+            <p class="industry-meta">Persistent but attenuated concept recoverability in transformer language models</p>
+            <h4>Question</h4>
+            <p>When a language model is instructed not to mention a concept, does avoiding that concept in the output imply that its internal representation has been suppressed?</p>
+            <h4>Approach and findings</h4>
+            <p>Controlled concept-suppression experiments examine how prohibited concepts remain recoverable from internal model signals, even when the model avoids producing them. The result highlights a distinction between observable behavior and internal representation that matters for interpreting alignment evaluations.</p>
+            <div class="industry-links"><a href="https://aclanthology.org/2026.emnlp-main.1609/" target="_blank" rel="noopener noreferrer">EMNLP paper</a><a href="materials/Ramnauth - EMNLP26 White Bear - Poster.pdf" target="_blank" rel="noopener noreferrer">Poster (PDF)</a></div>
+          </div>
+        </article>
+        <article class="industry-case industry-case--text" id="adaptation-compilation">
+          <div class="industry-case-copy">
+            <span class="industry-category">Adaptation methods · 2026 preprint</span>
+            <h3>Compiling Learning Problems Into Adaptation Programs</h3>
+            <p class="industry-meta">Adaptation Compilation · available as a research preprint and Python package</p>
+            <h4>Question</h4>
+            <p>Can the choice of where, how, and how much to adapt a model be treated as a prediction-and-decision problem rather than as a fixed intervention policy?</p>
+            <h4>Approach</h4>
+            <p>I develop a typed framework for representing adaptation problems and interventions, with a compiler that predicts the effects of candidate adaptation programs before selecting among them. This line of research builds on empirical work identifying different learning signatures across transformer layers and adaptation objectives.</p>
+            <div class="industry-links"><a href="https://arxiv.org/abs/2609.37371" target="_blank" rel="noopener noreferrer">Compilation preprint</a><a href="https://arxiv.org/abs/2607.25663" target="_blank" rel="noopener noreferrer">Localization study</a><a href="https://pypi.org/project/adaptcompile/" target="_blank" rel="noopener noreferrer">adaptcompile on PyPI</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrapper style2 industry-work" id="interactive-autonomy">
+      <div class="inner">
+        <div class="industry-section-heading">
+          <p class="industry-eyebrow">02 / Autonomy</p>
+          <h2>AI Safety &amp; Interactive Autonomy</h2>
+          <p>Autonomous systems must decide not only what they can do, but whether acting is appropriate in context. My work explores frameworks for assistance, contextual exceptions to rules, and runtime oversight in interactive settings.</p>
+        </div>
+        <article class="industry-case">
+          <div class="industry-case-copy">
+            <span class="industry-category">Context-sensitive decision-making</span>
+            <h3>When Should an Agent Help—or Hold Back?</h3>
+            <h4>Question</h4>
+            <p>How should an intelligent agent reason about assistance when human preferences, goals, and social circumstances make a simple “always help” rule inadequate?</p>
+            <h4>Approach</h4>
+            <p>I study principles for socially appropriate assistance and argue for explicitly bounded exceptions to conventional interaction rules. This agenda also motivates frameworks for runtime guardrails and oversight in deployed autonomous systems.</p>
+            <div class="industry-links"><a href="https://arxiv.org/abs/2605.19940" target="_blank" rel="noopener noreferrer">Grounded Observer preprint</a><a href="materials/ramnauth-breakingrules-20260115.pdf" target="_blank" rel="noopener noreferrer">Breaking the Rules (PDF)</a></div>
+          </div>
+          <figure>
+            <img src="images/research/robotrules.jpg" alt="Research visual illustrating interaction rules for autonomous robots" />
+            <figcaption>Research on rules, oversight, and appropriate autonomous behavior.</figcaption>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrapper style1 industry-overview" id="embodied-ai">
+      <div class="inner">
+        <div class="industry-section-heading">
+          <p class="industry-eyebrow">03 / Embodiment</p>
+          <h2>Embodied AI &amp; Human–Robot Interaction</h2>
+          <p>Social robots provide a demanding testbed for autonomy: people are unpredictable, environments change, deployments last beyond a demonstration, and success requires meaningful human-centered outcomes. These projects combine system building and empirical evaluation.</p>
+        </div>
+        <article class="industry-case" id="home-robots">
+          <div class="industry-case-copy">
+            <span class="industry-category">Long-term deployment · RSS / HRI 2025</span>
+            <h3>Autonomous Social Robots in Homes</h3>
+            <h4>Question</h4>
+            <p>Can autonomous social robots sustain meaningful, personalized interaction beyond a laboratory session, and what changes when evaluation moves into people's homes?</p>
+            <h4>Approach and evidence</h4>
+            <p>My in-home research studies sustained interaction with adults and children, including personalized conversational intervention and triadic gaze behavior. These studies examine engagement, reliability, and social behavior across days and weeks—not just immediate task completion.</p>
+            <div class="industry-links"><a href="https://scazlab.yale.edu/sites/default/files/files/ramnauth-smalltalk-RSS25f.pdf" target="_blank" rel="noopener noreferrer">RSS 2025 paper</a><a href="https://scazlab.yale.edu/sites/default/files/files/hri-frp1371.pdf" target="_blank" rel="noopener noreferrer">HRI 2025 gaze study</a><a href="index.html#therapy">More deployment details</a></div>
+          </div>
+          <figure>
+            <img src="images/research/smalltalk-preview.jpg" alt="Social robot used in long-term human-robot interaction research" />
+            <figcaption>In-home social robotics research.</figcaption>
+          </figure>
+        </article>
+        <article class="industry-case" id="reset-case">
+          <div class="industry-case-copy">
+            <span class="industry-category">Real-world evaluation · RO-MAN 2025</span>
+            <h3>RESET: Robot-Enhanced Social-Emotional Therapy</h3>
+            <h4>Question</h4>
+            <p>Can an autonomous robot integrate into an existing elementary-school de-escalation room and help students return more effectively to classroom activities?</p>
+            <h4>Approach and evidence</h4>
+            <p>RESET was co-designed and evaluated through a month-long deployment in a school. The research examines practical integration, real-world usability, de-escalation, and return to classroom activities, with outcomes assessed in the setting where the system was intended to operate.</p>
+            <div class="industry-links"><a href="https://scazlab.yale.edu/sites/default/files/files/ramnauth-20250617-f2.pdf" target="_blank" rel="noopener noreferrer">RO-MAN 2025 paper</a><a href="index.html#reset">More deployment details</a></div>
+          </div>
+          <figure>
+            <img src="images/research/reset.jpg" alt="Robot-Enhanced Social-Emotional Therapy research deployment" />
+            <figcaption>Autonomous intervention designed for a public-school de-escalation environment.</figcaption>
+          </figure>
+        </article>
+        <div class="industry-section-heading" style="margin-top:2rem">
+          <h3>Deployment at a glance</h3>
+          <p>As reported in August 2025, five recent deployments collectively involved 284 families, 12,984 hours of autonomous robot operation, 3,084 sessions, and approximately 84 TB of multimodal data. These totals combine distinct systems and studies; details and evidence are linked in the <a href="index.html#impact">deployment section</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrapper style2 align-center industry-work">
+      <div class="inner">
+        <p class="industry-eyebrow">Continue exploring</p>
+        <h2>Publications, systems &amp; contact</h2>
+        <p>Explore the linked papers, source package, longitudinal deployment summaries, and broader academic record.</p>
+        <ul class="actions" style="justify-content:center">
+          <li><a href="index.html" class="button">Homepage</a></li>
+          <li><a href="cv.html" class="button primary">Résumé / CV</a></li>
+          <li><a href="https://github.com/rramnauth2220" class="button" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="mailto:rebecca.ramnauth@yale.edu" class="button">Email</a></li>
+        </ul>
+      </div>
+    </section>
+    <footer class="wrapper style1 align-center"><div class="inner"><p class="minor">Rebecca Ramnauth &middot; Updated November 2026 &middot; <a href="index.html">Return home</a></p></div></footer>
+  </div>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.scrollex.min.js"></script>
+  <script src="assets/js/jquery.scrolly.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
