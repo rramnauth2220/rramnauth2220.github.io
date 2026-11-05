@@ -1,0 +1,53 @@
+/* Industry research portfolio enhancements — builds on the site's existing Story styling. */
+:root { --research-accent: #a95f70; --research-ink: #33343a; --research-line: rgba(53, 47, 51, .15); --research-paper: #faf7f7; }
+.industry-eyebrow { color: var(--research-accent); font-size: .78rem; font-weight: 700; letter-spacing: .15em; line-height: 1.7; text-transform: uppercase; margin: 0 0 1.15rem; }
+.banner .content .industry-lede { max-width: 43rem; font-size: 1rem; line-height: 1.75; margin-top: -.35rem; }
+.banner .content .industry-status { font-size: .86rem; line-height: 1.5; margin-top: 1.1rem; color: #777; }
+.industry-intro { max-width: 53rem; margin: 0 auto 2.4rem; }
+.industry-intro p { max-width: 48rem; margin-left: auto; margin-right: auto; }
+.industry-pillars, .industry-highlights, .industry-constraints { display: grid; gap: 1.2rem; text-align: left; }
+.industry-pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.industry-highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.industry-constraints { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.industry-pillar, .industry-highlight, .industry-constraint { border: 1px solid var(--research-line); background: white; border-radius: .35rem; padding: 1.65rem 1.7rem; }
+.industry-pillar h3, .industry-highlight h3 { font-size: 1.26rem; line-height: 1.35; margin: .45rem 0 .8rem; }
+.industry-pillar p, .industry-highlight p, .industry-constraint p { font-size: .94rem; line-height: 1.7; margin: 0 0 .9rem; }
+.industry-pillar a, .industry-highlight a { text-underline-offset: .18em; }
+.industry-category { color: var(--research-accent); font-weight: 700; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+.industry-meta { color: #737077; font-size: .83rem; margin-bottom: .6rem; }
+.industry-links { display: flex; flex-wrap: wrap; gap: .35rem 1.1rem; padding-top: .5rem; }
+.industry-links a { font-size: .86rem; font-weight: 600; }
+.industry-overview { padding-top: 4rem; padding-bottom: 4rem; }
+.industry-work { background: var(--research-paper); padding-top: 4rem; padding-bottom: 4rem; }
+.industry-work .industry-highlight { background: #fff; }
+.industry-constraint h4 { font-size: 1.02rem; margin: 0 0 .65rem; }
+.industry-metrics { margin-top: 1.7rem; }
+.industry-subtle { color: #777; font-size: .91rem; }
+.industry-archive-link { margin: 1.8rem auto 0; }
+.industry-case { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(220px, .7fr); gap: 2.1rem; align-items: start; border-top: 1px solid var(--research-line); padding: 2.7rem 0; text-align: left; }
+.industry-case:last-child { border-bottom: 1px solid var(--research-line); }
+.industry-case h3 { font-size: 1.7rem; margin: .3rem 0 .75rem; }
+.industry-case h4 { margin: 1.25rem 0 .35rem; font-size: 1rem; }
+.industry-case p { line-height: 1.78; margin-bottom: .65rem; }
+.industry-case figure { margin: .5rem 0; }
+.industry-case figure img { width: 100%; height: auto; display: block; border-radius: .3rem; }
+.industry-case figcaption { color: #777; font-size: .8rem; line-height: 1.5; padding-top: .6rem; }
+.industry-case .industry-links { margin-top: .7rem; }
+.industry-case--text { grid-template-columns: 1fr; }
+.industry-case--text .industry-case-copy { max-width: 56rem; }
+.industry-section-heading { max-width: 55rem; margin: 0 auto 1.9rem; text-align: left; }
+.industry-section-heading p { line-height: 1.75; }
+.industry-quicknav { margin-top: 1.5rem; }
+.industry-quicknav .button { margin-bottom: .55rem; }
+@media (max-width: 980px) {
+  .industry-pillars, .industry-constraints { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .industry-case { grid-template-columns: minmax(0, 1fr) minmax(190px, .65fr); }
+}
+@media (max-width: 736px) {
+  .industry-pillars, .industry-highlights, .industry-constraints, .industry-case { grid-template-columns: 1fr; }
+  .industry-overview, .industry-work { padding-top: 2.6rem; padding-bottom: 2.6rem; }
+  .industry-pillar, .industry-highlight, .industry-constraint { padding: 1.3rem; }
+  .industry-case { padding: 2rem 0; gap: 1.1rem; }
+  .industry-case h3 { font-size: 1.35rem; }
+  .industry-eyebrow { font-size: .7rem; }
+}
